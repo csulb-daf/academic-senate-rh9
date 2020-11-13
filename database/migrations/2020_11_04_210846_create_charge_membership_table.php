@@ -15,6 +15,7 @@ class CreateChargeMembershipTable extends Migration
     {
         Schema::create('charge_membership', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->unsignedBigInteger('user_id');
             $table->string('charge_membership');
             $table->timestamps();
         });

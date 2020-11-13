@@ -15,6 +15,7 @@ class CreateRankTable extends Migration
     {
         Schema::create('rank', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->unsignedBigInteger('user_id');
             $table->string('rank');
             $table->timestamps();
         });

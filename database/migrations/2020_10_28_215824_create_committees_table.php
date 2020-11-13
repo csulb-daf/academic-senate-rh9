@@ -15,6 +15,7 @@ class CreateCommitteesTable extends Migration
     {
         Schema::create('committees', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->unsignedBigInteger('user_id');
             $table->string('committeename',255);
             $table->string('meetingtimes_locations',255);
             $table->text('notes');
