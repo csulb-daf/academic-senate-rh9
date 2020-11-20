@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-class CommitteeController extends Controller
+class ListController extends Controller
 {
     /**
      * Create a new controller instance.
@@ -23,6 +23,6 @@ class CommitteeController extends Controller
      */
     public function index()
     {
-        return view('committee');
+        return view('list');
     }
 }

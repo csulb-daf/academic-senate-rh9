@@ -6,6 +6,9 @@
 @endpush
 
 @extends('layouts.app')
+
+@section('title', 'Committee Management')
+
 @section('content')
 <table id="committeeTable" class="display">
 	<thead>

@@ -11,9 +11,9 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// Route::get('/', function () {
+//     return view('welcome');
+// });
 /*
 Route::get('/', function () {
     return view('auth.login');
@@ -22,6 +22,7 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
-
-Route::get('/committee', 'CommitteeController@show')->name('committee');
+Route::redirect('/home', '/');
+Route::get('/', 'HomeController@index')->name('home');
+Route::get('/committee', 'CommitteeController@index')->name('committee');
+Route::get('/list', 'ListController@index')->name('list');

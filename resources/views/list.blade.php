@@ -7,7 +7,7 @@
 
 @extends('layouts.app')
 
-@section('title', 'Home')
+@section('title', 'List Management')
 
 @section('content')
 <table id="committeeTable" class="display">
