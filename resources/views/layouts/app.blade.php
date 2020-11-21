@@ -5,28 +5,28 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 <!-- CSRF Token -->
-<meta name="csrf-token" content="{{ csrf_token() }}">
-
-<title>
-	@if (trim($__env->yieldContent('title')))
-		@yield('title') 
-	@else
-		{{ config('app.name', 'Academic Senate') }}
-	@endif
-</title>
-
-<!-- Scripts -->
-<script src="{{ asset('js/app.js') }}"></script>
-
-<!-- Fonts -->
-<link rel="dns-prefetch" href="//fonts.gstatic.com">
-<link href="https://fonts.googleapis.com/css?family=Nunito"
-	rel="stylesheet">
-
-<!-- Styles -->
-<link href="{{ asset('css/app.css') }}" rel="stylesheet">
-
-@stack('head')
+	<meta name="csrf-token" content="{{ csrf_token() }}">
+	
+	<title>
+		@if (trim($__env->yieldContent('title')))
+			@yield('title') 
+		@else
+			{{ config('app.name', 'Academic Senate') }}
+		@endif
+	</title>
+	
+	<!-- Scripts -->
+	<script src="{{ asset('js/app.js') }}"></script>
+	
+	<!-- Fonts -->
+	<link rel="dns-prefetch" href="//fonts.gstatic.com">
+	<link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
+	
+	<!-- Styles -->
+	<link href="{{ asset('css/app.css') }}" rel="stylesheet">
+	<link href="{{ asset('css/styles.css') }}" rel="stylesheet">
+	
+	@stack('head')
 </head>
 
 <body>

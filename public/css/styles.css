@@ -1,0 +1,7 @@
+/*** Nav ***/
+@media (min-width: 768px) {
+ .navbar-expand-md .navbar-nav.main {
+    width: 100%;
+    justify-content: center;
+  }
+}
