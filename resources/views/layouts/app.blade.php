@@ -32,8 +32,14 @@
 <body>
 	<div id="app">
 		@include('partials.nav')
-
-		<main class="py-4">@yield('content')</main>
+		
+		<h1 class="pageHeader">Councils and Committees Management System</h1>
+		<div class="container">
+			<main class="py-4">
+				<h2 style="font-weight: bold;">@yield('title')</h2>
+				@yield('content')
+			</main>
+		</div>
 	</div>
 </body>
 @stack('scripts')

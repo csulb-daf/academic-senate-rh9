@@ -1,3 +1,9 @@
+/*** Common ***/
+h1.pageHeader {
+	text-align: center;
+	margin: 10px 0;
+}
+
 /*** Nav ***/
 @media (min-width: 768px) {
  .navbar-expand-md .navbar-nav.main {
