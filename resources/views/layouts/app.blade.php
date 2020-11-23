@@ -17,14 +17,17 @@
 	
 	<!-- Scripts -->
 	<script src="{{ asset('js/app.js') }}"></script>
+	<script src="{{asset('js/datatables.min.js')}}" defer></script>
 	
 	<!-- Fonts -->
 	<link rel="dns-prefetch" href="//fonts.gstatic.com">
 	<link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
 	
 	<!-- Styles -->
+	<link rel="stylesheet" href="{{asset('css/datatables.min.css')}}" type="text/css">
 	<link href="{{ asset('css/app.css') }}" rel="stylesheet">
 	<link href="{{ asset('css/styles.css') }}" rel="stylesheet">
+	
 	
 	@stack('head')
 </head>
