@@ -5,6 +5,16 @@ h1.pageHeader {
 }
 
 /*** Nav ***/
+.navbar {
+	background-color: #616161 !important;
+}
+.navbar-light .navbar-nav .nav-link {
+	color: #fff;
+}
+.navbar-light .navbar-nav .nav-link.active,
+.navbar-light .navbar-nav .nav-link:hover {
+    background: #fff;
+}
 @media (min-width: 768px) {
  .navbar-expand-md .navbar-nav.main {
     width: 100%;
