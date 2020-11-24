@@ -52,20 +52,20 @@ var dataSet = [
     [ "Unity Butler", "Marketing Designer", "San Francisco", "5384", "2009/12/09", "$85,675" ]
 ];
 	
-	$(document).ready(function() {
-		//$('#sample').DataTable();
+$(document).ready(function() {
+	//$('#sample').DataTable();
     
-		$('#committee').DataTable( {
-			data: dataSet,
-				columns: [
-					{ title: "Name" },
-					{ title: "Position" },
-					{ title: "Office" },
-					{ title: "Extn." },
-					{ title: "Start date" },
-					{ title: "Salary" }
-				]
-		});		
-	});
+	$('#committee').DataTable( {
+		data: dataSet,
+		columns: [
+			{ title: "Name" },
+			{ title: "Position" },
+			{ title: "Office" },
+			{ title: "Extn." },
+			{ title: "Start date" },
+			{ title: "Salary" }
+		]
+	});		
+});
 </script>
 @endpush
