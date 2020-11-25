@@ -79,16 +79,16 @@ $(document).ready(function() {
 	
 	$('#committee2').DataTable({
     ajax: {
-			url: 'user-request',
+			url: 'user-ajax',
 			dataSrc: '',
     },
 		columns: [
-			{ title: "ID", data: "id" },
-			{ title: "Name", data: "name" },
-			{ title: "Email", data: "email" },
-			{ title: "email_verified_at", data: "email_verified_at" },
-			{ title: "created_at", data: "created_at" },
-			{ title: "updated_at", data: "updated_at" },
+			{ title: 'ID', data: 'id' },
+			{ title: 'Name', data: 'name' },
+			{ title: 'Email', data: 'email' },
+			{ title: 'email_verified_at', data: 'email_verified_at' },
+			{ title: 'created_at', data: 'created_at' },
+			{ title: 'updated_at', data: 'updated_at' },
 		]
 	});	
 			

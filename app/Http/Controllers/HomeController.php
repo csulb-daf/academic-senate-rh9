@@ -31,7 +31,7 @@ class HomeController extends Controller
     
     public function ajax()
     {
-    	//$users = DB::table('users')->get();
+    	//$users = DB::table('committee_membership')->get();
     	$users = DB::table('users')->select('id', 'name', 'email', 'email_verified_at', 'created_at', 'updated_at')->get();
     	
     	return $users;

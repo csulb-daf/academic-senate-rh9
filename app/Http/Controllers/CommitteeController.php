@@ -24,9 +24,12 @@ class CommitteeController extends Controller
      */
     public function index()
     {
-        //return view('committee');
-        
-    	$users = DB::table('users')->get();
-    	return view('committee', ['users' => $users]);
+			return view('committee');
     }
+    
+    public function ajax()
+    {
+    	return  DB::table('committees')->select('committeename')->get();;
+    }
+    
 }
