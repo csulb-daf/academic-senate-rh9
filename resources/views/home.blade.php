@@ -1,13 +1,13 @@
 {{-- 
---}}
 {{ dump($users) }}
+--}}
 
 <p><br>
 <?php 
-foreach ($users as $user) {
-	echo 'User Name: '. $user->name;
-	echo '<br>';
-}
+// foreach ($users as $user) {
+// 	echo 'User Name: '. $user->name;
+// 	echo '<br>';
+// }
 ?>
 
 @push('head')
@@ -63,35 +63,32 @@ var dataSet = [
     [ "Unity Butler", "Marketing Designer", "San Francisco", "5384", "2009/12/09", "$85,675" ]
 ];
 
-	
 $(document).ready(function() {
-	//$('#sample').DataTable();
-    
-	$('#committee').DataTable({
-		data: dataSet,
-		columns: [
-			{ title: "Name" },
-			{ title: "Position" },
-			{ title: "Office" },
-			{ title: "Extn." },
-			{ title: "Start date" },
-			{ title: "Salary" }
-		]
-	});
+
+// 	$('#committee').DataTable({
+// 		data: dataSet,
+// 		columns: [
+// 			{ title: "Name" },
+// 			{ title: "Position" },
+// 			{ title: "Office" },
+// 			{ title: "Extn." },
+// 			{ title: "Start date" },
+// 			{ title: "Salary" }
+// 		]
+// 	});
 	
 	$('#committee2').DataTable({
-		ajax: {
+    ajax: {
 			url: 'user-request',
-			dataSrc: ''
-		},
+			dataSrc: '',
+    },
 		columns: [
-			{ title: "Name" },
-			{ title: "Email" },
-			{ title: "email_verified_at" },
-			{ title: "password." },
-			{ title: "remember_token" },
-			{ title: "created_at" },
-			{ title: "updated_at" },
+			{ title: "ID", data: "id" },
+			{ title: "Name", data: "name" },
+			{ title: "Email", data: "email" },
+			{ title: "email_verified_at", data: "email_verified_at" },
+			{ title: "created_at", data: "created_at" },
+			{ title: "updated_at", data: "updated_at" },
 		]
 	});	
 			

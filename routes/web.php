@@ -22,9 +22,10 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::redirect('/home', '/');
+Route::redirect('home', '/');
 Route::get('/', 'HomeController@index')->name('home');
 Route::get('/committee', 'CommitteeController@index')->name('committee');
 Route::get('/list', 'ListController@index')->name('list');
 
-Route::get('/user-request', 'UserRequestController@index')->name('user-request');
+Route::get('/user-request', 'HomeController@ajax')->name('user-request');
+
