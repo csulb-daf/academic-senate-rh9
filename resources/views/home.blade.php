@@ -20,19 +20,19 @@
 </form>
 @endsection 
 
-@push('scripts')
+@section('scripts')
 <script>
 $(document).ready(function() {
-	$('#commSearch').DataTable({
+	var table = $('#commSearch').DataTable({
     ajax: {
 			url: 'comm-search',
 			dataSrc: '',
-
-complete: function() {
-	//console.log('complete');
-	$("#searchContainter").appendTo("#commSearch_wrapper .dataTables_length").show();
-}	
-			
+			error: function (xhr, error, thrown) {
+				table.clear().draw();
+			},
+			complete: function() {
+				$("#searchContainter").appendTo("#commSearch_wrapper .dataTables_length").show();
+			}	
     },
 		columns: [
 			{ title: 'Campus ID', data: 'user_id' },
@@ -51,4 +51,4 @@ complete: function() {
 			
 });
 </script>
-@endpush
+@endsection

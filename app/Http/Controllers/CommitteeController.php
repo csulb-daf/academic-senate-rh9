@@ -29,7 +29,7 @@ class CommitteeController extends Controller
     
     public function ajax()
     {
-    	return  DB::table('committees')->select('committeename')->get();;
+    	return  DB::table('committees')->select('committeename')->get();
     }
     
 }

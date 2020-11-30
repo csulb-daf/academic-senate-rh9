@@ -9,8 +9,7 @@
 <table id="commAdmin" class="display"></table>
 @endsection 
 
-@push('scripts')
-
+@section('scripts')
 <script>
 $(document).ready(function() {
 
@@ -18,6 +17,9 @@ $(document).ready(function() {
     ajax: {
 			url: 'comm-admin',
 			dataSrc: '',
+			error: function (xhr, error, thrown) {
+				table.clear().draw();
+			},
     },
 		columns: [
 			{ title: 'Committee Name', data: 'committeename' },
@@ -37,10 +39,8 @@ $(document).ready(function() {
 				}
 			}
 		],
-		
-		
 	});
-
+	
 });
 
 function test() {
@@ -48,4 +48,4 @@ function test() {
 }
 	
 </script>
-@endpush
+@endsection
