@@ -24,17 +24,16 @@ class HomeController extends Controller
      */
     public function index()
     {
-			return view('home');
-			//$users = DB::table('users')->get();
-			//return view('home', ['users' => $users]);
+			//return view('home');
+			$comms = DB::table('committees')->get();
+			return view('home', ['comms' => $comms]);
+			
     }
     
     public function ajax()
     {
-    	//$users = DB::table('committee_membership')->get();
-    	$users = DB::table('users')->select('id', 'name', 'email', 'email_verified_at', 'created_at', 'updated_at')->get();
-    	
-    	return $users;
+    	//return DB::table('committee_membership')->select('user_id', 'lastname', 'firstname', 'rank', 'department', 'college', 'ext', 'email', 'term', 'charge_memberhip', 'notes' )->get();
+    	return DB::table('committee_membership')->get();
     }
     
 }

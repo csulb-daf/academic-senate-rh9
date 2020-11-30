@@ -18,6 +18,5 @@ Route::get('/', 'HomeController@index')->name('home');
 Route::get('/committee', 'CommitteeController@index')->name('committee');
 Route::get('/list', 'ListController@index')->name('list');
 
-Route::get('/user-ajax', 'HomeController@ajax');
-Route::get('/committee-ajax', 'CommitteeController@ajax');
-
+Route::get('/comm-search', 'HomeController@ajax');
+Route::get('/comm-admin', 'CommitteeController@ajax');

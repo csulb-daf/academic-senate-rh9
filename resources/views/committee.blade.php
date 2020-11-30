@@ -6,7 +6,7 @@
 @section('title', 'Committee Management')
 
 @section('content')
-<table id="committee" class="display"></table>
+<table id="commAdmin" class="display"></table>
 @endsection 
 
 @push('scripts')
@@ -14,9 +14,9 @@
 <script>
 $(document).ready(function() {
 
-	var table = $('#committee').DataTable({
+	var table = $('#commAdmin').DataTable({
     ajax: {
-			url: 'committee-ajax',
+			url: 'comm-admin',
 			dataSrc: '',
     },
 		columns: [
@@ -28,15 +28,16 @@ $(document).ready(function() {
 			}
 		],
 		
-	dom: 'Blfrtip',
-	buttons: [
-		{
-			text: 'Add New Committee',
-			action: function ( e, dt, node, config ) {
-				test();
+		dom: 'Blfrtip',
+		buttons: [
+			{
+				text: 'Add New Committee',
+				action: function ( e, dt, node, config ) {
+					test();
+				}
 			}
-		}
-	],
+		],
+		
 		
 	});
 
