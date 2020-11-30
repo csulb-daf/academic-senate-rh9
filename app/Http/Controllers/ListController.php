@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class ListController extends Controller
 {
@@ -25,4 +26,10 @@ class ListController extends Controller
     {
         return view('list');
     }
+    
+    public function ajax()
+    {
+    	return  DB::table('charge_membership')->select('charge_membership')->get();
+    }
+    
 }

@@ -27,7 +27,7 @@ $(document).ready(function() {
     ajax: {
 			url: 'comm-search',
 			dataSrc: '',
-			error: function (xhr, error, thrown) {
+			error: function(xhr, error, thrown) {
 				table.clear().draw();
 			},
 			complete: function() {

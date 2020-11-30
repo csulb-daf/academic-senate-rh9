@@ -12,7 +12,6 @@
 @section('scripts')
 <script>
 $(document).ready(function() {
-
 	var table = $('#commAdmin').DataTable({
     ajax: {
 			url: 'comm-admin',
