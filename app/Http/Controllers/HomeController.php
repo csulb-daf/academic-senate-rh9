@@ -30,7 +30,10 @@ class HomeController extends Controller
     
     public function ajax()
     {
-    	return DB::table('committee_membership')->get();
+    	return DB::table('committee_membership as cm')
+    		->join('rank as r', 'cm.rank', '=', 'r.id')
+    		->select('cm.*', 'r.rank as rank')
+    		->get();
     }
     
 }

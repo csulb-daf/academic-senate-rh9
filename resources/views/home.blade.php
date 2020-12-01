@@ -43,7 +43,8 @@ $(document).ready(function() {
 			{ title: 'Term', data: 'term' },
 			{ title: 'Charge Memberhip', data: 'charge_memberhip' },
 			{ title: 'Notes', data: 'notes' },
-		]
+		],
+		
 	});	
 			
 });
