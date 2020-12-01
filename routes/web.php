@@ -20,4 +20,5 @@ Route::get('/list', 'ListController@index')->name('list');
 
 Route::get('/comm-search', 'HomeController@ajax');
 Route::get('/comm-admin', 'CommitteeController@ajax');
-Route::get('/list-admin', 'ListController@ajax');
+Route::get('/charge-admin', 'ListController@getChargeMembership');
+Route::get('/community-members-admin', 'ListController@getCommunityMembers');
