@@ -1,6 +1,3 @@
-@push('head')
-@endpush
-
 @extends('layouts.app')
 
 @section('title', 'Committee Management')

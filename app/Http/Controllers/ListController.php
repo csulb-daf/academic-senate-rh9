@@ -38,5 +38,9 @@ class ListController extends Controller
     	return  DB::table('community_members')->select(DB::raw('CONCAT(firstname, " ", lastname) AS name'))->get();
     }
     
+    public function getRank()
+    {
+    	return  DB::table('rank')->select('rank')->get();
+    }
     
 }

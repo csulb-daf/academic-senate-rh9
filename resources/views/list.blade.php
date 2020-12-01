@@ -1,6 +1,3 @@
-@push('head')
-@endpush
-
 @extends('layouts.app')
 
 @section('title', 'List Management')
@@ -9,6 +6,7 @@
 <nav class="nav nav-tabs">
 	<a href="#tab-table1" data-toggle="tab" class="nav-item nav-link active">Charge Membership</a>
 	<a href="#tab-table2" data-toggle="tab" class="nav-item nav-link">Community Members</a>
+	<a href="#tab-table3" data-toggle="tab" class="nav-item nav-link">Rank</a>
 </nav>
 
 <div class="tab-content">
@@ -18,11 +16,16 @@
 			<button>ADD</button>
 			<input type="text">
 		</form>
-</div>
+	</div>
 
 	<div class="tab-pane" id="tab-table2">
 		<table id="listAdmin2" class="display" style="width: 100%"></table>
 	</div>
+	
+	<div class="tab-pane" id="tab-table3">
+		<table id="listAdmin3" class="display" style="width: 100%"></table>
+	</div>
+	
 </div>
 @endsection 
 
@@ -48,11 +51,17 @@ $(document).ready(function() {
 			}
 		],
 		columnDefs: [{		//index column
+			targets: 0,
 			sortable: false,
-			"class": "index",
-			targets: 0
+			"class": "index"
 		}],
-		order: [[ 1, 'asc' ]],
+		order: [[ 1, 'asc' ]],		//sort by index column
+		
+		columnDefs: [{		//Actions column
+			targets:  2,
+			sortable: false,
+		}],
+		
 	});
 	createIndexColumn(table1);
 	
@@ -80,8 +89,47 @@ $(document).ready(function() {
 			targets: 0
 		}],
 		order: [[ 1, 'asc' ]],
+		
+		columnDefs: [{		//Actions column
+			targets:  2,
+			sortable: false,
+		}],
+		
 	});	
 	createIndexColumn(table2);
+
+	var table3 = $('#listAdmin3').DataTable({
+    ajax: {
+			url: 'rank-admin',
+			dataSrc: '',
+			error: function (xhr, error, thrown) {
+				table1.clear().draw();
+			},
+			complete: function() {}	
+    },
+		columns: [
+			{ title: '#', data: null, defaultContent: '' },
+			{ title: 'Rank', data: 'rank'},
+			{ title: 'Actions', data: null, defaultContent: '',
+				render: function ( data, type, row ) {
+    			return '<button>Edit</button>';
+				}			
+			}
+		],
+		columnDefs: [{		//index column
+			sortable: false,
+			"class": "index",
+			targets: 0
+		}],
+		order: [[ 1, 'asc' ]],
+		
+		columnDefs: [{		//Actions column
+			targets:  2,
+			sortable: false,
+		}],
+		
+	});	
+	createIndexColumn(table3);
     	
 });
 
@@ -91,7 +139,6 @@ function createIndexColumn(table) {
 			cell.innerHTML = i+1;
 		});
 	}).draw();
-
 }
 </script>
 @endsection

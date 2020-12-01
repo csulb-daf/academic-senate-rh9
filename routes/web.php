@@ -22,3 +22,4 @@ Route::get('/comm-search', 'HomeController@ajax');
 Route::get('/comm-admin', 'CommitteeController@ajax');
 Route::get('/charge-admin', 'ListController@getChargeMembership');
 Route::get('/community-members-admin', 'ListController@getCommunityMembers');
+Route::get('/rank-admin', 'ListController@getRank');
