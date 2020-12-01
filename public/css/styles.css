@@ -22,6 +22,9 @@ h1.pageHeader {
   }
 }
 
+/*** Tabs ***/
+
+
 /*** datatables override ***/
 table.dataTable thead .sorting {
 	background-image: url("/images/sort_both.png")
