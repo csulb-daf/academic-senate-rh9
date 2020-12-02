@@ -32,7 +32,8 @@ $(document).ready(function() {
 			}	
     },
 		columns: [
-			{ title: 'Campus ID', data: 'user_id' },
+			{ title: 'Campus ID', data: 'campus_id' },
+			{ title: 'Committee', data: 'committee' },
 			{ title: 'Last Name', data: 'lastname' },
 			{ title: 'First Name', data: 'firstname' },
 			{ title: 'Rank', data: 'rank' },
@@ -41,12 +42,11 @@ $(document).ready(function() {
 			{ title: 'Ext.', data: 'ext' },
 			{ title: 'Email', data: 'email' },
 			{ title: 'Term', data: 'term' },
-			{ title: 'Charge Memberhip', data: 'charge_memberhip' },
+			{ title: 'Charge Memberhip', data: 'charge' },
 			{ title: 'Notes', data: 'notes' },
 		],
 		
 	});	
-			
 });
 </script>
 @endsection
