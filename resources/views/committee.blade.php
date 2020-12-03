@@ -4,6 +4,7 @@
 
 @section('content')
 <table id="commAdmin" class="display"></table>
+<button type="button" class="btn btn-primary" id="addComm" style="display: none; float: left;"  onclick="javascript:addComm();">Add New Committee</button>
 @endsection 
 
 @section('scripts')
@@ -16,6 +17,14 @@ $(document).ready(function() {
 			error: function (xhr, error, thrown) {
 				table.clear().draw();
 			},
+			
+			complete: function() {
+				$('.dataTables_length').css({
+					'float' : 'right',
+					'margin-left' : '30px'
+				});
+				$("button#addComm").prependTo("#commAdmin_wrapper").show();
+			}
     },
 		columns: [
 			{ title: 'Committee Name', data: 'committeename' },
@@ -26,21 +35,13 @@ $(document).ready(function() {
 			}
 		],
 		
-		dom: 'Blfrtip',
-		buttons: [
-			{
-				text: 'Add New Committee',
-				action: function ( e, dt, node, config ) {
-					test();
-				}
-			}
-		],
-	});
+	});		
 	
 });
 
-function test() {
-	console.log('ok');
+function addComm() {
+	//console.log('ok');
+	window.location = "{{ url('/committee/add') }}";
 }
 	
 </script>
