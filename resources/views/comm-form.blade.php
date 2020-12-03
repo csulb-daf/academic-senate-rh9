@@ -1,8 +1,16 @@
-@extends('layouts.app')
+@extends('layouts.app') @section('title', 'Committee Management')
 
-@section('title', 'Committee Management')
+@section('content') 
+@if ($errors->any())
+	<div class="alert alert-danger">
+		<ul>
+			@foreach ($errors->all() as $error)
+				<li>{{ $error }}</li>
+			@endforeach
+		</ul>
+	</div>
+@endif
 
-@section('content')
 <form method="POST" id="commForm" action="/committee/add">
 	@csrf
 
@@ -18,7 +26,7 @@
 	
 	<div class="input-group">
 		<label for="notes" style="margin-top: 1em;">Notes:</label>
-		<textarea class="form-control" type="text" name="notes" id="notes" >{{ old('notes') }}</textarea>
+		<textarea class="form-control" name="notes" id="notes" >{{ old('notes') }}</textarea>
 	</div>
 
 	<div class="form-group ">

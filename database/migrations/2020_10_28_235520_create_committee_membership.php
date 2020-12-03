@@ -27,7 +27,7 @@ class CreateCommitteeMembership extends Migration
             $table->string('email');
             $table->string('term');
             $table->string('charge_memberhip');
-            $table->text('notes');
+            $table->text('notes')->nullable();
             $table->boolean('private')->default(0);
             $table->timestamps();
         });

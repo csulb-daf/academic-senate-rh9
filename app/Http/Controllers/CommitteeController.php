@@ -46,13 +46,32 @@ class CommitteeController extends Controller {
 	 * @return \Illuminate\Http\Response
 	 */
 	public function store(Request $request) {
-		$committees = new Committees();
-		$committees->user_id = 0;
-		$committees->committeename = $request->commName;
-		$committees->meetingtimes_locations = $request->meetTime;
-		$committees->notes = $request->notes;
-		$committees->save();
 		
-		return redirect('/committee');
+		$validatedData = request()->validate(
+			[
+				'commName' => 'required',
+				'meetTime' => 'required',
+			],
+				
+			[
+				'commName.required' => 'Please Enter the Committee Name',
+				'meetTime.required' => 'Please Enter the Meeting Time and Location',
+			]
+		);
+		
+		if($validatedData) {
+			$committees = new Committees();
+			$committees->user_id = 0;
+			$committees->committeename = $request->commName;
+			$committees->meetingtimes_locations = $request->meetTime;
+			$committees->notes = $request->notes;
+			$committees->save();
+			
+			return redirect('/committee');
+		}
+		else {
+			return redirect('/committee')->withInput()->with('error');
+		}
+		
 	}
 }

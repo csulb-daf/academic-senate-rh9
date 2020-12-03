@@ -18,7 +18,7 @@ class CreateCommitteesTable extends Migration
             $table->unsignedBigInteger('user_id');
             $table->string('committeename',255);
             $table->string('meetingtimes_locations',255);
-            $table->text('notes');
+            $table->text('notes')->nullable();
             $table->timestamps();
         });
     }
