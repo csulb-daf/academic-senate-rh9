@@ -13,17 +13,43 @@
 	</div>
 @endif
 
-<form method="POST" id="commForm" action="/committee/add">
+<form method="POST" id="memberForm" action="{{ route('members.add') }}">
 	@csrf
 
 	<div class="input-group">
-		<label for="commName" style="margin-top: 1em;">Committee Name:</label>
-		<input class="form-control" type="text" name="commName" id="commName" value="{{ old('commName') }}" >
+		<label for="fName" style="margin-top: 1em;">First Name:</label>
+		<input class="form-control" type="text" name="fName" id="fName" value="{{ old('fName') }}" >
 	</div>
 
 	<div class="input-group">
-		<label for="meetTime" style="margin-top: 1em;">Meeting Time and Location:</label>
-		<input class="form-control" type="text" name="meetTime" id="meetTime" value="{{ old('meetTime') }}" >
+		<label for="lName" style="margin-top: 1em;">Lat Name:</label>
+		<input class="form-control" type="text" name="lName" id="lName" value="{{ old('lName') }}" >
+	</div>
+	
+	<div class="input-group">
+		<label for="campusID" style="margin-top: 1em;">Campus ID:</label>
+		<input class="form-control" type="text" name="campusID" id="campusID" value="{{ old('campusID') }}" >
+	</div>
+	
+	<div class="input-group">
+		<label for="term" style="margin-top: 1em;">Term:</label>
+		<select class="form-control" name="term" id="term">
+			<option>Test</option>
+		</select>
+	</div>
+	
+	<div class="input-group">
+		<label for="charge" style="margin-top: 1em;">Charge Membership:</label>
+		<select class="form-control" name="charge" id="charge">
+			<option>Test</option>
+		</select>
+	</div>
+
+	<div class="input-group">
+		<label for="rank" style="margin-top: 1em;">Rank:</label>
+		<select class="form-control" name="rank" id="rank">
+			<option>Test</option>
+		</select>
 	</div>
 	
 	<div class="input-group">

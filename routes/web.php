@@ -27,3 +27,8 @@ Route::get('/rank-admin', 'ListController@getRank');
 Route::get('/committee/form', 'CommitteeController@create');
 Route::get('/committee/add', 'CommitteeController@create');
 Route::post('/committee/add', 'CommitteeController@store');
+
+Route::get('/committee/assign/{cid}', 'MembersController@index')->name('comm.assign');
+
+Route::get('/committee/members/add', 'MembersController@create')->name('members.add');
+Route::post('/committee/members/add', 'MembersController@store')->name('members.add');

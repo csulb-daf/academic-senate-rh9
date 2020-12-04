@@ -4,10 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Auth;
-use App\Committees;
+//use App\Committees;
 
-class CommitteeController extends Controller {
+class MembersController extends Controller {
 	/**
 	 * Create a new controller instance.
 	 *
@@ -23,12 +22,13 @@ class CommitteeController extends Controller {
 	 * @return \Illuminate\Contracts\Support\Renderable
 	 */
 	public function index() {
-		return view ( 'committee' );
+		$members = DB::table('committee_membership')->get();
+		return view('members', ['members' => $members]);
 	}
 	
-	public function getComms() {
-		return DB::table('committees')->select('committeename')->get();
-	}
+// 	public function getComms() {
+// 		return DB::table ( 'committees' )->select ( 'committeename' )->get ();
+// 	}
 
 	/**
 	 * Show the form for creating a new resource.
@@ -36,7 +36,7 @@ class CommitteeController extends Controller {
 	 * @return \Illuminate\Http\Response
 	 */
 	public function create() {
-		return view('comm-form');
+		return view('member-form');
 	}
 
 	/**
@@ -61,7 +61,7 @@ class CommitteeController extends Controller {
 		
 		if($validatedData) {
 			$committees = new Committees();
-			$committees->user_id =  Auth::id();
+			$committees->user_id = 0;
 			$committees->committeename = $request->commName;
 			$committees->meetingtimes_locations = $request->meetTime;
 			$committees->notes = $request->notes;

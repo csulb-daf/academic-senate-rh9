@@ -30,19 +30,28 @@ $(document).ready(function() {
 			{ title: 'Committee Name', data: 'committeename' },
 			{ title: 'Assignments', data: null, defaultContent: '',
 				render: function ( data, type, row ) {
-    			return '<button>Edit</button>';
+    			return '<button type="button" class="btn btn-light border" id="" onclick="javascrtipt:assignComm()">Edit</button>';
 				}			
 			}
 		],
+		
+		columnDefs: [{		//Assignments column
+			targets:  1,
+			sortable: false,
+		}],
 		
 	});		
 	
 });
 
 function addComm() {
-	//console.log('ok');
 	window.location = "{{ url('/committee/add') }}";
 }
+function assignComm() {
+// 	window.location = "{{ url('/committee/assign') }}";
+	window.location = "{{ route('comm.assign', ['id'=>1]) }}";
+}
+
 	
 </script>
 @endsection
