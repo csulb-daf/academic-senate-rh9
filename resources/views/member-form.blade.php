@@ -34,21 +34,31 @@
 	<div class="input-group">
 		<label for="term" style="margin-top: 1em;">Term:</label>
 		<select class="form-control" name="term" id="term">
-			<option>Test</option>
+			<option value="">Select</option>
+			
+			<option value="Ex-Officio">Ex-Officio</option>
 		</select>
 	</div>
 	
 	<div class="input-group">
 		<label for="charge" style="margin-top: 1em;">Charge Membership:</label>
 		<select class="form-control" name="charge" id="charge">
-			<option>Test</option>
+			<option value="">Select</option>
+			
+			@foreach ($charges as $charge)
+				<option value="{{ $charge->id }}">{{ $charge->charge_membership }}</option>
+			@endForeach
 		</select>
 	</div>
 
 	<div class="input-group">
 		<label for="rank" style="margin-top: 1em;">Rank:</label>
 		<select class="form-control" name="rank" id="rank">
-			<option>Test</option>
+			<option value="">Select</option>
+			
+			@foreach ($ranks as $rank)
+				<option value="{{ $rank->id }}">{{ $rank->rank }}</option>
+			@endForeach
 		</select>
 	</div>
 	

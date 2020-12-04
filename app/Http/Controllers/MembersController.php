@@ -4,7 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-//use App\Committees;
+use Illuminate\Support\Facades\Auth;
+use App\Members;
 
 class MembersController extends Controller {
 	/**
@@ -26,17 +27,20 @@ class MembersController extends Controller {
 		return view('members', ['members' => $members]);
 	}
 	
-// 	public function getComms() {
-// 		return DB::table ( 'committees' )->select ( 'committeename' )->get ();
-// 	}
-
 	/**
 	 * Show the form for creating a new resource.
 	 *
 	 * @return \Illuminate\Http\Response
 	 */
 	public function create() {
-		return view('member-form');
+		$charges = DB::table('charge_membership')->select('id', 'charge_membership')->get();
+		$ranks = DB::table('rank')->select('id', 'rank')->get();
+		
+		return view('member-form', [
+				'charges' => $charges,
+				'ranks' => $ranks
+		]);
+		
 	}
 
 	/**
@@ -46,26 +50,40 @@ class MembersController extends Controller {
 	 * @return \Illuminate\Http\Response
 	 */
 	public function store(Request $request) {
+		return $request;
 		
 		$validatedData = request()->validate(
 			[
-				'commName' => 'required',
-				'meetTime' => 'required',
+				'fName' => 'required',
+				'lName' => 'required',
+				'campusID' => 'required',
+				'term' => 'required',
+				'charge' => 'required',
+				'rank' => 'required',
 			],
 				
 			[
-				'commName.required' => 'Please Enter the Committee Name',
-				'meetTime.required' => 'Please Enter the Meeting Time and Location',
+				'fName.required' => 'Please Enter First Name',
+				'lName.required' => 'Please Enter Last Name',
+				'campusID.required' => 'Please Enter the Campus ID',
+				'term.required' => 'Please Select the Term',
+				'charge.required' => 'Please Select the Charge Membership',
+				'rank.required' => 'Please Select the Rank',
 			]
 		);
 		
 		if($validatedData) {
-			$committees = new Committees();
-			$committees->user_id = 0;
-			$committees->committeename = $request->commName;
-			$committees->meetingtimes_locations = $request->meetTime;
-			$committees->notes = $request->notes;
-			$committees->save();
+			$members = new Members();
+			$members->user_id = Auth::id();;
+			$members->committee = $request->committeeID;
+			$members->campus_id = $request->campusID;
+			$members->lastname = $request->lName;
+			$members->firstname = $request->fName;
+			$members->rank = $request->rank;
+			$members->term = $request->term;
+			$members->charge_memberhip = $request->charge;
+			$members->notes = $request->notes;
+			$members->save();
 			
 			return redirect('/committee');
 		}
