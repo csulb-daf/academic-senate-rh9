@@ -35,13 +35,16 @@ class MembersController extends Controller {
 	 *
 	 * @return \Illuminate\Http\Response
 	 */
-	public function create() {
+	public function create($cid) {
 		$charges = DB::table('charge_membership')->select('id', 'charge_membership')->get();
 		$ranks = DB::table('rank')->select('id', 'rank')->get();
 		
+		//return $ranks;
+		
 		return view('member-form', [
 				'charges' => $charges,
-				'ranks' => $ranks
+				'ranks' => $ranks,
+				'cid' => $cid,
 		]);
 		
 	}

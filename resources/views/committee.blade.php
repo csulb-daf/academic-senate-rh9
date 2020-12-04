@@ -55,7 +55,5 @@ function assignComm(id) {
 	url = url.replace(':id', id);
 	window.location = url;
 }
-
-	
 </script>
 @endsection

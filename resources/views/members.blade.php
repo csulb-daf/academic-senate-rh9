@@ -4,7 +4,7 @@
 
 @section('content')
 <table id="memberAdmin" class="display"></table>
-<button type="button" class="btn btn-primary" id="addMember" style="display: none; float: left;"  onclick="javascript:addMember();">Add New Committee Member</button>
+<button type="button" class="btn btn-primary" id="addMember" style="display: none; float: left;"  onclick="javascript:addMember({{ $cid }});">Add New Committee Member</button>
 @endsection 
 
 @section('scripts')
@@ -39,9 +39,8 @@ $(document).ready(function() {
 	
 });
 
-function addMember() {
-	//console.log('ok');
-	window.location = "{{ route('members.add') }}";
+function addMember(id) {
+	window.location = '/committee/members/'+ id +'/add';
 }
 	
 </script>
