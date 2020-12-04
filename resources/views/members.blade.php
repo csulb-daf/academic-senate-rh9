@@ -26,13 +26,20 @@ $(document).ready(function() {
 				$("button#addMember").prependTo("#memberAdmin_wrapper").show();
 			}
     },
+		
 		columns: [
-			{ title: 'Committee Name', data: 'committeename' },
-			{ title: 'Assignments', data: null, defaultContent: '',
-				render: function ( data, type, row ) {
-    			return '<button>Edit</button>';
-				}			
-			}
+			{ title: 'Campus ID', data: 'campus_id' },
+			{ title: 'Committee', data: 'committee' },
+			{ title: 'Last Name', data: 'lastname' },
+			{ title: 'First Name', data: 'firstname' },
+			{ title: 'Rank', data: 'rank' },
+			{ title: 'Department', data: 'department' },
+			{ title: 'College', data: 'college' },
+			{ title: 'Ext.', data: 'ext' },
+			{ title: 'Email', data: 'email' },
+			{ title: 'Term', data: 'term' },
+			{ title: 'Charge Memberhip', data: 'charge' },
+			{ title: 'Notes', data: 'notes' },
 		],
 		
 	});		
