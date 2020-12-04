@@ -40,7 +40,9 @@ $(document).ready(function() {
 });
 
 function addMember(id) {
-	window.location = '/committee/members/'+ id +'/add';
+	var url = 	"{{ route('members.add', ['cid'=>':id']) }}";
+	url = url.replace(':id', id);
+	window.location = url;
 }
 	
 </script>

@@ -13,9 +13,11 @@
 	</div>
 @endif
 
-<form method="POST" id="memberForm" action="{{ route('members.add') }}">
+<form method="POST" id="memberForm" action="{{ route('members.add', ['cid' => $cid]) }}">
 	@csrf
 
+	<input type="hidden" name="cid" value="{{ $cid }}">
+	
 	<div class="input-group">
 		<label for="fName" style="margin-top: 1em;">First Name:</label>
 		<input class="form-control" type="text" name="fName" id="fName" value="{{ old('fName') }}" >

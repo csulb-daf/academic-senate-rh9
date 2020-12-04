@@ -39,8 +39,6 @@ class MembersController extends Controller {
 		$charges = DB::table('charge_membership')->select('id', 'charge_membership')->get();
 		$ranks = DB::table('rank')->select('id', 'rank')->get();
 		
-		//return $ranks;
-		
 		return view('member-form', [
 				'charges' => $charges,
 				'ranks' => $ranks,
@@ -56,7 +54,7 @@ class MembersController extends Controller {
 	 * @return \Illuminate\Http\Response
 	 */
 	public function store(Request $request) {
-		return $request;
+		//return $request;
 		
 		$validatedData = request()->validate(
 			[
@@ -80,8 +78,8 @@ class MembersController extends Controller {
 		
 		if($validatedData) {
 			$members = new Members();
-			$members->user_id = Auth::id();;
-			$members->committee = $request->committeeID;
+			$members->user_id = Auth::id();
+			$members->committee = $request->cid;
 			$members->campus_id = $request->campusID;
 			$members->lastname = $request->lName;
 			$members->firstname = $request->fName;
