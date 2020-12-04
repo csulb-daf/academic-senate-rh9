@@ -21,10 +21,10 @@ class CreateCommitteeMembership extends Migration
             $table->string('lastname');
             $table->string('firstname');
             $table->string('rank');
-            $table->string('department');
-            $table->string('college');
-            $table->string('ext');
-            $table->string('email');
+            $table->string('department')->nullable();
+            $table->string('college')->nullable();
+            $table->string('ext')->nullable();
+            $table->string('email')->nullable();
             $table->string('term');
             $table->string('charge_memberhip');
             $table->text('notes')->nullable();
