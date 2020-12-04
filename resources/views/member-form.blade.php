@@ -73,43 +73,4 @@
 
 </form>
 
-@endsection @section('scripts')
-<script>
-$(document).ready(function() {
-	var table = $('#commAdmin').DataTable({
-    ajax: {
-			url: 'comm-admin',
-			dataSrc: '',
-			error: function (xhr, error, thrown) {
-				table.clear().draw();
-			},
-    },
-		columns: [
-			{ title: 'Committee Name', data: 'committeename' },
-			{ title: 'Assignments', data: null, defaultContent: '',
-				render: function ( data, type, row ) {
-    			return '<button>Edit</button>';
-				}			
-			}
-		],
-		
-		dom: 'Blfrtip',
-		buttons: [
-			{
-				text: 'Add New Committee',
-				action: function ( e, dt, node, config ) {
-					addComm();
-				}
-			}
-		],
-	});
-	
-});
-
-function addComm() {
-	//console.log('ok');
-	window.location = "{{ url('/committee/add') }}";
-}
-	
-</script>
 @endsection

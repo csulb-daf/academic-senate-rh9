@@ -28,9 +28,11 @@ $(document).ready(function() {
     },
 		columns: [
 			{ title: 'Committee Name', data: 'committeename' },
+			
 			{ title: 'Assignments', data: null, defaultContent: '',
 				render: function ( data, type, row ) {
-    			return '<button type="button" class="btn btn-light border" id="" onclick="javascrtipt:assignComm()">Edit</button>';
+					//console.log(data);
+    			return '<button type="button" class="btn btn-light border" onclick="javascrtipt:assignComm('+ data.id +')">Edit</button>';
 				}			
 			}
 		],
@@ -47,9 +49,11 @@ $(document).ready(function() {
 function addComm() {
 	window.location = "{{ url('/committee/add') }}";
 }
-function assignComm() {
-// 	window.location = "{{ url('/committee/assign') }}";
-	window.location = "{{ route('comm.assign', ['id'=>1]) }}";
+
+function assignComm(id) {
+	var url = 	"{{ route('comm.assign', ['id'=>':id']) }}";
+	url = url.replace(':id', id);
+	window.location = url;
 }
 
 	

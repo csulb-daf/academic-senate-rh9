@@ -22,9 +22,12 @@ class MembersController extends Controller {
 	 *
 	 * @return \Illuminate\Contracts\Support\Renderable
 	 */
-	public function index() {
-		$members = DB::table('committee_membership')->get();
-		return view('members', ['members' => $members]);
+	public function index($cid) {
+		return view('members', ['cid' => $cid]);
+	}
+
+	public function ajax($cid) {
+		return  DB::table('committees')->where('id', '=', $cid)->get();
 	}
 	
 	/**

@@ -12,7 +12,7 @@
 $(document).ready(function() {
 	var table = $('#memberAdmin').DataTable({
     ajax: {
-			url: 'comm-admin',
+			url: '/committee/members/{{ $cid }}/ajax',
 			dataSrc: '',
 			error: function (xhr, error, thrown) {
 				table.clear().draw();

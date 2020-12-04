@@ -27,7 +27,7 @@ class CommitteeController extends Controller {
 	}
 	
 	public function getComms() {
-		return DB::table('committees')->select('committeename')->get();
+		return DB::table('committees')->select('id', 'committeename')->get();
 	}
 
 	/**
