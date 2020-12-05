@@ -11,15 +11,35 @@
 
 <div class="tab-content">
 	<div class="tab-pane active" id="tab-table1">
-		<table id="listAdmin1" class="display" style="width: 100%"></table>
-		<form id="addForm">
-			<button>ADD</button>
-			<input type="text">
-		</form>
+
+	<div class="row">
+		<div class="col-sm-4">
+			@include('partials.comm-search')		
+		</div>
+	
+		<div class="col">
+			<table id="listAdmin1" class="display" style="width: 100%"></table>
+
+			<form id="addForm">
+				<button>ADD</button>
+				<input type="text">
+			</form>
+		</div>
+</div>
+	
 	</div>
 
 	<div class="tab-pane" id="tab-table2">
-		<table id="listAdmin2" class="display" style="width: 100%"></table>
+		<div class="row">
+			<div class="col-sm-4">
+				@include('partials.comm-search')		
+			</div>
+		
+			<div class="col">
+				<table id="listAdmin2" class="display" style="width: 100%"></table>
+				<button type="button" class="btn btn-primary" id="addCommunity" style="display: none; float: left;"  onclick="javascript:addCommunity();">Add Community Member</button>
+			</div>
+		</div>
 	</div>
 	
 	<div class="tab-pane" id="tab-table3">
@@ -72,7 +92,9 @@ $(document).ready(function() {
 			error: function (xhr, error, thrown) {
 				table1.clear().draw();
 			},
-			complete: function() {}	
+			complete: function() {
+				$("button#addCommunity").prependTo("#listAdmin2_wrapper").show();
+			}	
     },
 		columns: [
 			{ title: '#', data: null, defaultContent: '' },
@@ -139,6 +161,10 @@ function createIndexColumn(table) {
 			cell.innerHTML = i+1;
 		});
 	}).draw();
+	
+	function addCommunity() {
+		window.location = "{{ url('/community/add') }}";
+	}
 }
 </script>
 @endsection

@@ -25,7 +25,11 @@ class ListController extends Controller
      */
     public function index()
     {
-        return view('list');
+        //return view('list');
+        
+			$comms = DB::table('committees')->get();
+			return view('list', ['comms' => $comms]);
+        
     }
     
     public function getChargeMembership()
