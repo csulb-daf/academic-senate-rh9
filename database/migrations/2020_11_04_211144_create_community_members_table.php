@@ -16,11 +16,11 @@ class CreateCommunityMembersTable extends Migration
         Schema::create('community_members', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->unsignedBigInteger('user_id');
-            $table->unsignedBigInteger('charge_memberhip')->nullable();
-            $table->unsignedBigInteger('committee')->nullable();
             $table->string('firstname');
             $table->string('lastname');
             $table->string('email');
+            $table->unsignedBigInteger('charge_memberhip')->nullable();
+            $table->unsignedBigInteger('committee')->nullable();
             $table->string('notes')->nullable();
             $table->timestamps();
         });

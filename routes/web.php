@@ -32,3 +32,6 @@ Route::get('/list', 'ListController@index')->name('list');
 Route::get('/charge-admin', 'ListController@getChargeMembership');
 Route::get('/community-members-admin', 'ListController@getCommunityMembers');
 Route::get('/rank-admin', 'ListController@getRank');
+
+Route::get('/list/community/add', 'ListController@createCommunity');
+Route::post('/list/community/add', 'ListController@storeCommunity')->name('community.add');

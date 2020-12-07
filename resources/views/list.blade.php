@@ -161,10 +161,10 @@ function createIndexColumn(table) {
 			cell.innerHTML = i+1;
 		});
 	}).draw();
-	
-	function addCommunity() {
-		window.location = "{{ url('/community/add') }}";
-	}
+}
+
+function addCommunity() {
+	window.location = "{{ url('/list/community/add') }}";
 }
 </script>
 @endsection

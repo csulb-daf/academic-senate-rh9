@@ -4,7 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use PhpParser\Node\Expr\AssignOp\Concat;
+use Illuminate\Support\Facades\Auth;
+use App\Community;
 
 class ListController extends Controller
 {
@@ -47,4 +48,51 @@ class ListController extends Controller
     	return  DB::table('rank')->select('rank')->get();
     }
     
+    public function createCommunity() 
+    {
+    	$charges = DB::table('charge_membership')->select('id', 'charge_membership')->get();
+    	$comms = DB::table('committees')->select('id', 'committeename')->get();
+    	
+    	return view('community-form', [
+    			'charges' => $charges,
+    			'comms' => $comms,
+    	]);
+    	
+    }
+    
+    public function storeCommunity(Request $request)
+		{
+			// return $request->all();
+			$validatedData = request ()->validate ([ 
+					'fName' => 'required',
+					'lName' => 'required',
+					'email' => 'required'
+			], 
+			[ 
+					'fName.required' => 'Please Enter First Name',
+					'lName.required' => 'Please Enter Last Name',
+					'email.required' => 'Please Enter your email address'
+			]);
+			
+		if ($validatedData) {
+			$community = new Community();
+			$community->user_id = Auth::id();
+			$community->firstname = $request->fName;
+			$community->lastname = $request->lName;
+			$community->email = $request->email;
+			$community->charge_memberhip = $request->charge;
+			$community->committee = $request->comms;
+			$community->notes = $request->notes;
+			$community->save ();
+
+			return redirect ( '/list' );
+		}
+		else {
+			return redirect ( '/list' )->withInput()->with ( 'error' );
+		}
+    	
+    }
+    
+    
+
 }
