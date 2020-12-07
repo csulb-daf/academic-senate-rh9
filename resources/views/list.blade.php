@@ -3,10 +3,10 @@
 @section('title', 'List Management')
 
 @section('content')
-<nav class="nav nav-tabs">
-	<a href="#charge" data-toggle="tab" class="nav-item nav-link active">Charge Membership</a>
-	<a href="#community" data-toggle="tab" class="nav-item nav-link">Community Members</a>
-	<a href="#rank" data-toggle="tab" class="nav-item nav-link">Rank</a>
+<nav class="nav nav-tabs" style="text-align: center;">
+	<a href="#charge" data-toggle="tab" class="nav-item nav-link active">Charge Membership<span style="display: block">(Requires Committee Selection)</span></a>
+	<a href="#community" data-toggle="tab" class="nav-item nav-link">Community Members<span style="display: block">(Requires Committee Selection)</span></a>
+	<a href="#rank" data-toggle="tab" class="nav-item nav-link">Rank<span style="display: block">(Global List)</span></a>
 </nav>
 
 <div class="tab-content">
