@@ -4,13 +4,13 @@
 
 @section('content')
 <nav class="nav nav-tabs">
-	<a href="#tab-table1" data-toggle="tab" class="nav-item nav-link active">Charge Membership</a>
-	<a href="#tab-table2" data-toggle="tab" class="nav-item nav-link">Community Members</a>
-	<a href="#tab-table3" data-toggle="tab" class="nav-item nav-link">Rank</a>
+	<a href="#charge" data-toggle="tab" class="nav-item nav-link active">Charge Membership</a>
+	<a href="#community" data-toggle="tab" class="nav-item nav-link">Community Members</a>
+	<a href="#rank" data-toggle="tab" class="nav-item nav-link">Rank</a>
 </nav>
 
 <div class="tab-content">
-	<div class="tab-pane active" id="tab-table1">
+	<div class="tab-pane active" id="charge">
 
 	<div class="row">
 		<div class="col-sm-4">
@@ -18,18 +18,31 @@
 		</div>
 	
 		<div class="col">
+			@if ($errors->any())
+				<div class="alert alert-danger">
+					<ul>
+						@foreach ($errors->all() as $error)
+							<li>{{ $error }}</li>
+						@endforeach
+					</ul>
+				</div>
+			@endif
+
 			<table id="listAdmin1" class="display" style="width: 100%"></table>
 
-			<form id="addForm">
-				<button>ADD</button>
-				<input type="text">
-			</form>
+			<form method="POST" id="chargeForm" action="{{ route('charge.add') }}">
+				@csrf
+
+				<div class="input-group">
+					<button class="btn btn-primary " type="submit">ADD CHARGE</button>
+					<input class="form-control" type="text" name="charge_membership" id="charge_membership" value="{{ old('charge_membership') }}" >
+				</div>
+			</form>	
 		</div>
 </div>
-	
-	</div>
+</div>
 
-	<div class="tab-pane" id="tab-table2">
+	<div class="tab-pane" id="community">
 		<div class="row">
 			<div class="col-sm-4">
 				@include('partials.comm-search')		
@@ -42,10 +55,32 @@
 		</div>
 	</div>
 	
-	<div class="tab-pane" id="tab-table3">
+	<div class="tab-pane" id="rank">
+		<div class="col">
+			@if ($errors->any())
+				<div class="alert alert-danger">
+					<ul>
+						@foreach ($errors->all() as $error)
+							<li>{{ $error }}</li>
+						@endforeach
+					</ul>
+				</div>
+			@endif
+	
 		<table id="listAdmin3" class="display" style="width: 100%"></table>
+		
+			<form method="POST" id="rankForm" action="{{ route('rank.add') }}">
+				@csrf
+
+				<div class="input-group">
+					<button class="btn btn-primary " type="submit">ADD RANK</button>
+					<input class="form-control" type="text" name="rank" id="rank" value="{{ old('rank') }}" >
+				</div>
+			</form>	
+		
 	</div>
 	
+</div>
 </div>
 @endsection 
 

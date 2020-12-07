@@ -17,6 +17,7 @@ Route::redirect('home', '/');
 Route::get('/', 'HomeController@index')->name('home');
 Route::get('/comm-search', 'HomeController@ajax');
 
+/*** Committee Pages ***/
 Route::get('/committee', 'CommitteeController@index')->name('committee');
 Route::get('/comm-admin', 'CommitteeController@getComms');
 Route::get('/committee/form', 'CommitteeController@create');
@@ -28,6 +29,7 @@ Route::get('/committee/members/{cid}/ajax', 'MembersController@ajax')->name('com
 Route::get('/committee/members/{cid}/add', 'MembersController@create')->name('members.add');
 Route::post('/committee/members/{cid}/add', 'MembersController@store')->name('members.add');
 
+/*** List Pages ***/
 Route::get('/list', 'ListController@index')->name('list');
 Route::get('/charge-admin', 'ListController@getChargeMembership');
 Route::get('/community-members-admin', 'ListController@getCommunityMembers');
@@ -35,3 +37,7 @@ Route::get('/rank-admin', 'ListController@getRank');
 
 Route::get('/list/community/add', 'ListController@createCommunity');
 Route::post('/list/community/add', 'ListController@storeCommunity')->name('community.add');
+
+Route::post('/list/charge/add', 'ListController@storeCharge')->name('charge.add');
+
+Route::post('/list/rank/add', 'ListController@storeRank')->name('rank.add');
