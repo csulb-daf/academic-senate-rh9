@@ -1,5 +1,3 @@
-{{ dump($errors) }}
-
 @extends('layouts.app')
 
 @section('title', 'List Management')
@@ -29,7 +27,7 @@
 	<div class="tab-pane" id="charge">
 	<div class="row">
 		<div class="col">
-			@if ($errors->any('charge_membership'))
+			@if ($errors->has('charge_membership'))
 				<div class="alert alert-danger">
 					<ul>
 						@foreach ($errors->all() as $error)
@@ -56,7 +54,7 @@
 	
 	<div class="tab-pane" id="rank">
 		<div class="col">
-			@if ($errors->any())
+			@if ($errors->has('rank'))
 				<div class="alert alert-danger">
 					<ul>
 						@foreach ($errors->all() as $error)
