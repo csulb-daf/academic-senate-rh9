@@ -1,24 +1,35 @@
+{{ dump($errors) }}
+
 @extends('layouts.app')
 
 @section('title', 'List Management')
 
 @section('content')
 <nav class="nav nav-tabs" style="text-align: center;">
-	<a href="#charge" data-toggle="tab" class="nav-item nav-link active">Charge Membership<span style="display: block">(Requires Committee Selection)</span></a>
-	<a href="#community" data-toggle="tab" class="nav-item nav-link">Community Members<span style="display: block">(Requires Committee Selection)</span></a>
+	<a href="#community" data-toggle="tab" class="nav-item nav-link active">Community Members<span style="display: block">(Requires Committee Selection)</span></a>
+	<a href="#charge" data-toggle="tab" class="nav-item nav-link">Charge Membership<span style="display: block">(Global List)</span></a>
 	<a href="#rank" data-toggle="tab" class="nav-item nav-link">Rank<span style="display: block">(Global List)</span></a>
 </nav>
 
 <div class="tab-content">
-	<div class="tab-pane active" id="charge">
-
-	<div class="row">
-		<div class="col-sm-4">
-			@include('partials.comm-search')		
+	<div class="tab-pane active" id="community">
+		<div class="row">
+			<div class="col-sm-4">
+				@include('partials.comm-search')		
+			</div>
+			
+			<div class="col">
+				<table id="listAdmin2" class="display" style="width: 100%"></table>
+				<button type="button" class="btn btn-primary" id="addCommunity" style="display: none; float: left;"  onclick="javascript:addCommunity();">Add Community Member</button>
+			</div>
+					
 		</div>
-	
+	</div>
+
+	<div class="tab-pane" id="charge">
+	<div class="row">
 		<div class="col">
-			@if ($errors->any())
+			@if ($errors->any('charge_membership'))
 				<div class="alert alert-danger">
 					<ul>
 						@foreach ($errors->all() as $error)
@@ -42,18 +53,6 @@
 </div>
 </div>
 
-	<div class="tab-pane" id="community">
-		<div class="row">
-			<div class="col-sm-4">
-				@include('partials.comm-search')		
-			</div>
-		
-			<div class="col">
-				<table id="listAdmin2" class="display" style="width: 100%"></table>
-				<button type="button" class="btn btn-primary" id="addCommunity" style="display: none; float: left;"  onclick="javascript:addCommunity();">Add Community Member</button>
-			</div>
-		</div>
-	</div>
 	
 	<div class="tab-pane" id="rank">
 		<div class="col">
