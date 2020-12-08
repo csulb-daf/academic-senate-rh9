@@ -3,7 +3,7 @@
 @section('title', 'List Management')
 
 @section('content')
-<nav class="nav nav-tabs" style="text-align: center;">
+<nav class="nav nav-tabs" id="tabMenu" style="text-align: center;">
 	<a href="#community" data-toggle="tab" class="nav-item nav-link active">Community Members<span style="display: block">(Requires Committee Selection)</span></a>
 	<a href="#charge" data-toggle="tab" class="nav-item nav-link">Charge Membership<span style="display: block">(Global List)</span></a>
 	<a href="#rank" data-toggle="tab" class="nav-item nav-link">Rank<span style="display: block">(Global List)</span></a>
@@ -36,15 +36,22 @@
 					</ul>
 				</div>
 			@endif
-
+			
+			@if(session()->has('message'))
+			    <div class="alert alert-success">
+			        {{ session()->get('message') }}
+			    </div>
+			@endif			
+			
 			<table id="listAdmin1" class="display" style="width: 100%"></table>
 
 			<form method="POST" id="chargeForm" action="{{ route('charge.add') }}">
 				@csrf
+				<input type="hidden" name="tabName" value="charge">
 
 				<div class="input-group">
 					<button class="btn btn-primary " type="submit">ADD CHARGE</button>
-					<input class="form-control" type="text" name="charge_membership" id="charge_membership" value="{{ old('charge_membership') }}" >
+					<input class="form-control {{ $errors->has('charge_membership')? 'is-invalid' : '' }}" type="text" name="charge_membership" id="charge_membership" value="{{ old('charge_membership') }}" >
 				</div>
 			</form>	
 		</div>
@@ -63,15 +70,22 @@
 					</ul>
 				</div>
 			@endif
+			
+			@if(session()->has('message'))
+			    <div class="alert alert-success">
+			        {{ session()->get('message') }}
+			    </div>
+			@endif			
 	
-		<table id="listAdmin3" class="display" style="width: 100%"></table>
+			<table id="listAdmin3" class="display" style="width: 100%"></table>
 		
 			<form method="POST" id="rankForm" action="{{ route('rank.add') }}">
 				@csrf
-
+				<input type="hidden" name="tabName" value="rank">	
+			
 				<div class="input-group">
 					<button class="btn btn-primary " type="submit">ADD RANK</button>
-					<input class="form-control" type="text" name="rank" id="rank" value="{{ old('rank') }}" >
+					<input class="form-control {{ $errors->has('rank')? 'is-invalid' : '' }}" type="text" name="rank" id="rank" value="{{ old('rank') }}" >
 				</div>
 			</form>	
 		
@@ -84,6 +98,8 @@
 @section('scripts')
 <script>
 $(document).ready(function() {
+	$('#tabMenu a[href="#{{ old('tabName') }}"]').tab('show')
+
 	var table1 = $('#listAdmin1').DataTable({
     ajax: {
 			url: 'charge-admin',

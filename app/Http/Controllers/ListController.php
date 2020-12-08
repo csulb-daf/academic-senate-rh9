@@ -97,9 +97,10 @@ class ListController extends Controller {
 			$charge->charge_membership = $request->charge_membership;
 			$charge->save ();
 			
-			return redirect ( '/list' );
-		} else {
-			return redirect ( '/list' )->withInput()->with( 'error' );
+			return redirect()->route('list')->withInput($request->all)->with('message', 'New Charge Membership Added');
+		} 
+		else {
+			return redirect()->route('list')->withInput($request->all)->with('error');
 		}
 	}
 	
@@ -108,7 +109,7 @@ class ListController extends Controller {
 		$validatedData = request()->validate ( [
 				'rank' => 'required',
 		], [
-				'charge_membership.required' => 'Please Enter Charge Membership',
+				'rank.required' => 'Please Enter Rank',
 		] );
 		
 		if ($validatedData) {
@@ -117,9 +118,10 @@ class ListController extends Controller {
 			$rank->rank = $request->rank;
 			$rank->save ();
 			
-			return redirect ( '/list' );
-		} else {
-			return redirect ( '/list' )->withInput()->with( 'error' );
+			return redirect()->route('list')->withInput($request->all)->with('message', 'New Rank Added');
+		} 
+		else {
+			return redirect()->route('list')->withInput($request->all)->with('error');
 		}
 	}
 	
