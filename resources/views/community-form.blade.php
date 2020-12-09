@@ -22,7 +22,7 @@
 	</div>
 
 	<div class="input-group">
-		<label for="lName" style="margin-top: 1em;">Lat Name:</label>
+		<label for="lName" style="margin-top: 1em;">Last Name:</label>
 		<input class="form-control" type="text" name="lName" id="lName" value="{{ old('lName') }}" >
 	</div>
 	
@@ -59,7 +59,7 @@
 	</div>
 
 	<div class="form-group ">
-		<button class="btn btn-primary mt-3" type="submit">Create Committee</button>
+		<button class="btn btn-primary mt-3" type="submit">Create Community Member</button>
 	</div>
 
 </form>

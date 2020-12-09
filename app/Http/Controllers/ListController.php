@@ -76,8 +76,8 @@ class ListController extends Controller {
 			$community->firstname = $request->fName;
 			$community->lastname = $request->lName;
 			$community->email = $request->email;
-			$community->charge_memberhip = $request->charge;
-			$community->committee = $request->comms;
+			$community->charge_memberhip = $request->chargeSelect;
+			$community->committee = $request->commSelect;
 			$community->notes = $request->notes;
 			$community->save ();
 

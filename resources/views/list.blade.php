@@ -23,7 +23,7 @@
 				    </div>
 				@endif			
 				
-				<table id="listAdmin2" class="display" style="width: 100%"></table>
+				<table id="communityTable" class="display" style="width: 100%"></table>
 				<button type="button" class="btn btn-primary" id="addCommunity" style="display: none; float: left;"  onclick="javascript:addCommunity();">Add Community Member</button>
 			</div>
 					
@@ -49,7 +49,7 @@
 			    </div>
 			@endif			
 			
-			<table id="listAdmin1" class="display" style="width: 100%"></table>
+			<table id="chargeTable" class="display" style="width: 100%"></table>
 
 			<form method="POST" id="chargeForm" action="{{ route('charge.add') }}">
 				@csrf
@@ -83,7 +83,7 @@
 			    </div>
 			@endif			
 	
-			<table id="listAdmin3" class="display" style="width: 100%"></table>
+			<table id="rankTable" class="display" style="width: 100%"></table>
 		
 			<form method="POST" id="rankForm" action="{{ route('rank.add') }}">
 				@csrf
@@ -106,7 +106,7 @@
 $(document).ready(function() {
 	$('#tabMenu a[href="#{{ old('tabName') }}"]').tab('show')
 
-	var table1 = $('#listAdmin1').DataTable({
+	var table1 = $('#chargeTable').DataTable({
     ajax: {
 			url: 'charge-admin',
 			dataSrc: '',
@@ -127,7 +127,7 @@ $(document).ready(function() {
 		columnDefs: [{		//index column
 			targets: 0,
 			sortable: false,
-			"class": "index"
+			class: 'index',
 		}],
 		order: [[ 1, 'asc' ]],		//sort by index column
 		
@@ -139,7 +139,7 @@ $(document).ready(function() {
 	});
 	createIndexColumn(table1);
 	
-	var table2 = $('#listAdmin2').DataTable({
+	var table2 = $('#communityTable').DataTable({
     ajax: {
 			url: 'community-members-admin',
 			dataSrc: '',
@@ -147,7 +147,7 @@ $(document).ready(function() {
 				table1.clear().draw();
 			},
 			complete: function() {
-				$("button#addCommunity").prependTo("#listAdmin2_wrapper").show();
+				$("button#addCommunity").prependTo("#communityTable_wrapper").show();
 			}	
     },
 		columns: [
@@ -160,9 +160,9 @@ $(document).ready(function() {
 			}
 		],
 		columnDefs: [{		//index column
+			targets: 0,
 			sortable: false,
-			"class": "index",
-			targets: 0
+			class: 'index',
 		}],
 		order: [[ 1, 'asc' ]],
 		
@@ -174,7 +174,7 @@ $(document).ready(function() {
 	});	
 	createIndexColumn(table2);
 
-	var table3 = $('#listAdmin3').DataTable({
+	var table3 = $('#rankTable').DataTable({
     ajax: {
 			url: 'rank-admin',
 			dataSrc: '',
@@ -193,9 +193,9 @@ $(document).ready(function() {
 			}
 		],
 		columnDefs: [{		//index column
+			targets: 0,
 			sortable: false,
-			"class": "index",
-			targets: 0
+			class: 'index',
 		}],
 		order: [[ 1, 'asc' ]],
 		
