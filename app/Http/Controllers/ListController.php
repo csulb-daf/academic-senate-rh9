@@ -55,15 +55,19 @@ class ListController extends Controller {
 	}
 	
 	public function storeCommunity(Request $request) {
-		// return $request->all();
+// 		return $request->all();
 		$validatedData = request ()->validate ( [ 
 				'fName' => 'required',
 				'lName' => 'required',
-				'email' => 'required'
+				'email' => 'required',
+				'chargeSelect' => 'required',
+				'commSelect' => 'required',
 		], [ 
 				'fName.required' => 'Please Enter First Name',
 				'lName.required' => 'Please Enter Last Name',
-				'email.required' => 'Please Enter your email address'
+				'email.required' => 'Please Enter your email address',
+				'chargeSelect.required' => 'Please Select Charge Membership',
+				'commSelect.required' => 'Please Select Committee',
 		] );
 
 		if ($validatedData) {
@@ -77,9 +81,10 @@ class ListController extends Controller {
 			$community->notes = $request->notes;
 			$community->save ();
 
-			return redirect ( '/list' );
-		} else {
-			return redirect ( '/list' )->withInput ()->with ( 'error' );
+			return redirect()->route('list')->withInput($request->all)->with('community', 'New Community Member Added');
+		} 
+		else {
+			return redirect()->route('list')->withInput($request->all)->with('error');
 		}
 	}
 	
@@ -97,7 +102,7 @@ class ListController extends Controller {
 			$charge->charge_membership = $request->charge_membership;
 			$charge->save ();
 			
-			return redirect()->route('list')->withInput($request->all)->with('message', 'New Charge Membership Added');
+			return redirect()->route('list')->withInput($request->all)->with('charge', 'New Charge Membership Added');
 		} 
 		else {
 			return redirect()->route('list')->withInput($request->all)->with('error');
@@ -118,7 +123,7 @@ class ListController extends Controller {
 			$rank->rank = $request->rank;
 			$rank->save ();
 			
-			return redirect()->route('list')->withInput($request->all)->with('message', 'New Rank Added');
+			return redirect()->route('list')->withInput($request->all)->with('rank', 'New Rank Added');
 		} 
 		else {
 			return redirect()->route('list')->withInput($request->all)->with('error');

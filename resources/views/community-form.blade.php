@@ -28,27 +28,27 @@
 	
 	<div class="input-group">
 		<label for="campusID" style="margin-top: 1em;">Email:</label>
-		<input class="form-control" type="text" name="email" id="email" value="{{ old('campusID') }}" >
+		<input class="form-control" type="text" name="email" id="email" value="{{ old('email') }}" >
 	</div>
 	
 	<div class="input-group">
-		<label for="charge" style="margin-top: 1em;">Charge Membership:</label>
-		<select class="form-control" name="charge" id="charge">
+		<label for="chargeSelect" style="margin-top: 1em;">Charge Membership:</label>
+		<select class="form-control" name="chargeSelect" id="chargeSelect">
 			<option value="">Select</option>
 			
 			@foreach ($charges as $charge)
-				<option value="{{ $charge->id }}">{{ $charge->charge_membership }}</option>
+				<option value="{{ $charge->id }}" {{ old('chargeSelect') == $charge->id ? 'selected' : '' }}>{{ $charge->charge_membership }}</option>
 			@endForeach
 		</select>
 	</div>
 
 	<div class="input-group">
-		<label for="comms" style="margin-top: 1em;">Committee:</label>
-		<select class="form-control" name="comms" id="comms">
+		<label for="commSelect" style="margin-top: 1em;">Committee:</label>
+		<select class="form-control" name="commSelect" id="commSelect">
 			<option value="">Select</option>
 			
 			@foreach ($comms as $comm)
-				<option value="{{ $comm->id }}">{{ $comm->committeename }}</option>
+				<option value="{{ $comm->id }}"  {{ old('commSelect') == $comm->id ? 'selected' : '' }}>{{ $comm->committeename }}</option>
 			@endForeach
 		</select>
 	</div>

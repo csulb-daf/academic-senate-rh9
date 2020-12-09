@@ -17,6 +17,12 @@
 			</div>
 			
 			<div class="col">
+				@if(session()->has('community'))
+				    <div class="alert alert-success">
+				        {{ session()->get('community') }}
+				    </div>
+				@endif			
+				
 				<table id="listAdmin2" class="display" style="width: 100%"></table>
 				<button type="button" class="btn btn-primary" id="addCommunity" style="display: none; float: left;"  onclick="javascript:addCommunity();">Add Community Member</button>
 			</div>
@@ -37,9 +43,9 @@
 				</div>
 			@endif
 			
-			@if(session()->has('message'))
+			@if(session()->has('charge'))
 			    <div class="alert alert-success">
-			        {{ session()->get('message') }}
+			        {{ session()->get('charge') }}
 			    </div>
 			@endif			
 			
@@ -51,7 +57,7 @@
 
 				<div class="input-group">
 					<button class="btn btn-primary " type="submit">ADD CHARGE</button>
-					<input class="form-control {{ $errors->has('charge_membership')? 'is-invalid' : '' }}" type="text" name="charge_membership" id="charge_membership" value="{{ old('charge_membership') }}" >
+					<input class="form-control {{ $errors->has('charge_membership')? 'is-invalid' : '' }}" type="text" name="charge_membership" id="charge_membership" value="" >
 				</div>
 			</form>	
 		</div>
@@ -71,9 +77,9 @@
 				</div>
 			@endif
 			
-			@if(session()->has('message'))
+			@if(session()->has('rank'))
 			    <div class="alert alert-success">
-			        {{ session()->get('message') }}
+			        {{ session()->get('rank') }}
 			    </div>
 			@endif			
 	
@@ -85,7 +91,7 @@
 			
 				<div class="input-group">
 					<button class="btn btn-primary " type="submit">ADD RANK</button>
-					<input class="form-control {{ $errors->has('rank')? 'is-invalid' : '' }}" type="text" name="rank" id="rank" value="{{ old('rank') }}" >
+					<input class="form-control {{ $errors->has('rank')? 'is-invalid' : '' }}" type="text" name="rank" id="rank" value="" >
 				</div>
 			</form>	
 		
