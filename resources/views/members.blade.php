@@ -3,6 +3,12 @@
 @section('title', 'Committee Management')
 
 @section('content')
+@if(session()->has('member'))
+    <div class="alert alert-success">
+        {{ session()->get('member') }}
+    </div>
+@endif			
+
 <table id="memberAdmin" class="display"></table>
 <button type="button" class="btn btn-primary" id="addMember" style="display: none; float: left;"  onclick="javascript:addMember({{ $cid }});">Add New Committee Member</button>
 @endsection 
@@ -39,6 +45,7 @@ $(document).ready(function() {
 			{ title: 'Email', data: 'email' },
 			{ title: 'Term', data: 'term' },
 			{ title: 'Charge Memberhip', data: 'charge' },
+			{ title: 'Alternate', data: 'alternate' },
 			{ title: 'Notes', data: 'notes' },
 		],
 		

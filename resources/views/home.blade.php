@@ -43,6 +43,7 @@ $(document).ready(function() {
 			{ title: 'Email', data: 'email' },
 			{ title: 'Term', data: 'term' },
 			{ title: 'Charge Memberhip', data: 'charge' },
+			{ title: 'Alternate', data: 'alternate' },
 			{ title: 'Notes', data: 'notes' },
 		],
 		
