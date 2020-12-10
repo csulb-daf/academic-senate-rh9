@@ -129,24 +129,13 @@ $(document).ready(function() {
 				}			
 			}
 		],
-		columnDefs: [{		//index column
-			targets: 0,
+		columnDefs: [{
 			sortable: false,
-			class: 'index',
+			"class": "index",
+			targets: [0, 2],
 		}],
-		order: [[ 1, 'asc' ]],		//sort by index column
-		
-		columnDefs: [{		//Actions column
-			targets:  2,
-			sortable: false,
-		}],
-		
-	columnDefs: [{		//Actions column
-			targets:  1,
-			width: '700px',
-		}],
-		
-		
+		order: [[ 1, 'asc' ]],
+		fixedColumns: true,
 	});
 	createIndexColumn(table1);
 	
@@ -155,7 +144,7 @@ $(document).ready(function() {
 			url: 'community-members-admin',
 			dataSrc: '',
 			error: function (xhr, error, thrown) {
-				table1.clear().draw();
+				table2.clear().draw();
 			},
 			complete: function() {
 				$("button#addCommunity").prependTo("#communityTable_wrapper").show();
@@ -175,18 +164,13 @@ $(document).ready(function() {
 				}			
 			}
 		],
-		columnDefs: [{		//index column
-			targets: 0,
+		columnDefs: [{
 			sortable: false,
-			class: 'index',
+			"class": "index",
+			targets: [0, 2]
 		}],
 		order: [[ 1, 'asc' ]],
-		
-		columnDefs: [{		//Actions column
-			targets:  2,
-			sortable: false,
-		}],
-		
+		fixedColumns: true,
 	});	
 	createIndexColumn(table2);
 
@@ -195,7 +179,7 @@ $(document).ready(function() {
 			url: 'rank-admin',
 			dataSrc: '',
 			error: function (xhr, error, thrown) {
-				table1.clear().draw();
+				table3.clear().draw();
 			},
 			complete: function() {}	
     },
@@ -213,21 +197,15 @@ $(document).ready(function() {
 				}			
 			}
 		],
-		columnDefs: [{		//index column
-			targets: 0,
+		columnDefs: [{
 			sortable: false,
-			class: 'index',
+			"class": "index",
+			targets: [0, 2],
 		}],
 		order: [[ 1, 'asc' ]],
-		
-		columnDefs: [{		//Actions column
-			targets:  2,
-			sortable: false,
-		}],
-		
+		fixedColumns: true,
 	});	
 	createIndexColumn(table3);
-    	
 });
 
 function createIndexColumn(table) {
