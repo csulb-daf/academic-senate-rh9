@@ -107,6 +107,7 @@ $(document).ready(function() {
 	$('#tabMenu a[href="#{{ old('tabName') }}"]').tab('show')
 
 	var table1 = $('#chargeTable').DataTable({
+	
     ajax: {
 			url: 'charge-admin',
 			dataSrc: '',
@@ -117,7 +118,7 @@ $(document).ready(function() {
     },
 		columns: [
 			{ title: '#', data: null, defaultContent: '' },
-			{ title: 'Charge Membership', data: 'charge_membership' },
+			{ title: 'Charge Membership', data: 'charge_membership',  width: '70%'},
 			{ title: 'Actions', data: null, defaultContent: '',
 				render: function ( data, type, row ) {
     			var html='\
