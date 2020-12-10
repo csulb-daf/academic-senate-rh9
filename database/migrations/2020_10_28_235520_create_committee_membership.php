@@ -28,9 +28,10 @@ class CreateCommitteeMembership extends Migration
             $table->string('term');
             $table->unsignedBigInteger('charge_memberhip');
             $table->text('notes')->nullable();
-            $table->char('private', 1)->nullable();
-            $table->char('alternate', 1)->nullable();
+            $table->boolean('private')->default(0);
+            $table->boolean('alternate')->default(0);
             $table->timestamps();
+            $table->boolean('active')->default(1);
         });
     }
 

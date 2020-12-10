@@ -29,7 +29,7 @@
 				<input class="form-control" type="text" name="fName" id="fName" value="{{ old('fName') }}" >
 				
 				<div class="form-check">
-					<input type="checkbox" class="form-check-input" name="alternate" id="alternate" value="Y" {{ old('alternate') == 'Y' ? 'checked' : '' }}>
+					<input type="checkbox" class="form-check-input" name="alternate" id="alternate" value="1" {{ old('alternate') == '1' ? 'checked' : '' }}>
 					<label class="form-check-label" for="alternate">Alternate</label>
 				</div>				
 			</div>

@@ -41,7 +41,7 @@ class ListController extends Controller {
 	}
 	
 	public function getRank() {
-		return DB::table ( 'rank' )->select ( 'rank' )->get ();
+		return DB::table ( 'rank' )->select('id', 'rank')->get();
 	}
 	
 	public function createCommunity() {
@@ -129,5 +129,28 @@ class ListController extends Controller {
 			return redirect()->route('list')->withInput($request->all)->with('error');
 		}
 	}
-	
+
+	/**
+	 * Update the specified resource in storage.
+	 *
+	 * @param \Illuminate\Http\Request $request
+	 * @param int $id
+	 * @return \Illuminate\Http\Response
+	 */
+	public function updateRank(Request $request, $id) {
+		Rank::where('id', id)
+			->update(['rank' => $request->rank]);
+		
+		return back();
+	}
+
+	/**
+	 * Remove the specified resource from storage.
+	 *
+	 * @param int $id
+	 * @return \Illuminate\Http\Response
+	 */
+	public function destroy($id) {
+		//
+	}
 }

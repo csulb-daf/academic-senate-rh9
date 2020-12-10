@@ -190,8 +190,8 @@ $(document).ready(function() {
 			{ title: 'Actions', data: null, defaultContent: '',
 				render: function ( data, type, row ) {
     			var html='\
-    				<button type="button" class="btn btn-default btn-sm"><img src="/images/pencil-square.svg" style="width: 22px;"></button>\
-    				<button type="button" class="btn btn-default btn-sm"><img src="/images/x-circle-fill.svg" style="width: 22px;"></span></button>\
+    				<button type="button" class="btn btn-default btn-sm" onclick="javascript:edit(data.id);"><img src="/images/pencil-square.svg" style="width: 22px;"></button>\
+    				<button type="button" class="btn btn-default btn-sm" onclick="javascript:delete(data.id);"><img src="/images/x-circle-fill.svg" style="width: 22px;"></span></button>\
     			';
     			
     			return html;
@@ -220,5 +220,7 @@ function createIndexColumn(table) {
 function addCommunity() {
 	window.location = "{{ url('/list/community/add') }}";
 }
+
+
 </script>
 @endsection
