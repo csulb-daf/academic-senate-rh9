@@ -120,7 +120,12 @@ $(document).ready(function() {
 			{ title: 'Charge Membership', data: 'charge_membership' },
 			{ title: 'Actions', data: null, defaultContent: '',
 				render: function ( data, type, row ) {
-    			return '<button>Edit</button>';
+    			var html='\
+    				<button type="button" class="btn btn-default btn-sm"><img src="/images/pencil-square.svg" style="width: 22px;"></button>\
+    				<button type="button" class="btn btn-default btn-sm"><img src="/images/x-circle-fill.svg" style="width: 22px;"></span></button>\
+    			';
+    			
+    			return html;
 				}			
 			}
 		],
@@ -135,6 +140,12 @@ $(document).ready(function() {
 			targets:  2,
 			sortable: false,
 		}],
+		
+	columnDefs: [{		//Actions column
+			targets:  1,
+			width: '700px',
+		}],
+		
 		
 	});
 	createIndexColumn(table1);
@@ -155,7 +166,12 @@ $(document).ready(function() {
 			{ title: 'Community Members', data: 'name'},
 			{ title: 'Actions', data: null, defaultContent: '',
 				render: function ( data, type, row ) {
-    			return '<button>Edit</button>';
+    			var html='\
+    				<button type="button" class="btn btn-default btn-sm"><img src="/images/pencil-square.svg" style="width: 22px;"></button>\
+    				<button type="button" class="btn btn-default btn-sm"><img src="/images/x-circle-fill.svg" style="width: 22px;"></span></button>\
+    			';
+    			
+    			return html;
 				}			
 			}
 		],
@@ -188,7 +204,12 @@ $(document).ready(function() {
 			{ title: 'Rank', data: 'rank'},
 			{ title: 'Actions', data: null, defaultContent: '',
 				render: function ( data, type, row ) {
-    			return '<button>Edit</button>';
+    			var html='\
+    				<button type="button" class="btn btn-default btn-sm"><img src="/images/pencil-square.svg" style="width: 22px;"></button>\
+    				<button type="button" class="btn btn-default btn-sm"><img src="/images/x-circle-fill.svg" style="width: 22px;"></span></button>\
+    			';
+    			
+    			return html;
 				}			
 			}
 		],
