@@ -11,12 +11,12 @@
 
 <div class="tab-content">
 	<div class="tab-pane active" id="community">
-		<div class="row">
-			<div class="col-sm-4">
+<!-- 		<div class="row"> -->
+<!-- 			<div class="col-sm-4"> -->
 				@include('partials.comm-search')		
-			</div>
+<!-- 			</div> -->
 			
-			<div class="col">
+<!-- 			<div class="col"> -->
 				@if(session()->has('community'))
 				    <div class="alert alert-success">
 				        {{ session()->get('community') }}
@@ -25,14 +25,14 @@
 				
 				<table id="communityTable" class="display" style="width: 100%"></table>
 				<button type="button" class="btn btn-primary" id="addCommunity" style="display: none; float: left;"  onclick="javascript:addCommunity();">Add Community Member</button>
-			</div>
+<!-- 			</div> -->
 					
-		</div>
+<!-- 		</div> -->
 	</div>
 
 	<div class="tab-pane" id="charge">
-	<div class="row">
-		<div class="col">
+<!-- 	<div class="row"> -->
+<!-- 		<div class="col"> -->
 			@if ($errors->has('charge_membership'))
 				<div class="alert alert-danger">
 					<ul>
@@ -60,13 +60,13 @@
 					<input class="form-control {{ $errors->has('charge_membership')? 'is-invalid' : '' }}" type="text" name="charge_membership" id="charge_membership" value="" >
 				</div>
 			</form>	
-		</div>
-</div>
+<!-- 		</div> -->
+<!-- </div> -->
 </div>
 
 	
 	<div class="tab-pane" id="rank">
-		<div class="col">
+<!-- 		<div class="col"> -->
 			@if ($errors->has('rank'))
 				<div class="alert alert-danger">
 					<ul>
@@ -95,7 +95,7 @@
 				</div>
 			</form>	
 		
-	</div>
+<!-- 	</div> -->
 	
 </div>
 </div>
