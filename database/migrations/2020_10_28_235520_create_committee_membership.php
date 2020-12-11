@@ -16,7 +16,6 @@ class CreateCommitteeMembership extends Migration
         Schema::create('committee_membership', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->unsignedBigInteger('user_id');
-            $table->unsignedBigInteger('committee');
             $table->string('campus_id', 10);
             $table->string('lastname');
             $table->string('firstname');
