@@ -11,97 +11,60 @@
 
 <div class="tab-content">
 	<div class="tab-pane" id="community">
-		<div class="row">
-			<div class="col-sm-4">
-				@include('partials.comm-search')		
-			</div>
-			
-			<div class="col">
-				@if(session()->has('community'))
-				    <div class="alert alert-success">
-				        {{ session()->get('community') }}
-				    </div>
-				@endif			
-				
-				<table id="communityTable" class="display" style="width: 100%"></table>
-				<button type="button" class="btn btn-primary" id="addCommunity" style="display: none; float: left;"  onclick="javascript:addCommunity();">Add Community Member</button>
-			</div>
-		</div>
+		@include('partials.comm-search')		
+	
+		@if(session()->has('community'))
+		    <div class="alert alert-success">
+		        {{ session()->get('community') }}
+		    </div>
+		@endif			
+		
+		<table id="communityTable" class="display" style="width: 100%"></table>
+		<button type="button" class="btn btn-primary" id="addCommunity" style="display: none; float: left;"  onclick="javascript:addCommunity();">Add Community Member</button>
 	</div>
 
 	<div class="tab-pane active" id="charge">
-	<div class="row">
-		<div class="col-sm-4">
-			@include('partials.comm-search')		
-		</div>
+		@include('partials.comm-search')
 	
-		<div class="col">
-			@if ($errors->has('charge_membership') || $errors->has('commAssign'))
-				<div class="alert alert-danger">
-					<ul>
-						@foreach ($errors->all() as $error)
-							<li>{{ $error }}</li>
-						@endforeach
-					</ul>
-				</div>
-			@endif
-			
-			@if(session()->has('charge'))
-			    <div class="alert alert-success">
-			        {{ session()->get('charge') }}
-			    </div>
-			@endif			
-			
-			<table id="chargeTable" class="display" style="width: 100%"></table>
-
-			<form method="POST" id="chargeForm" action="{{ route('charge.add') }}">
-				@csrf
-				<input type="hidden" name="tabName" value="charge">
-				<input type="hidden" name="commAssign" id="commAssign" value="{{ old('commAssign') }}">
-
-				<div class="input-group">
-					<button class="btn btn-primary " type="submit">ADD CHARGE</button>
-					<input class="form-control {{ $errors->has('charge_membership')? 'is-invalid' : '' }}" type="text" name="charge_membership" id="charge_membership" value="{{ old('charge_membership') }}" >
-				</div>
-			</form>	
-		</div>
-</div>
-</div>
-
+		@if(session()->has('charge'))
+		    <div class="alert alert-success">
+		        {{ session()->get('charge') }}
+		    </div>
+		@endif			
+		
+		<table id="chargeTable" class="display" style="width: 100%"></table>
+		<button type="button" class="btn btn-primary" id="addCharge" style="display: none; float: left;"  onclick="javascript:addCharge();">Add Charge Membership</button>
+	</div>
 	
 	<div class="tab-pane" id="rank">
-<!-- 		<div class="col"> -->
-			@if ($errors->has('rank'))
-				<div class="alert alert-danger">
-					<ul>
-						@foreach ($errors->all() as $error)
-							<li>{{ $error }}</li>
-						@endforeach
-					</ul>
-				</div>
-			@endif
-			
-			@if(session()->has('rank'))
-			    <div class="alert alert-success">
-			        {{ session()->get('rank') }}
-			    </div>
-			@endif			
-	
-			<table id="rankTable" class="display" style="width: 100%"></table>
+		@if ($errors->has('rank'))
+			<div class="alert alert-danger">
+				<ul>
+					@foreach ($errors->all() as $error)
+						<li>{{ $error }}</li>
+					@endforeach
+				</ul>
+			</div>
+		@endif
 		
-			<form method="POST" id="rankForm" action="{{ route('rank.add') }}">
-				@csrf
-				<input type="hidden" name="tabName" value="rank">	
-			
-				<div class="input-group">
-					<button class="btn btn-primary " type="submit">ADD RANK</button>
-					<input class="form-control {{ $errors->has('rank')? 'is-invalid' : '' }}" type="text" name="rank" id="rank" value="" >
-				</div>
-			</form>	
-		
-<!-- 	</div> -->
+		@if(session()->has('rank'))
+		    <div class="alert alert-success">
+		        {{ session()->get('rank') }}
+		    </div>
+		@endif			
 	
-</div>
+		<table id="rankTable" class="display" style="width: 100%"></table>
+	
+		<form method="POST" id="rankForm" action="{{ route('rank.add') }}">
+			@csrf
+			<input type="hidden" name="tabName" value="rank">	
+		
+			<div class="input-group">
+				<button class="btn btn-primary " type="submit">ADD RANK</button>
+				<input class="form-control {{ $errors->has('rank')? 'is-invalid' : '' }}" type="text" name="rank" id="rank" value="" >
+			</div>
+		</form>	
+	</div>
 </div>
 @endsection 
 
@@ -123,7 +86,9 @@ $(document).ready(function() {
 			error: function (xhr, error, thrown) {
 				table1.clear().draw();
 			},
-			complete: function() {}	
+			complete: function() {
+				$("button#addCharge").prependTo("#chargeTable_wrapper").show();
+			}	
     },
 		columns: [
 			{ title: '#', data: null, defaultContent: '' },
@@ -229,6 +194,9 @@ function createIndexColumn(table) {
 
 function addCommunity() {
 	window.location = "{{ url('/list/community/add') }}";
+}
+function addCharge() {
+	window.location = "{{ url('/list/charge/add') }}";
 }
 
 

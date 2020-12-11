@@ -15,6 +15,7 @@
 
 <form method="POST" id="communityForm" action="{{ route('community.add') }}">
 	@csrf
+	<input type="hidden" name="tabName" value="community">
 
 	<div class="input-group">
 		<label for="fName" style="margin-top: 1em;">First Name:</label>

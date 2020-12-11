@@ -38,6 +38,7 @@ Route::get('/rank-admin', 'ListController@getRank');
 Route::get('/list/community/add', 'ListController@createCommunity');
 Route::post('/list/community/add', 'ListController@storeCommunity')->name('community.add');
 
+Route::get('/list/charge/add', 'ListController@createCharge')->name('charge.add');
 Route::post('/list/charge/add', 'ListController@storeCharge')->name('charge.add');
 
 Route::post('/list/rank/add', 'ListController@storeRank')->name('rank.add');

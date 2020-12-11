@@ -88,21 +88,31 @@ class ListController extends Controller {
 		}
 	}
 	
+	public function createCharge() {
+		$charges = DB::table ( 'charge_membership' )->select ( 'id', 'charge_membership' )->get ();
+		$comms = DB::table ( 'committees' )->select ( 'id', 'committeename' )->get ();
+		
+		return view ( 'charge-form', [
+				'charges' => $charges,
+				'comms' => $comms
+		] );
+	}
+	
 	public function storeCharge(Request $request) {
 // 		return $request->all();
 		$validatedData = request()->validate ( [
-				'charge_membership' => 'required',
-				'commAssign' => 'required',
+				'chargeName' => 'required',
+				'commSelect' => 'required',
 		], [
-				'charge_membership.required' => 'Please Enter Charge Membership',
-				'commAssign.required' => 'Please Select a Commiittee',
+				'chargeName.required' => 'Please Enter Charge Membership',
+				'commSelect.required' => 'Please Select a Commiittee',
 		] );
 		
 		if ($validatedData) {
 			$charge = new Charge();
 			$charge->user_id = Auth::id ();
-			$charge->charge_membership = $request->charge_membership;
-			$charge->committee = $request->commAssign;
+			$charge->charge_membership = $request->chargeName;
+			$charge->committee = $request->commSelect;
 			$charge->save ();
 			
 			return redirect()->route('list')->withInput($request->all)->with('charge', 'New Charge Membership Added');
