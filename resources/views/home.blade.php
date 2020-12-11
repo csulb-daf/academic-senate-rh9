@@ -3,36 +3,39 @@
 @section('title', 'Home')
 
 @section('content')
-<form id="searchForm">
-	<table id="commSearch" class="display"></table>
-	<span id="searchContainter" style="display: none;">
-		<select class="" name="commSelect"  id="commSelect" >
-			<option value="option_select" disabled selected>Select Committee</option>
-			@foreach($comms as $comm)
-				<option value="{{ $comm->committeename }}">{{ $comm->committeename }}</option>
-			@endforeach
-		</select>
-		<input type="checkbox" name="commVacancies" id="commVacancies" value=""><label for="commVacancies">Show Vacancies for committee</label>
-	</span>
-</form>
+<select class="commSelect form-control" style="margin: 20px 0;" name="commSelect"  id="commSelect">
+	<option value="" disabled selected>Select Committee</option>
+	@foreach($comms as $comm)
+		<option value="{{ $comm->id }}">{{ $comm->committeename }}</option>
+	@endforeach
+</select>
+	
+<table id="commSearch" class="display"></table>
 @endsection 
 
 @section('scripts')
 <script>
 $(document).ready(function() {
+	var cid = null;
+
+	$('#commSelect').on('change', function() {
+		table.ajax.reload();
+	});
+
 	var table = $('#commSearch').DataTable({
     ajax: {
 			url: 'comm-search',
+			data: function(d) {
+				d.cid = $('#commSelect').val();
+			},
 			dataSrc: '',
 			error: function(xhr, error, thrown) {
 				table.clear().draw();
 			},
-			complete: function() {
-				$("#searchContainter").appendTo("#commSearch_wrapper .dataTables_length").show();
-			}	
+			complete: function() {}	
     },
 		columns: [
-			{ title: 'Campus ID', data: 'campus_id' },
+			{ title: 'Campus ID', data: 'campus_id', defaultContent: '<a href="#">VACANT</a>' },
 			{ title: 'Committee', data: 'committee' },
 			{ title: 'Last Name', data: 'lastname' },
 			{ title: 'First Name', data: 'firstname' },
@@ -46,8 +49,7 @@ $(document).ready(function() {
 			{ title: 'Alternate', data: 'alternate' },
 			{ title: 'Notes', data: 'notes' },
 		],
-		
-	});	
+	});
 });
 </script>
 @endsection

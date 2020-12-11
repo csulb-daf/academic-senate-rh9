@@ -29,15 +29,13 @@ class MembersController extends Controller {
 	}
 
 	public function ajax($cid) {
-		//return  DB::table('committee_membership')->where('committee', '=', $cid)->get();
 		return DB::table('committee_membership as cm')
 		->join('committees as c', 'cm.committee', '=', 'c.id')
 		->join('rank as r', 'cm.rank', '=', 'r.id')
-		->join('charge_membership as charge', 'cm.charge_memberhip', '=', 'charge.id')
+		->rightJoin('charge_membership as charge', 'cm.charge_memberhip', '=', 'charge.id')
 		->select('cm.*', 'c.committeename as committee',  'r.rank as rank', 'charge.charge_membership as charge')
-		->where('committee', '=', $cid)
+		->where('charge.committee', '=', $cid)
 		->get();
-		
 	}
 	
 	/**
