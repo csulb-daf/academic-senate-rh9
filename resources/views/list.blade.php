@@ -4,19 +4,19 @@
 
 @section('content')
 <nav class="nav nav-tabs" id="tabMenu" style="text-align: center;">
-	<a href="#community" data-toggle="tab" class="nav-item nav-link active">Community Members<span style="display: block">(Requires Committee Selection)</span></a>
-	<a href="#charge" data-toggle="tab" class="nav-item nav-link">Charge Membership<span style="display: block">(Global List)</span></a>
+	<a href="#charge" data-toggle="tab" class="nav-item nav-link active">Charge Membership<span style="display: block">(Requires Committee Selection)</span></a>
+	<a href="#community" data-toggle="tab" class="nav-item nav-link">Community Members<span style="display: block">(Requires Committee Selection)</span></a>
 	<a href="#rank" data-toggle="tab" class="nav-item nav-link">Rank<span style="display: block">(Global List)</span></a>
 </nav>
 
 <div class="tab-content">
-	<div class="tab-pane active" id="community">
-<!-- 		<div class="row"> -->
-<!-- 			<div class="col-sm-4"> -->
+	<div class="tab-pane" id="community">
+		<div class="row">
+			<div class="col-sm-4">
 				@include('partials.comm-search')		
-<!-- 			</div> -->
+			</div>
 			
-<!-- 			<div class="col"> -->
+			<div class="col">
 				@if(session()->has('community'))
 				    <div class="alert alert-success">
 				        {{ session()->get('community') }}
@@ -25,15 +25,18 @@
 				
 				<table id="communityTable" class="display" style="width: 100%"></table>
 				<button type="button" class="btn btn-primary" id="addCommunity" style="display: none; float: left;"  onclick="javascript:addCommunity();">Add Community Member</button>
-<!-- 			</div> -->
-					
-<!-- 		</div> -->
+			</div>
+		</div>
 	</div>
 
-	<div class="tab-pane" id="charge">
-<!-- 	<div class="row"> -->
-<!-- 		<div class="col"> -->
-			@if ($errors->has('charge_membership'))
+	<div class="tab-pane active" id="charge">
+	<div class="row">
+		<div class="col-sm-4">
+			@include('partials.comm-search')		
+		</div>
+	
+		<div class="col">
+			@if ($errors->has('charge_membership') || $errors->has('commAssign'))
 				<div class="alert alert-danger">
 					<ul>
 						@foreach ($errors->all() as $error)
@@ -54,14 +57,15 @@
 			<form method="POST" id="chargeForm" action="{{ route('charge.add') }}">
 				@csrf
 				<input type="hidden" name="tabName" value="charge">
+				<input type="hidden" name="commAssign" id="commAssign" value="{{ old('commAssign') }}">
 
 				<div class="input-group">
 					<button class="btn btn-primary " type="submit">ADD CHARGE</button>
-					<input class="form-control {{ $errors->has('charge_membership')? 'is-invalid' : '' }}" type="text" name="charge_membership" id="charge_membership" value="" >
+					<input class="form-control {{ $errors->has('charge_membership')? 'is-invalid' : '' }}" type="text" name="charge_membership" id="charge_membership" value="{{ old('charge_membership') }}" >
 				</div>
 			</form>	
-<!-- 		</div> -->
-<!-- </div> -->
+		</div>
+</div>
 </div>
 
 	
@@ -104,7 +108,12 @@
 @section('scripts')
 <script>
 $(document).ready(function() {
-	$('#tabMenu a[href="#{{ old('tabName') }}"]').tab('show')
+	$('#tabMenu a[href="#{{ old('tabName') }}"]').tab('show');
+	
+	$('select#commSelect').on('change', function() {
+		  //console.log($(this).val());
+		  $('input#commAssign').val($(this).val());
+		});
 
 	var table1 = $('#chargeTable').DataTable({
 	
@@ -119,6 +128,7 @@ $(document).ready(function() {
 		columns: [
 			{ title: '#', data: null, defaultContent: '' },
 			{ title: 'Charge Membership', data: 'charge_membership',  width: '70%'},
+			{ title: 'Assigned to Committee', data: 'committee',  width: '70%'},
 			{ title: 'Actions', data: null, defaultContent: '',
 				render: function ( data, type, row ) {
     			var html='\

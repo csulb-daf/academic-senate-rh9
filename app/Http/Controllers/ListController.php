@@ -33,7 +33,7 @@ class ListController extends Controller {
 	}
 	
 	public function getChargeMembership() {
-		return DB::table ( 'charge_membership' )->select ( 'charge_membership' )->get ();
+		return DB::table ( 'charge_membership' )->select ( 'charge_membership', 'committee' )->get ();
 	}
 	
 	public function getCommunityMembers() {
@@ -89,17 +89,20 @@ class ListController extends Controller {
 	}
 	
 	public function storeCharge(Request $request) {
-		//return $request->all();
+// 		return $request->all();
 		$validatedData = request()->validate ( [
 				'charge_membership' => 'required',
+				'commAssign' => 'required',
 		], [
 				'charge_membership.required' => 'Please Enter Charge Membership',
+				'commAssign.required' => 'Please Select a Commiittee',
 		] );
 		
 		if ($validatedData) {
 			$charge = new Charge();
 			$charge->user_id = Auth::id ();
 			$charge->charge_membership = $request->charge_membership;
+			$charge->committee = $request->commAssign;
 			$charge->save ();
 			
 			return redirect()->route('list')->withInput($request->all)->with('charge', 'New Charge Membership Added');
