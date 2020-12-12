@@ -17,7 +17,6 @@
 @section('scripts')
 <script>
 $(document).ready(function() {
-	var cid = null;
 
 	$('#commSelect').on('change', function() {
 		$('#tableTitle').text($(this).find('option:selected').text());
@@ -26,9 +25,15 @@ $(document).ready(function() {
 
 	var table = $('#commSearch').DataTable({
 		dom: 'Blfrtip',
-		buttons: [
-			{ extend: 'pdf', text: 'Export to PDF', className: 'btn btn-primary glyphicon glyphicon-file' },		
-		],		
+		buttons: [{ 
+			extend: 'pdf',
+			text: 'Export to PDF', 
+			className: 'btn btn-primary',
+			title: function() {
+				return $('#commSelect').find('option:selected').text();
+			},
+			orientation: 'landscape',
+		}],		
 
 		ajax: {
 			url: 'comm-search',
