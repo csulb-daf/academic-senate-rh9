@@ -10,6 +10,7 @@
 	@endforeach
 </select>
 	
+<h2 style="font-weight: bold;">Committee: <span id="tableTitle"></span></h2>
 <table id="commSearch" class="display"></table>
 @endsection 
 
@@ -19,10 +20,27 @@ $(document).ready(function() {
 	var cid = null;
 
 	$('#commSelect').on('change', function() {
+		$('#tableTitle').text($(this).find('option:selected').text());
 		table.ajax.reload();
 	});
 
 	var table = $('#commSearch').DataTable({
+		dom: 'Blfrtip',
+		buttons: ['pdf'],		
+		
+		
+// 				dom: 'Blfrtip',
+// 		buttons: [
+// 			{
+// 				text: 'Add New Committee',
+// 				action: function ( e, dt, node, config ) {
+// 					test();
+// 				}
+// 			}
+// 		],
+	
+		
+    		
     ajax: {
 			url: 'comm-search',
 			data: function(d) {

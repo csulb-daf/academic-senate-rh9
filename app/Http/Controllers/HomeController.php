@@ -21,14 +21,16 @@ class HomeController extends Controller {
 	 * @return \Illuminate\Contracts\Support\Renderable
 	 */
 	public function index() {
-		$comms = DB::table ( 'committees' )->get ();
+		$comms = DB::table('committees as c')
+		->join('committee_membership as cm', 'c.id', '=', 'cm.committee')
+		->select('c.*')
+		->get();
 		return view ( 'home', [ 
 				'comms' => $comms
 		] );
 	}
 	public function ajax(Request $request) {
 // 		return $request;
-		
 		return DB::table('committee_membership as cm')
 		->join('committees as c', 'cm.committee', '=', 'c.id')
 		->join('rank as r', 'cm.rank', '=', 'r.id')
@@ -36,6 +38,5 @@ class HomeController extends Controller {
 		->select('cm.*', 'c.committeename as committee',  'r.rank as rank', 'charge.charge_membership as charge')
 		->where('charge.committee', '=', $request->cid)
 		->get();
-		
 	}
 }

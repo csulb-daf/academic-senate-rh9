@@ -18,7 +18,6 @@
 	<!-- Scripts -->
 	<script src="{{ asset('js/app.js') }}"></script>
 	<script src="{{ asset('js/datatables.min.js') }}"></script>
-	<script src="{{ asset('js/datatables.min.js') }}"></script>
 	
 	<!-- Fonts -->
 	<link rel="dns-prefetch" href="//fonts.gstatic.com">
@@ -38,7 +37,6 @@
 		<h1 class="pageHeader">Councils and Committees Management System</h1>
 		<div class="container">
 			<main class="py-4">
-				<h2 style="font-weight: bold;">@yield('title')</h2>
 				@yield('content')
 			</main>
 		</div>
