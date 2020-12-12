@@ -26,22 +26,11 @@ $(document).ready(function() {
 
 	var table = $('#commSearch').DataTable({
 		dom: 'Blfrtip',
-		buttons: ['pdf'],		
-		
-		
-// 				dom: 'Blfrtip',
-// 		buttons: [
-// 			{
-// 				text: 'Add New Committee',
-// 				action: function ( e, dt, node, config ) {
-// 					test();
-// 				}
-// 			}
-// 		],
-	
-		
-    		
-    ajax: {
+		buttons: [
+			{ extend: 'pdf', text: 'Export to PDF', className: 'btn btn-primary glyphicon glyphicon-file' },		
+		],		
+
+		ajax: {
 			url: 'comm-search',
 			data: function(d) {
 				d.cid = $('#commSelect').val();
