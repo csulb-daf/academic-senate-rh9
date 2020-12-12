@@ -19,6 +19,13 @@
 	<script src="{{ asset('js/app.js') }}"></script>
 	<script src="{{ asset('js/datatables.min.js') }}"></script>
 	
+	<script src="{{ asset('js/datatables-buttons/dataTables.buttons.min.js') }}"></script>
+	<script src="{{ asset('js/datatables-buttons/jszip.min.js') }}"></script>
+	<script src="{{ asset('js/datatables-buttons/pdfmake.min.js') }}"></script>
+	<script src="{{ asset('js/datatables-buttons/buttons.print.min.js') }}"></script>
+	<script src="{{ asset('js/datatables-buttons/vfs_fonts.js') }}"></script>
+	<script src="{{ asset('js/datatables-buttons/buttons.html5.min.js') }}"></script>
+	
 	<!-- Fonts -->
 	<link rel="dns-prefetch" href="//fonts.gstatic.com">
 	<link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
