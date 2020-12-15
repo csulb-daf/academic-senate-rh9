@@ -71,12 +71,13 @@
 @section('scripts')
 <script>
 $(document).ready(function() {
+	/*** Show correct tab after form submit ***/
 	$('#tabMenu a[href="#{{ old('tabName') }}"]').tab('show');
 	
 	$('select#commSelect').on('change', function() {
 		  //console.log($(this).val());
 		  $('input#commAssign').val($(this).val());
-		});
+	});
 
 	var table1 = $('#chargeTable').DataTable({
 	
@@ -87,20 +88,54 @@ $(document).ready(function() {
 				table1.clear().draw();
 			},
 			complete: function() {
+				
 				$("button#addCharge").prependTo("#chargeTable_wrapper").show();
+
+				$('.edit').editable(function(value, settings) {
+					var id = $(this).attr('data-id');
+
+					$.ajax({
+						headers: {
+							'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+						},
+						type: 'post',
+						url: '/list/charge/update',
+						data: {
+							id: id,
+							charge: value,
+						},
+					});
+					return value;
+				}, {
+					indicator : '<img src="/images/spinner.svg" />',
+				});
+
+				$('button.editButton').click(function() {
+					$(this).hide();
+					$(this).next('button.saveButton').show();
+					$(this).closest('tr').find('span.edit').trigger('click');
+				});
+				$('button.saveButton').click(function() {
+					$(this).closest('tr').find('span.edit form').trigger('submit');
+				});		
 			}	
     },
 		columns: [
 			{ title: '#', data: null, defaultContent: '' },
-			{ title: 'Charge Membership', data: 'charge_membership',  width: '70%'},
-			{ title: 'Assigned to Committee', data: 'committee',  width: '70%'},
+			{ title: 'Charge Membership', data: 'charge_membership',  width: '70%',
+				render: function ( data, type, row ) {
+					//console.log('row', row);
+					return '<span class="edit" data-id="'+ row.id +'">'+ data +'</span>';
+				}
+			},
+			{ title: 'Assigned to Committee', data: 'committee',  width: '10%'},
 			{ title: 'Actions', data: null, defaultContent: '',
 				render: function ( data, type, row ) {
     			var html='\
-    				<button type="button" class="btn btn-default btn-sm"><img src="/images/pencil-square.svg" style="width: 22px;"></button>\
-    				<button type="button" class="btn btn-default btn-sm"><img src="/images/x-circle-fill.svg" style="width: 22px;"></span></button>\
+    				<button type="button" class="btn btn-default btn-sm editButton">Edit</button>\
+    				<button type="button" class="btn btn-default btn-sm saveButton" style="display: none;">Save</button>\
+    				<button type="button" class="btn btn-default btn-sm">Delete</button>\
     			';
-    			
     			return html;
 				}			
 			}
@@ -198,6 +233,7 @@ function addCommunity() {
 function addCharge() {
 	window.location = "{{ url('/list/charge/add') }}";
 }
+
 
 
 </script>

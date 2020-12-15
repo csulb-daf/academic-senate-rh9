@@ -33,7 +33,7 @@ class ListController extends Controller {
 	}
 	
 	public function getChargeMembership() {
-		return DB::table ( 'charge_membership' )->select ( 'charge_membership', 'committee' )->get ();
+		return DB::table ( 'charge_membership' )->select ('id', 'charge_membership', 'committee' )->get ();
 	}
 	
 	public function getCommunityMembers() {
@@ -121,6 +121,26 @@ class ListController extends Controller {
 			return redirect()->route('list')->withInput($request->all)->with('error');
 		}
 	}
+	
+	/**
+	 * Update the specified resource in storage.
+	 *
+	 * @param \Illuminate\Http\Request $request
+	 * @param int $id
+	 * @return \Illuminate\Http\Response
+	 */
+	public function updateCharge(Request $request) {
+// 		return $request;
+		
+		Charge::where('id', $request->id)
+		->update([
+				'user_id' => Auth::id(),
+				'charge_membership' => $request->charge,
+		]);
+		
+		return back();
+	}
+	
 	
 	public function storeRank(Request $request) {
 // 		return $request->all();
