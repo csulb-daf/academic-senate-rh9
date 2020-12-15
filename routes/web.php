@@ -40,7 +40,7 @@ Route::post('/list/community/add', 'ListController@storeCommunity')->name('commu
 
 Route::get('/list/charge/add', 'ListController@createCharge')->name('charge.add');
 Route::post('/list/charge/add', 'ListController@storeCharge')->name('charge.add');
-Route::get('/list/charge/update', 'ListController@updateCharge')->name('charge.update');
 Route::post('/list/charge/update', 'ListController@updateCharge')->name('charge.update');
+Route::post('/list/charge/destroy', 'ListController@destroyCharge')->name('charge.destroy');
 
 Route::post('/list/rank/add', 'ListController@storeRank')->name('rank.add');

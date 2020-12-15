@@ -148,7 +148,7 @@ class ListController extends Controller {
 	 * @return \Illuminate\Http\Response
 	 */
 	public function destroyCharge(Request $request) {
-		return $request;
+		//return $request;
 		
 		Charge::where('id', $request->id)->delete();
 	}
