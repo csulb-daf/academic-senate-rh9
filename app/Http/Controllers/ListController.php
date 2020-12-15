@@ -140,7 +140,18 @@ class ListController extends Controller {
 		
 		return back();
 	}
-	
+
+	/**
+	 * Remove the specified resource from storage.
+	 *
+	 * @param int $id
+	 * @return \Illuminate\Http\Response
+	 */
+	public function destroyCharge(Request $request) {
+		return $request;
+		
+		Charge::where('id', $request->id)->delete();
+	}
 	
 	public function storeRank(Request $request) {
 // 		return $request->all();

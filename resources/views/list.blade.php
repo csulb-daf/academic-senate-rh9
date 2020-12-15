@@ -112,10 +112,14 @@ $(document).ready(function() {
 
 				$('button.editButton').click(function() {
 					$(this).hide();
-					$(this).next('button.saveButton').show();
+					$(this).siblings('button.saveButton').show();
+					$(this).siblings('img.saved').hide();
 					$(this).closest('tr').find('span.edit').trigger('click');
 				});
 				$('button.saveButton').click(function() {
+					$(this).hide();
+					$(this).siblings('button.editButton').show();
+					$(this).siblings('img.saved').show();
 					$(this).closest('tr').find('span.edit form').trigger('submit');
 				});		
 			}	
@@ -134,7 +138,8 @@ $(document).ready(function() {
     			var html='\
     				<button type="button" class="btn btn-default btn-sm editButton">Edit</button>\
     				<button type="button" class="btn btn-default btn-sm saveButton" style="display: none;">Save</button>\
-    				<button type="button" class="btn btn-default btn-sm">Delete</button>\
+    				<button type="button" class="btn btn-default btn-sm deleteButton">Delete</button>\
+    				<img src="/images/check.svg" class="saved" style="width: 35px; display: none;">\
     			';
     			return html;
 				}			
