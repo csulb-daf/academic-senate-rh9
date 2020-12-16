@@ -42,27 +42,21 @@ class ListController extends Controller {
 				'chargeComms' => $chargeComms,
 				'communityComms' => $communityComms
 		] );
-		
 	}
 	
-	public function getChargeMembership(Request $request) {
-		return DB::table ( 'charge_membership')
-		->select ('id', 'charge_membership', 'committee' )
-		->where('committee', '=', $request->id)
-		->get();
-	}
-	
+	/*** Commmunity Members ***/
 	public function getCommunityMembers(Request $request) {
 		return DB::table('community_members')
-		->select(DB::raw('CONCAT(firstname, " ", lastname) AS name'))
+		->select('id', DB::raw('CONCAT(firstname, " ", lastname) AS name'))
 		->where('committee', '=', $request->id)
 		->get();
 	}
 	
-	public function getRank() {
-		return DB::table ( 'rank' )->select('id', 'rank')->get();
-	}
-	
+	/**
+	 * Show the form for creating a new resource.
+	 *
+	 * @return \Illuminate\Http\Response
+	 */
 	public function createCommunity() {
 		$charges = DB::table ( 'charge_membership' )->select ( 'id', 'charge_membership' )->get ();
 		$comms = DB::table ( 'committees' )->select ( 'id', 'committeename' )->get ();
@@ -73,8 +67,13 @@ class ListController extends Controller {
 		] );
 	}
 	
+	/**
+	 * Store a newly created resource in storage.
+	 *
+	 * @param  \Illuminate\Http\Request  $request
+	 * @return \Illuminate\Http\Response
+	 */
 	public function storeCommunity(Request $request) {
-// 		return $request->all();
 		$validatedData = request ()->validate ( [ 
 				'fName' => 'required',
 				'lName' => 'required',
@@ -107,6 +106,44 @@ class ListController extends Controller {
 		}
 	}
 	
+	/**
+	 * Update the specified resource in storage.
+	 *
+	 * @param \Illuminate\Http\Request $request
+	 * @param int $id
+	 * @return \Illuminate\Http\Response
+	 */
+	public function updateCommunity(Request $request) {
+		return $request;
+		Community::where('id', $request->id)
+		->update([
+				'user_id' => Auth::id(),
+				'charge_membership' => $request->charge,
+		]);
+		
+		return $request;
+	}
+	
+	/**
+	 * Remove the specified resource from storage.
+	 *
+	 * @param int $id
+	 * @return \Illuminate\Http\Response
+	 */
+	public function destroyCommunity(Request $request) {
+		return $request;
+		Community::where('id', $request->id)->delete();
+		return $request;
+	}
+	
+	/*** Charge Membership ***/
+	public function getChargeMembership(Request $request) {
+		return DB::table ( 'charge_membership')
+		->select ('id', 'charge_membership', 'committee' )
+		->where('committee', '=', $request->id)
+		->get();
+	}
+	
 	public function createCharge() {
 		$charges = DB::table ( 'charge_membership' )->select ( 'id', 'charge_membership' )->get ();
 		$comms = DB::table ( 'committees' )->select ( 'id', 'committeename' )->get ();
@@ -118,7 +155,6 @@ class ListController extends Controller {
 	}
 	
 	public function storeCharge(Request $request) {
-// 		return $request->all();
 		$validatedData = request()->validate ( [
 				'chargeName' => 'required',
 				'commSelect' => 'required',
@@ -141,39 +177,27 @@ class ListController extends Controller {
 		}
 	}
 	
-	/**
-	 * Update the specified resource in storage.
-	 *
-	 * @param \Illuminate\Http\Request $request
-	 * @param int $id
-	 * @return \Illuminate\Http\Response
-	 */
 	public function updateCharge(Request $request) {
-// 		return $request;
-		
 		Charge::where('id', $request->id)
 		->update([
 				'user_id' => Auth::id(),
 				'charge_membership' => $request->charge,
 		]);
 		
-		return back();
+		return $request;
 	}
 
-	/**
-	 * Remove the specified resource from storage.
-	 *
-	 * @param int $id
-	 * @return \Illuminate\Http\Response
-	 */
 	public function destroyCharge(Request $request) {
-		//return $request;
-		
 		Charge::where('id', $request->id)->delete();
+		return $request;
+	}
+	
+	/*** Rank ***/
+	public function getRank() {
+		return DB::table ( 'rank' )->select('id', 'rank')->get();
 	}
 	
 	public function storeRank(Request $request) {
-// 		return $request->all();
 		$validatedData = request()->validate ( [
 				'rank' => 'required',
 		], [
@@ -193,27 +217,17 @@ class ListController extends Controller {
 		}
 	}
 
-	/**
-	 * Update the specified resource in storage.
-	 *
-	 * @param \Illuminate\Http\Request $request
-	 * @param int $id
-	 * @return \Illuminate\Http\Response
-	 */
-	public function updateRank(Request $request, $id) {
-		Rank::where('id', id)
-			->update(['rank' => $request->rank]);
-		
-		return back();
+	public function updateRank(Request $request) {
+		return $request;
+		Rank::where('id', $request->id)
+		->update(['rank' => $request->rank]);
+		return $request;
 	}
 
-	/**
-	 * Remove the specified resource from storage.
-	 *
-	 * @param int $id
-	 * @return \Illuminate\Http\Response
-	 */
-	public function destroy($id) {
-		//
+	public function destroyRank(Request $request) {
+		return $request;
+		Rank::where('id', $request->id)->delete();
+		return $request;
 	}
+
 }
