@@ -10,26 +10,6 @@
 </nav>
 
 <div class="tab-content">
-	<div class="tab-pane" id="community">
-		<select class="commSelect form-control" style="margin: 20px 0;" name="commSelect" >
-			<option value="" disabled selected>Select Committee</option>
-		<!-- 	<option value="0">Unassigned</option> -->
-			@foreach($communityComms as $comm)
-				<option value="{{ $comm->id }}">{{ $comm->committeename }}</option>
-			@endforeach
-		</select>
-		
-		@if(session()->has('community'))
-		    <div class="alert alert-success">
-		        {{ session()->get('community') }}
-		    </div>
-		@endif			
-		
-		<h2 class="tableTitle">List Managment : <span></span></h2>
-		<table id="communityTable" class="display" style="width: 100%"></table>
-		<button type="button" class="btn btn-primary" id="addCommunity" style="display: none; float: left;"  onclick="javascript:addCommunity();">Add Community Member</button>
-	</div>
-
 	<div class="tab-pane active" id="charge">
 		<select class="commSelect form-control" style="margin: 20px 0;" name="commSelect" >
 			<option value="" disabled selected>Select Committee</option>
@@ -48,6 +28,26 @@
 		<h2 class="tableTitle">List Management : <span></span></h2>
 		<table id="chargeTable" class="display" style="width: 100%"></table>
 		<button type="button" class="btn btn-primary" id="addCharge" style="display: none; float: left;"  onclick="javascript:addCharge();">Add Charge Membership</button>
+	</div>
+
+	<div class="tab-pane" id="community">
+		<select class="commSelect form-control" style="margin: 20px 0;" name="commSelect" >
+			<option value="" disabled selected>Select Committee</option>
+		<!-- 	<option value="0">Unassigned</option> -->
+			@foreach($communityComms as $comm)
+				<option value="{{ $comm->id }}">{{ $comm->committeename }}</option>
+			@endforeach
+		</select>
+		
+		@if(session()->has('community'))
+		    <div class="alert alert-success">
+		        {{ session()->get('community') }}
+		    </div>
+		@endif			
+		
+		<h2 class="tableTitle">List Managment : <span></span></h2>
+		<table id="communityTable" class="display" style="width: 100%"></table>
+		<button type="button" class="btn btn-primary" id="addCommunity" style="display: none; float: left;"  onclick="javascript:addCommunity();">Add Community Member</button>
 	</div>
 	
 	<div class="tab-pane" id="rank">
@@ -91,14 +91,13 @@ $(document).ready(function() {
 
 	/*** Table title ***/
 	$('.commSelect').on('change', function() {
-		//console.log($(this).find('option:selected').text());
-		
 		$(this).siblings('h2.tableTitle').find('span').text($(this).find('option:selected').text());
 		table1.ajax.reload();
 		table2.ajax.reload();
 	});
 	
 	var table1 = $('#chargeTable').DataTable({
+		autoWidth: false,
 		createdRow: function(row, data, dataIndex) {
 			setEdit(row, table1, '/list/charge/update', '/list/charge/destroy');
 		},
@@ -116,14 +115,14 @@ $(document).ready(function() {
 			}	
     },
 		columns: [
-			{ title: '#', data: null, defaultContent: '' },
-			{ title: 'Charge Membership', data: 'charge_membership',  width: '70%',
+			{ title: '#', data: null, defaultContent: '', width: '50px'},
+			{ title: 'Charge Membership', data: 'charge_membership',
 				render: function ( data, type, row ) {
 					return getEditableRow(row, data);
 				}
 			},
-			{ title: 'Assigned to Committee', data: 'committee',  width: '10%'},
-			{ title: 'Actions', data: null, defaultContent: '',
+			{ title: 'Committee', data: 'committee', width: '50px'},
+			{ title: 'Actions', data: null, defaultContent: '', width: '120px',
 				render: function ( data, type, row ) {
     			return getEditButtons(row.id);
 				}			
@@ -135,11 +134,11 @@ $(document).ready(function() {
 			targets: [0, 1, 2, 3],
 		}],
 		order: [[ 1, 'asc' ]],
-		fixedColumns: true,
 	});
 	createIndexColumn(table1);
 	
 	var table2 = $('#communityTable').DataTable({
+		autoWidth: false,
 		createdRow: function(row, data, dataIndex) {
 			setEdit(row, table2, '/list/community/update', '/list/community/destroy');
 		},
@@ -157,13 +156,13 @@ $(document).ready(function() {
 			}	
     },
 		columns: [
-			{ title: '#', data: null, defaultContent: '' },
+			{ title: '#', data: null, defaultContent: '', width: '50px'},
 			{ title: 'Community Members', data: 'name',
 				render: function ( data, type, row ) {
 					return getEditableRow(row, data);
 				}
 			},
-			{ title: 'Actions', data: null, defaultContent: '',
+			{ title: 'Actions', data: null, defaultContent: '', width: '120px',
 				render: function ( data, type, row ) {
 					return getEditButtons(row.id);
 				}			
@@ -171,15 +170,14 @@ $(document).ready(function() {
 		],
 		columnDefs: [{
 			sortable: false,
-			"class": "index",
 			targets: [0, 2]
 		}],
 		order: [[ 1, 'asc' ]],
-		fixedColumns: true,
 	});	
 	createIndexColumn(table2);
 
 	var table3 = $('#rankTable').DataTable({
+		autoWidth: false,
 		createdRow: function(row, data, dataIndex) {
 			setEdit(row, table3, '/list/rank/update', '/list/rank/destroy');
 		},
@@ -192,13 +190,13 @@ $(document).ready(function() {
 			complete: function() {}	
     },
 		columns: [
-			{ title: '#', data: null, defaultContent: '' },
+			{ title: '#', data: null, defaultContent: '', width: '50px'},
 			{ title: 'Rank', data: 'rank',
 				render: function ( data, type, row ) {
 					return getEditableRow(row, data);
 				}
 			},
-			{ title: 'Actions', data: null, defaultContent: '',
+			{ title: 'Actions', data: null, defaultContent: '', width: '120px',
 				render: function ( data, type, row ) {
 					return getEditButtons(row.id);					
 				}			
@@ -210,7 +208,6 @@ $(document).ready(function() {
 			targets: [0, 2],
 		}],
 		order: [[ 1, 'asc' ]],
-		fixedColumns: true,
 	});	
 	createIndexColumn(table3);
 });
