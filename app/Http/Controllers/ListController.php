@@ -25,19 +25,38 @@ class ListController extends Controller {
 	 * @return \Illuminate\Contracts\Support\Renderable
 	 */
 	public function index() {
-		// return view('list');
-		$comms = DB::table ( 'committees' )->get ();
-		return view ( 'list', [ 
-				'comms' => $comms
+		$communityComms = DB::table('committees as c')
+		->join('community_members as cm', 'c.id', '=', 'cm.committee')
+		->select('c.*')
+		->orderBy('c.committeename', 'asc')
+		->distinct()
+		->get();
+		
+		$chargeComms = DB::table('committees as c')
+		->join('charge_membership as charge', 'c.id', '=', 'charge.committee')
+		->select('c.*')
+		->orderBy('c.committeename', 'asc')
+		->distinct()
+		->get();
+		return view ( 'list', [
+				'chargeComms' => $chargeComms,
+				'communityComms' => $communityComms
 		] );
+		
 	}
 	
-	public function getChargeMembership() {
-		return DB::table ( 'charge_membership' )->select ('id', 'charge_membership', 'committee' )->get ();
+	public function getChargeMembership(Request $request) {
+		return DB::table ( 'charge_membership')
+		->select ('id', 'charge_membership', 'committee' )
+		->where('committee', '=', $request->id)
+		->get();
 	}
 	
-	public function getCommunityMembers() {
-		return DB::table ( 'community_members' )->select ( DB::raw ( 'CONCAT(firstname, " ", lastname) AS name' ) )->get ();
+	public function getCommunityMembers(Request $request) {
+		return DB::table('community_members')
+		->select(DB::raw('CONCAT(firstname, " ", lastname) AS name'))
+		->where('committee', '=', $request->id)
+		->get();
 	}
 	
 	public function getRank() {

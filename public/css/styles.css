@@ -3,6 +3,11 @@ h1.pageHeader {
 	text-align: center;
 	margin: 10px 0;
 }
+h2.tableTitle {
+	font-weight: bold;
+	text-transform: uppercase;
+	font-size: 1.4rem;
+}
 
 /*** Nav ***/
 .navbar {
@@ -21,9 +26,6 @@ h1.pageHeader {
     justify-content: center;
   }
 }
-
-/*** Tabs ***/
-
 
 /*** datatables override ***/
 table.dataTable thead .sorting {

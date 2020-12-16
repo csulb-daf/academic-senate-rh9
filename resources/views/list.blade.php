@@ -11,20 +11,33 @@
 
 <div class="tab-content">
 	<div class="tab-pane" id="community">
-		@include('partials.comm-search')		
-	
+		<select class="commSelect form-control" style="margin: 20px 0;" name="commSelect" >
+			<option value="" disabled selected>Select Committee</option>
+		<!-- 	<option value="0">Unassigned</option> -->
+			@foreach($communityComms as $comm)
+				<option value="{{ $comm->id }}">{{ $comm->committeename }}</option>
+			@endforeach
+		</select>
+		
 		@if(session()->has('community'))
 		    <div class="alert alert-success">
 		        {{ session()->get('community') }}
 		    </div>
 		@endif			
 		
+		<h2 class="tableTitle">List Managment : <span></span></h2>
 		<table id="communityTable" class="display" style="width: 100%"></table>
 		<button type="button" class="btn btn-primary" id="addCommunity" style="display: none; float: left;"  onclick="javascript:addCommunity();">Add Community Member</button>
 	</div>
 
 	<div class="tab-pane active" id="charge">
-		@include('partials.comm-search')
+		<select class="commSelect form-control" style="margin: 20px 0;" name="commSelect" >
+			<option value="" disabled selected>Select Committee</option>
+		<!-- 	<option value="0">Unassigned</option> -->
+			@foreach($chargeComms as $comm)
+				<option value="{{ $comm->id }}">{{ $comm->committeename }}</option>
+			@endforeach
+		</select>
 	
 		@if(session()->has('charge'))
 		    <div class="alert alert-success">
@@ -32,6 +45,7 @@
 		    </div>
 		@endif			
 		
+		<h2 class="tableTitle">List Management : <span></span></h2>
 		<table id="chargeTable" class="display" style="width: 100%"></table>
 		<button type="button" class="btn btn-primary" id="addCharge" style="display: none; float: left;"  onclick="javascript:addCharge();">Add Charge Membership</button>
 	</div>
@@ -53,6 +67,7 @@
 		    </div>
 		@endif			
 	
+		<h2 class="tableTitle">List Management : Rank</h2>	
 		<table id="rankTable" class="display" style="width: 100%"></table>
 	
 		<form method="POST" id="rankForm" action="{{ route('rank.add') }}">
@@ -73,18 +88,25 @@
 $(document).ready(function() {
 	/*** Show correct tab after form submit ***/
 	$('#tabMenu a[href="#{{ old('tabName') }}"]').tab('show');
-	
-	$('select#commSelect').on('change', function() {
-		  //console.log($(this).val());
-		  $('input#commAssign').val($(this).val());
-	});
 
+	/*** Table title ***/
+	$('.commSelect').on('change', function() {
+		//console.log($(this).find('option:selected').text());
+		
+		$(this).siblings('h2.tableTitle').find('span').text($(this).find('option:selected').text());
+		table1.ajax.reload();
+		table2.ajax.reload();
+	});
+	
 	var table1 = $('#chargeTable').DataTable({
 		createdRow: function(row, data, dataIndex) {
 			setEdit(row, table1, '/list/charge/update', '/list/charge/destroy');
 		},
     ajax: {
 			url: 'charge-admin',
+			data: function(d) {
+				d.id = $('#charge .commSelect').val();
+			},
 			dataSrc: '',
 			error: function (xhr, error, thrown) {
 				table1.clear().draw();
@@ -123,6 +145,9 @@ $(document).ready(function() {
 		},
     ajax: {
 			url: 'community-members-admin',
+			data: function(d) {
+				d.id = $('#community .commSelect').val();
+			},
 			dataSrc: '',
 			error: function (xhr, error, thrown) {
 				table2.clear().draw();
