@@ -44,7 +44,16 @@ class MembersController extends Controller {
 	 * @return \Illuminate\Http\Response
 	 */
 	public function create($cid) {
-		$charges = DB::table('charge_membership')->select('id', 'charge_membership')->get();
+		//$charges = DB::table('charge_membership')->select('id', 'charge_membership')->get();
+		
+		$charges = DB::table('charge_membership')
+		//->join('committee_membership as cm', 'cm.id', '=', 'charge.committee')
+		->select('id', 'charge_membership')
+		->where('committee', '=', $cid)
+		->orderBy('charge_membership', 'asc')
+		//->distinct()
+		->get();
+		
 		$ranks = DB::table('rank')->select('id', 'rank')->get();
 		
 		$users[0] = array(

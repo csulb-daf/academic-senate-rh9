@@ -47,7 +47,18 @@ $(document).ready(function() {
 			complete: function() {}	
     },
 		columns: [
-			{ title: 'Campus ID', data: 'campus_id', defaultContent: '<a href="#">VACANT</a>' },
+			{ 
+				title: 'Campus ID', 
+				render: function(data, type, row, meta) {
+					if(row.campus_id == null) {
+						var cid = $('#commSelect').val();
+						var url = 	"{{ route('members.add', ['id'=>':id']) }}";
+						url = url.replace(':id', cid);
+						return '<a href="'+ url +'">VACANT</a>';
+					}
+					return row.campus_id;
+				}	
+			},
 			{ title: 'Committee', data: 'committee' },
 			{ title: 'Last Name', data: 'lastname' },
 			{ title: 'First Name', data: 'firstname' },

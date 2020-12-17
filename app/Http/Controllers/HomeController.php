@@ -24,6 +24,7 @@ class HomeController extends Controller {
 		$comms = DB::table('committees as c')
 		->join('committee_membership as cm', 'c.id', '=', 'cm.committee')
 		->select('c.*')
+		->distinct()
 		->orderBy('c.committeename', 'asc')
 		->get();
 		return view ( 'home', [ 
