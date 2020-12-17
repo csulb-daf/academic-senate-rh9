@@ -46,3 +46,5 @@ Route::post('/list/charge/update', 'ListController@updateCharge')->name('charge.
 Route::post('/list/charge/destroy', 'ListController@destroyCharge')->name('charge.destroy');
 
 Route::post('/list/rank/add', 'ListController@storeRank')->name('rank.add');
+Route::post('/list/rank/update', 'ListController@updateRank')->name('rank.update');
+Route::post('/list/rank/destroy', 'ListController@destroyRank')->name('rank.destroy');

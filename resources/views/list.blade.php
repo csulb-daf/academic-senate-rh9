@@ -13,7 +13,8 @@
 	<div class="tab-pane active" id="charge">
 		<select class="commSelect form-control" style="margin: 20px 0;" name="commSelect" >
 			<option value="" disabled selected>Select Committee</option>
-		<!-- 	<option value="0">Unassigned</option> -->
+			<option value="0">Unassigned</option>
+			
 			@foreach($chargeComms as $comm)
 				<option value="{{ $comm->id }}">{{ $comm->committeename }}</option>
 			@endforeach
@@ -25,9 +26,9 @@
 		    </div>
 		@endif			
 		
+		<button type="button" class="btn btn-primary" id="addCharge" style="margin-bottom: 20px;"  onclick="javascript:addCharge();">Add Charge Membership</button>
 		<h2 class="tableTitle">List Management : <span></span></h2>
 		<table id="chargeTable" class="display" style="width: 100%"></table>
-		<button type="button" class="btn btn-primary" id="addCharge" style="display: none; float: left;"  onclick="javascript:addCharge();">Add Charge Membership</button>
 	</div>
 
 	<div class="tab-pane" id="community">
@@ -45,9 +46,9 @@
 		    </div>
 		@endif			
 		
+		<button type="button" class="btn btn-primary" id="addCommunity" style="margin-bottom: 20px;"   onclick="javascript:addCommunity();">Add Community Member</button>
 		<h2 class="tableTitle">List Managment : <span></span></h2>
 		<table id="communityTable" class="display" style="width: 100%"></table>
-		<button type="button" class="btn btn-primary" id="addCommunity" style="display: none; float: left;"  onclick="javascript:addCommunity();">Add Community Member</button>
 	</div>
 	
 	<div class="tab-pane" id="rank">
@@ -99,7 +100,8 @@ $(document).ready(function() {
 	var table1 = $('#chargeTable').DataTable({
 		autoWidth: false,
 		createdRow: function(row, data, dataIndex) {
-			setEdit(row, table1, '/list/charge/update', '/list/charge/destroy');
+			//var uri = 	"{{ route('charge.update', [], false) }}";
+			setEdit(row, table1, "{{ route('charge.update', [], false) }}", "{{ route('charge.destroy', [], false) }}");
 		},
     ajax: {
 			url: 'charge-admin',
@@ -110,9 +112,7 @@ $(document).ready(function() {
 			error: function (xhr, error, thrown) {
 				table1.clear().draw();
 			},
-			complete: function() {
-				$("button#addCharge").prependTo("#chargeTable_wrapper").show();
-			}	
+			complete: function() {}
     },
 		columns: [
 			{ title: '#', data: null, defaultContent: '', width: '50px'},
@@ -140,7 +140,7 @@ $(document).ready(function() {
 	var table2 = $('#communityTable').DataTable({
 		autoWidth: false,
 		createdRow: function(row, data, dataIndex) {
-			setEdit(row, table2, '/list/community/update', '/list/community/destroy');
+			setEdit(row, table2, "{{ route('community.update', [], false) }}", "{{ route('community.destroy', [], false) }}");
 		},
     ajax: {
 			url: 'community-members-admin',
@@ -151,9 +151,7 @@ $(document).ready(function() {
 			error: function (xhr, error, thrown) {
 				table2.clear().draw();
 			},
-			complete: function() {
-				$("button#addCommunity").prependTo("#communityTable_wrapper").show();
-			}	
+			complete: function() {}	
     },
 		columns: [
 			{ title: '#', data: null, defaultContent: '', width: '50px'},
@@ -179,7 +177,7 @@ $(document).ready(function() {
 	var table3 = $('#rankTable').DataTable({
 		autoWidth: false,
 		createdRow: function(row, data, dataIndex) {
-			setEdit(row, table3, '/list/rank/update', '/list/rank/destroy');
+			setEdit(row, table3, "{{ route('rank.update', [], false) }}", "{{ route('rank.destroy', [], false) }}");
 		},
     ajax: {
 			url: 'rank-admin',
@@ -244,6 +242,7 @@ function getEditButtons(id) {
 		';
 		return html;
 }
+
 function setEdit(row, table, updateURL, delURL) {
 	$('.edit', row).editable(function(value, settings) {
 		var id = $(this).attr('data-id');
@@ -256,7 +255,7 @@ function setEdit(row, table, updateURL, delURL) {
 			url: updateURL,
 			data: {
 				id: id,
-				charge: value,
+				data: value,
 			},
 		});
 		return value;

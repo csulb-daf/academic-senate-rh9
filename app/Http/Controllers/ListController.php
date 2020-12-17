@@ -114,11 +114,12 @@ class ListController extends Controller {
 	 * @return \Illuminate\Http\Response
 	 */
 	public function updateCommunity(Request $request) {
-		return $request;
+		$nameArr = explode(' ', $request->data);
 		Community::where('id', $request->id)
 		->update([
 				'user_id' => Auth::id(),
-				'charge_membership' => $request->charge,
+				'firstname' => $nameArr[0],
+				'lastname' => $nameArr[1],
 		]);
 		
 		return $request;
@@ -131,8 +132,10 @@ class ListController extends Controller {
 	 * @return \Illuminate\Http\Response
 	 */
 	public function destroyCommunity(Request $request) {
-		return $request;
-		Community::where('id', $request->id)->delete();
+		Community::where('id', $request->id)
+		->update([
+				'active' => 0,
+		]);
 		return $request;
 	}
 	
@@ -181,14 +184,16 @@ class ListController extends Controller {
 		Charge::where('id', $request->id)
 		->update([
 				'user_id' => Auth::id(),
-				'charge_membership' => $request->charge,
+				'charge_membership' => $request->data,
 		]);
 		
 		return $request;
 	}
 
 	public function destroyCharge(Request $request) {
-		Charge::where('id', $request->id)->delete();
+		Charge::where('id', $request->id)
+		->update([	'active' => 0]);
+		
 		return $request;
 	}
 	
@@ -218,14 +223,15 @@ class ListController extends Controller {
 	}
 
 	public function updateRank(Request $request) {
-		return $request;
 		Rank::where('id', $request->id)
-		->update(['rank' => $request->rank]);
+		->update([
+				'user_id' => Auth::id(),
+				'rank' => $request->data
+		]);
 		return $request;
 	}
 
 	public function destroyRank(Request $request) {
-		return $request;
 		Rank::where('id', $request->id)->delete();
 		return $request;
 	}
