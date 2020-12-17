@@ -232,7 +232,8 @@ class ListController extends Controller {
 	}
 
 	public function destroyRank(Request $request) {
-		Rank::where('id', $request->id)->delete();
+		Rank::where('id', $request->id)
+		->update([	'active' => 0]);
 		return $request;
 	}
 

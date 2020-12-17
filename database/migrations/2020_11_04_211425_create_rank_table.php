@@ -18,6 +18,7 @@ class CreateRankTable extends Migration
             $table->unsignedBigInteger('user_id');
             $table->string('rank');
             $table->timestamps();
+            $table->boolean('active')->default(1);
         });
     }
 
