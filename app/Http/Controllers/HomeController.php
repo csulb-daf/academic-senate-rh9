@@ -32,13 +32,13 @@ class HomeController extends Controller {
 		] );
 	}
 	public function ajax(Request $request) {
-// 		return $request;
 		return DB::table('committee_membership as cm')
 		->join('committees as c', 'cm.committee', '=', 'c.id')
 		->join('rank as r', 'cm.rank', '=', 'r.id')
-		->rightJoin('charge_membership as charge', 'cm.charge_memberhip', '=', 'charge.id')
-		->select('cm.*', 'c.committeename as committee',  'r.rank as rank', 'charge.charge_membership as charge')
-		->where('charge.committee', '=', $request->cid)
+		->rightJoin('charge_membership as chm', 'cm.charge', '=', 'chm.charge')
+		->join('charges', 'charges.id', '=', 'chm.charge')
+		->select('cm.*', 'c.id as committee',  'r.rank as rank', 'charges.charge')
+		->where('chm.committee', '=', $request->cid)
 		->get();
 	}
 }

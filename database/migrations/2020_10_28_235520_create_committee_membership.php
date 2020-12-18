@@ -19,13 +19,14 @@ class CreateCommitteeMembership extends Migration
             $table->string('campus_id', 10);
             $table->string('lastname');
             $table->string('firstname');
+            $table->unsignedBigInteger('committee');
+            $table->unsignedBigInteger('charge');
             $table->unsignedBigInteger('rank');
             $table->string('department')->nullable();
             $table->string('college')->nullable();
             $table->string('ext')->nullable();
             $table->string('email')->nullable();
             $table->string('term');
-            $table->unsignedBigInteger('charge_memberhip');
             $table->text('notes')->nullable();
             $table->boolean('private')->default(0);
             $table->boolean('alternate')->default(0);
