@@ -6,9 +6,10 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use App\Members;
-use phpDocumentor\Reflection\Types\Object_;
+use App\Traits\TableData;
 
 class MembersController extends Controller {
+	use TableData;
 	
 	/**
 	 * Create a new controller instance.
@@ -29,13 +30,8 @@ class MembersController extends Controller {
 	}
 
 	public function ajax($cid) {
-		return DB::table('committee_membership as cm')
-		->join('committees as c', 'cm.committee', '=', 'c.id')
-		->join('rank as r', 'cm.rank', '=', 'r.id')
-		->rightJoin('charge_membership as charge', 'cm.charge_memberhip', '=', 'charge.id')
-		->select('cm.*', 'c.committeename as committee',  'r.rank as rank', 'charge.charge_membership as charge')
-		->where('charge.committee', '=', $cid)
-		->get();
+// 		return $cid;
+		return $this->getCommitteeData($cid);
 	}
 	
 	/**

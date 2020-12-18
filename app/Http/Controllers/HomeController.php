@@ -4,8 +4,11 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use App\Traits\TableData;
 
 class HomeController extends Controller {
+	use TableData;
+	
 	/**
 	 * Create a new controller instance.
 	 *
@@ -31,14 +34,10 @@ class HomeController extends Controller {
 				'comms' => $comms
 		] );
 	}
+
 	public function ajax(Request $request) {
-		return DB::table('committee_membership as cm')
-		->join('committees as c', 'cm.committee', '=', 'c.id')
-		->join('rank as r', 'cm.rank', '=', 'r.id')
-		->rightJoin('charge_membership as chm', 'cm.charge', '=', 'chm.charge')
-		->join('charges', 'charges.id', '=', 'chm.charge')
-		->select('cm.*', 'c.id as committee',  'r.rank as rank', 'charges.charge')
-		->where('chm.committee', '=', $request->cid)
-		->get();
+		$cid = $request->cid;
+		return $this->getCommitteeData($cid);
 	}
+	
 }
