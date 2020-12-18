@@ -9,8 +9,9 @@
     </div>
 @endif			
 
+<button type="button" class="btn btn-primary" id="addMember" style="margin-bottom: 20px;"  onclick="javascript:addMember({{ $cid }});">Add New Committee Member</button>
+<h2 style="font-weight: bold;">{{ $cname }}</h2>
 <table id="memberAdmin" class="display"></table>
-<button type="button" class="btn btn-primary" id="addMember" style="display: none; float: left;"  onclick="javascript:addMember({{ $cid }});">Add New Committee Member</button>
 @endsection 
 
 @section('scripts')
@@ -25,11 +26,11 @@ $(document).ready(function() {
 			},
 			
 			complete: function() {
-				$('.dataTables_length').css({
-					'float' : 'right',
-					'margin-left' : '30px'
-				});
-				$("button#addMember").prependTo("#memberAdmin_wrapper").show();
+// 				$('.dataTables_length').css({
+// 					'float' : 'right',
+// 					'margin-left' : '30px'
+// 				});
+// 				$("button#addMember").prependTo("#memberAdmin_wrapper").show();
 			}
     },
 		

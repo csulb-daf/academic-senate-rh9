@@ -63,7 +63,7 @@
 					<option value="">Select</option>
 					
 					@foreach ($charges as $charge)
-						<option value="{{ $charge->id }}" {{ old('chargeSelect') == $charge->id ? 'selected' : '' }} >{{ $charge->charge_membership }}</option>
+						<option value="{{ $charge->id }}" {{ old('chargeSelect') == $charge->id ? 'selected' : '' }} >{{ $charge->charge }}</option>
 					@endForeach
 				</select>
 			</div>

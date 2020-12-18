@@ -29,6 +29,15 @@ Route::get('/committee/members/{cid}/ajax', 'MembersController@ajax')->name('com
 Route::get('/committee/members/{cid}/add', 'MembersController@create')->name('members.add');
 Route::post('/committee/members/{cid}/add', 'MembersController@store')->name('members.add');
 
+/*** Charge Pages ***/
+Route::get('/charge', 'ChargeController@index')->name('charge');
+Route::get('/charge/admin', 'ChargeController@getChargeMemberships')->name('charge.admin');
+// Route::get('/charge/form', 'ChargeController@create');
+// Route::get('/charge/add', 'ChargeController@create');
+// Route::post('/charge/add', 'ChargeController@store');
+
+Route::get('/charge/membership/{cid}', 'ChargeController@indexMembership')->name('charge.assign');
+
 /*** List Pages ***/
 Route::get('/list', 'ListController@index')->name('list');
 Route::get('/charge-admin', 'ListController@getChargeMembership');

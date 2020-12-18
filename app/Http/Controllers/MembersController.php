@@ -26,11 +26,18 @@ class MembersController extends Controller {
 	 * @return \Illuminate\Contracts\Support\Renderable
 	 */
 	public function index($cid) {
-		return view('members', ['cid' => $cid]);
+		$request = DB::table('committees')
+		->select('committeename')
+		->where('id', '=', $cid)
+		->first();
+		
+		return view('members', [
+				'cid' => $cid, 
+				'cname' => $request->committeename,
+		]);
 	}
 
 	public function ajax($cid) {
-// 		return $cid;
 		return $this->getCommitteeData($cid);
 	}
 	
@@ -40,15 +47,15 @@ class MembersController extends Controller {
 	 * @return \Illuminate\Http\Response
 	 */
 	public function create($cid) {
-		//$charges = DB::table('charge_membership')->select('id', 'charge_membership')->get();
+		$charges = DB::table('charge_membership')->select('id', 'charge')->get();
 		
-		$charges = DB::table('charge_membership')
-		//->join('committee_membership as cm', 'cm.id', '=', 'charge.committee')
-		->select('id', 'charge_membership')
-		->where('committee', '=', $cid)
-		->orderBy('charge_membership', 'asc')
-		//->distinct()
-		->get();
+// 		$charges = DB::table('charge_membership')
+// 		//->join('committee_membership as cm', 'cm.id', '=', 'charge.committee')
+// 		->select('id', 'charge_membership')
+// 		->where('committee', '=', $cid)
+// 		->orderBy('charge_membership', 'asc')
+// 		//->distinct()
+// 		->get();
 		
 		$ranks = DB::table('rank')->select('id', 'rank')->get();
 		
