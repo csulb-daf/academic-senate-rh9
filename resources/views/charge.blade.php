@@ -4,7 +4,7 @@
 
 @section('content')
 <table id="chargeAdmin" class="display"></table>
-<button type="button" class="btn btn-primary" id="addChargeMem" style="display: none; float: left;"  onclick="javascript:addChargeMem();">Add New Charge Membership</button>
+{{-- <button type="button" class="btn btn-primary" id="addChargeMem" style="display: none; float: left;"  onclick="javascript:addChargeMem();">Add New Charge Membership</button> --}}
 @endsection 
 
 @section('scripts')
@@ -19,19 +19,19 @@ $(document).ready(function() {
 			},
 			
 			complete: function() {
-				$('.dataTables_length').css({
-					'float' : 'right',
-					'margin-left' : '30px'
-				});
-				$("button#addChargeMem").prependTo("#chargeAdmin_wrapper").show();
+// 				$('.dataTables_length').css({
+// 					'float' : 'right',
+// 					'margin-left' : '30px'
+// 				});
+// 				$("button#addChargeMem").prependTo("#chargeAdmin_wrapper").show();
 			}
     },
 		columns: [
-			{ title: 'Charge Name', data: 'chargeName' },
+			{ title: 'Charge Name', data: 'charge' },
 			
 			{ title: 'Assignments', data: null, defaultContent: '',
 				render: function ( data, type, row ) {
-					//console.log(data);
+					//console.log('id', data.id);
     			return '<button type="button" class="btn btn-light border" onclick="javascrtipt:assignCharge('+ data.id +')">Edit</button>';
 				}			
 			}
@@ -46,9 +46,9 @@ $(document).ready(function() {
 	
 });
 
-function addChargeMem() {
-	window.location = "{{ url('/charge/add') }}";
-}
+// function addChargeMem() {
+// 	window.location = "{{ url('/charge/add') }}";
+// }
 
 function assignCharge(id) {
 	var url = 	"{{ route('charge.assign', ['id'=>':id']) }}";
