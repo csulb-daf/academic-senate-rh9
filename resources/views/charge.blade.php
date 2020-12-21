@@ -51,7 +51,7 @@ $(document).ready(function() {
 // }
 
 function assignCharge(id) {
-	var url = 	"{{ route('charge.assign', ['id'=>':id']) }}";
+	var url = 	"{{ route('charge.assignments', ['id'=>':id']) }}";
 	url = url.replace(':id', id);
 	window.location = url;
 }

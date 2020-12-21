@@ -33,9 +33,8 @@ class ChargeController extends Controller {
 	public function getMembership($chargeID) {
 		$comms = DB::table('committees')
 		->select('id', 'committeename')
+		->orderBy('committeename', 'asc')
 		->get();
-		
-// 		return $comms;
 		
 		$request = DB::table('charges')
 		->select('charge')
@@ -58,6 +57,8 @@ class ChargeController extends Controller {
 	}
 	
 	public function store(Request $request) {
+// 		return $request;
+		
 		$validatedData = request()->validate ( [
 				'committee' => 'required',
 		], [
@@ -68,13 +69,17 @@ class ChargeController extends Controller {
 			$charge = new ChargeMembership();
 			$charge->user_id = Auth::id();
 			$charge->committee = $request->committee;
-			//$charge->save ();
+// 			$charge->save();
 			
-			return redirect()->route('charge.assign')->withInput($request->all)->with('committee', 'New Committee Added');
+			//return back()->withInput($request->all)->with('committee', 'New Committee Added');
+			return response()->json([
+				'message' => 'New Committee Added',
+				'commName' => $request->commName,
+			]);
 		}
-		else {
-			return redirect()->route('charge.assign')->withInput($request->all)->with('error');
-		}
+// 		else {
+// 			return redirect()->route('charge.assign')->withInput($request->all)->with('error');
+// 		}
 	}
 	
 }

@@ -4,7 +4,7 @@
 
 @section('content')
 <h2 style="font-weight: bold;">{{ $chargeName }}</h2>
-<table id="chargeAssign" class="display"></table>
+<table id="chargeMembership" class="display"></table>
 
 <form method="POST" id="chargeForm" action="javascript:void(0);">
 	@csrf
@@ -24,8 +24,9 @@
 	    <div class="alert alert-success">
 	        {{ session()->get('committee') }}
 	    </div>
-	@endif			
-
+	@endif
+	
+	<div id="messageContainer" style="display: none;"></div>
 	<div class="input-group">
 		<button class="btn btn-primary " type="submit">Add Committee</button>
 <!-- 		<input class="form-control {{ $errors->has('committee')? 'is-invalid' : '' }}" type="text" name="committee" id="committee" value="" > -->
@@ -38,23 +39,55 @@
 @section('scripts')
 <script>
 $(document).ready(function() {
+	$('select.commSelect').change(function() {
+		$(this).removeClass('is-invalid');
+	});
+	
 	$('form#chargeForm').submit(function(e) {
 		e.preventDefault();
+		var comm = $(this).find('select.commSelect').val();
+		var commName = $(this).find('select.commSelect').find('option:selected').text();
+		//console.log(commName);
 
 		$.ajax({
 			headers: {
 				'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
 			},
 			type: 'post',
-			url: '{{ route('charge.assign.new') }}',
-			data: {},
+			url: '{{ route('charge.assignments.add') }}',
+			data: {
+				committee: comm,
+				commName: commName
+			},
+
+			success:  function(response) {
+				console.log(response);
+				$('select.commSelect').removeClass('is-invalid');
+				table.row.add({
+					'commName': commName,
+				}).draw(false);
+
+				$('#messageContainer').html('<div class="alert alert-success">'+ response.message +'</div>').fadeIn();
+							
+			},
+			error: function(err) {
+				//console.log(err);
+				if(err.status == 422) {
+					$('select.commSelect').addClass('is-invalid');
+					$('#messageContainer').html('<div class="alert alert-danger">'+ err.responseJSON.errors.committee +'</div>').fadeIn();
+
+// 					$.each(err.responseJSON.errors, function (i, error) {
+// 						console.log(error[0]);
+// 					});	
+				}
+			},
 
 		});
 	});
 	
-	var table = $('#chargeAssign').DataTable({
+	var table = $('#chargeMembership').DataTable({
     ajax: {
-			url: "/charge/membership/{{ $id }}/ajax",
+			url: "/charge/assignments/{{ $id }}/ajax",
 // 			data: function(d) {
 // 				d.id = $('#charge .commSelect').val();
 // 			},
@@ -97,7 +130,7 @@ $(document).ready(function() {
 			sortable: false,
 		}],
 		
-	});		
+	});	
 	
 });
 
@@ -106,7 +139,7 @@ function addChargeMem() {
 }
 
 function assignCharge(id) {
-	var url = 	"{{ route('charge.assign', ['id'=>':id']) }}";
+	var url = 	"{{ route('charge.assignments', ['id'=>':id']) }}";
 	url = url.replace(':id', id);
 	window.location = url;
 }
