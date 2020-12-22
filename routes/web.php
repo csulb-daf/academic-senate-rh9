@@ -31,9 +31,10 @@ Route::post('/committee/members/{cid}/add', 'MembersController@store')->name('me
 
 /*** Charge Membership Pages ***/
 Route::get('/charge', 'ChargeController@index')->name('charge');
-Route::get('/charge/admin', 'ChargeController@getCharges')->name('charge.admin');
+Route::get('/charge/admin', 'ChargeController@getComms')->name('charge.admin');
 Route::get('/charge/assignments/{id}', 'ChargeController@getMembership')->name('charge.assignments');
 Route::get('/charge/assignments/{id}/ajax', 'ChargeController@getMembershipAjax')->name('charge.assignments.ajax');
+Route::get('/charge/assignments/{id}/charges/ajax', 'ChargeController@getCharges')->name('charges.list.ajax');
 Route::post('/charge/assignments/add', 'ChargeController@store')->name('charge.assignments.add');
 Route::post('/charge/assignments/update', 'ChargeController@update')->name('charge.assignments.update');
 

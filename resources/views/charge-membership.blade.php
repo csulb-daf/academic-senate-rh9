@@ -3,8 +3,9 @@
 @section('title', 'Charge Management')
 
 @section('content')
-<h2 style="font-weight: bold;">{{ $chargeName }}</h2>
+<h2 style="font-weight: bold;">{{ $commName }}</h2>
 <table id="chargeMembership" class="display"></table>
+<table id="charges" class="display"></table>
 
 <form method="POST" id="chargeForm" action="javascript:void(0);">
 	@csrf
@@ -27,13 +28,12 @@
 	@endif
 	
 	<div id="messageContainer" style="display: none;"></div>
-	<div class="input-group">
-		<button class="btn btn-primary " type="submit">Add Committee</button>
-<!-- 		<input class="form-control {{ $errors->has('committee')? 'is-invalid' : '' }}" type="text" name="committee" id="committee" value="" > -->
-		@include('partials.committee-select') 
-	</div>
+<!-- 	<div class="input-group"> -->
+<!-- 		<button class="btn btn-primary " type="submit">Add Committee</button> -->
+<!-- 	</div> -->
 </form>	
 
+<button type="button" class="btn btn-light btn-sm addButton2" data-id="268">Add</button>\
 @endsection 
 
 @section('scripts')
@@ -43,7 +43,7 @@ $(document).ready(function() {
 		$(this).removeClass('is-invalid');
 	});
 	
-	$('form#chargeForm').submit(function(e) {
+	/*$('form#chargeForm').submit(function(e) {
 		e.preventDefault();
 		var comm = $(this).find('select.commSelect').val();
 		var commName = $(this).find('select.commSelect').find('option:selected').text();
@@ -55,7 +55,7 @@ $(document).ready(function() {
 			type: 'post',
 			url: '{{ route('charge.assignments.add') }}',
 			data: {
-				charge: {{ $id }},
+				charge: {{ $commID }},
 				committee: comm,
 			},
 
@@ -82,52 +82,113 @@ $(document).ready(function() {
 			},
 
 		});
-	});
-	
+	});*/
+
 	var table = $('#chargeMembership').DataTable({
 		paging: false,
+		searching: false,
+		//info: false,
 		autoWidth: false,
     ajax: {
-			url: "/charge/assignments/{{ $id }}/ajax",
-// 			data: function(d) {
-// 				d.id = $('#charge .commSelect').val();
-// 			},
-			
+			url: "/charge/assignments/{{ $commID }}/ajax",
 			dataSrc: '',
 			error: function (xhr, error, thrown) {
 				table.clear().draw();
 			},
-			
 			complete: function() {
 			}
     },
 		columns: [
-			{ title: 'Committee Name', data: 'commName' },
-			
+			{ title: 'Charge Name', data: 'chargeName' },
 			{ title: 'Actions', data: null, defaultContent: '', width: '120px',
 				render: function ( data, type, row ) {
-					return getEditButtons(row.id);	    			
+					//return getEditButtons(row.id);
+
+					var html='\
+						<div class="editButtons">\
+								<button type="button" class="btn btn-danger btn-sm removeButton" data-id="'+ data.charge +'">Remove</button>\
+						</div>\
+						<div class="delButtons" style="display: none;">\
+							<button type="button" class="btn btn-danger btn-sm confirmDelete" >Confirm</button>\
+							<button type="button" class="btn btn-light btn-sm cancelDelete">Cancel</button>\
+						</div>\
+						';
+						return html;
+						    			
 				}	
 			}
 		],
-		
 		columnDefs: [{		//Assignments column
 			targets:  1,
 			sortable: false,
 		}],
-		
+	});	
+
+	var chargesTable = $('#charges').DataTable({
+		autoWidth: false,
+    ajax: {
+			url: "/charge/assignments/{{ $commID }}/charges/ajax",
+			dataSrc: '',
+			error: function (xhr, error, thrown) {
+				table.clear().draw();
+			},
+			complete: function() {
+				$('button.addButton').click(function() {
+					var chargeID = $(this).attr('data-id');
+					console.log(chargeID);
+			 		$.ajax({
+			 			headers: {
+			 				'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+			 			},
+			 			type: 'post',
+			 			url: '{{ route('charge.assignments.add') }}',
+			 			data: {
+			 				charge: chargeID,
+			 				committee: {{ $commID }}
+			 			},
+			 		});
+				});
+			}
+    },
+		columns: [
+			{ title: 'Charge Name', data: 'charge' },
+			{ title: 'Actions', data: null, defaultContent: '', width: '120px',
+				render: function ( data, type, row ) {
+					//return getEditButtons(row.id);
+					var html='\
+						<div class="editButtons">\
+							<button type="button" class="btn btn-light btn-sm addButton" data-id="'+ data.id +'">Add</button>\
+						</div>\
+						<div class="delButtons" style="display: none;">\
+							<button type="button" class="btn btn-success btn-sm addedButton">Added</button>\
+						</div>\
+						';
+						return html;
+				}	
+			}
+		],
+		columnDefs: [{		//Assignments column
+			targets:  1,
+			sortable: false,
+		}],
 	});	
 	
-});
+});		//$(document).ready(function() {
 
-function addChargeMem() {
-	window.location = "{{ url('/charge/add') }}";
+function getEditButtons(id) {
+	var html='\
+		<div class="editButtons">\
+				<button type="button" class="btn btn-light btn-sm editButton">Edit</button>\
+				<button type="button" class="btn btn-danger btn-sm deleteButton">Delete</button>\
+				<img src="/images/check.svg" class="saved" style="width: 35px; display: none;">\
+			</div>\
+			<div class="delButtons" style="display: none;">\
+					<button type="button" class="btn btn-danger btn-sm confirmDelete" data-id="'+ id +'">Confirm</button>\
+					<button type="button" class="btn btn-light btn-sm cancelDelete">Cancel</button>\
+				</div>\
+		';
+		return html;
 }
-
-function assignCharge(id) {
-	var url = 	"{{ route('charge.assignments', ['id'=>':id']) }}";
-	url = url.replace(':id', id);
-	window.location = url;
-}
+	
 </script>
 @endsection

@@ -30,6 +30,11 @@ tr.added td {
   }
 }
 
+/*** Charge Membership Pages ***/
+#chargeMembership_wrapper {
+	margin-bottom: 30px;
+}
+
 /*** datatables override ***/
 table.dataTable thead .sorting {
 	background-image: url("/images/sort_both.png")

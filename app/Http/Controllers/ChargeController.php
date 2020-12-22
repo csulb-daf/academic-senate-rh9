@@ -26,37 +26,39 @@ class ChargeController extends Controller {
 		return view('charge');
 	}
 	
-	public function getCharges() {
-		return DB::table('charges')->get();
+	public function getComms() {
+		return DB::table('committees')->select('id', 'committeename as comm')->get();
 	}
 	
-	public function getMembership($chargeID) {
+	public function getMembership($commID) {
 		$comms = DB::table('committees')
-		->select('id', 'committeename')
-		->orderBy('committeename', 'asc')
-		->get();
-		
-		$request = DB::table('charges')
-		->select('charge')
-		->where('id', '=', $chargeID)
+		->select('committeename')
+		->where('id', '=', $commID)
 		->first();
 		
 		return view('charge-membership', [
-			'id' => $chargeID,
-			'chargeName' => $request->charge,
-			'comms' => $comms,
+			'commID' => $commID,
+			'commName' => $comms->committeename,
 		]);
 	}
-	
-	public function getMembershipAjax($chargeID) {
+
+	public function getMembershipAjax($commID) {
 		return  DB::table( 'charge_membership as chm' )
-		->join('committees as c', 'chm.committee', '=', 'c.id')
-		->select('c.committeename as commName' )
-		->where('chm.charge', '=', $chargeID)
+		->join('charges as c', 'chm.charge', '=', 'c.id')
+		->select('chm.charge', 'c.charge as chargeName' )
+		->where('chm.committee', '=', $commID)
+		->get();
+	}
+	
+	public function getCharges() {
+		return DB::table('charges')
+		->select('id', 'charge')
+		->orderBy('charge', 'asc')
 		->get();
 	}
 	
 	public function store(Request $request) {
+// 		return $request;
 		$validatedData = request()->validate ( [
 				'committee' => 'required',
 		], [
@@ -68,10 +70,10 @@ class ChargeController extends Controller {
 			$charge->user_id = Auth::id();
 			$charge->committee = $request->committee;
 			$charge->charge = $request->charge;
-			$charge->save();
+// 			$charge->save();
 			
 			return response()->json([
-				'message' => 'New Committee Added',
+				'message' => 'New Charge Added',
 			]);
 		}
 	}

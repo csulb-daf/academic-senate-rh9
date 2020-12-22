@@ -27,7 +27,7 @@ $(document).ready(function() {
 			}
     },
 		columns: [
-			{ title: 'Charge Name', data: 'charge' },
+			{ title: 'Committee Name', data: 'comm' },
 			
 			{ title: 'Assignments', data: null, defaultContent: '',
 				render: function ( data, type, row ) {
