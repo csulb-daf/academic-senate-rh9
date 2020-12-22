@@ -35,7 +35,7 @@ Route::get('/charge/admin', 'ChargeController@getCharges')->name('charge.admin')
 Route::get('/charge/assignments/{id}', 'ChargeController@getMembership')->name('charge.assignments');
 Route::get('/charge/assignments/{id}/ajax', 'ChargeController@getMembershipAjax')->name('charge.assignments.ajax');
 Route::post('/charge/assignments/add', 'ChargeController@store')->name('charge.assignments.add');
-
+Route::post('/charge/assignments/update', 'ChargeController@update')->name('charge.assignments.update');
 
 /*** List Pages ***/
 Route::get('/list', 'ListController@index')->name('list');

@@ -47,7 +47,6 @@ $(document).ready(function() {
 		e.preventDefault();
 		var comm = $(this).find('select.commSelect').val();
 		var commName = $(this).find('select.commSelect').find('option:selected').text();
-		//console.log(commName);
 
 		$.ajax({
 			headers: {
@@ -56,19 +55,19 @@ $(document).ready(function() {
 			type: 'post',
 			url: '{{ route('charge.assignments.add') }}',
 			data: {
+				charge: {{ $id }},
 				committee: comm,
-				commName: commName
 			},
 
 			success:  function(response) {
-				console.log(response);
 				$('select.commSelect').removeClass('is-invalid');
-				table.row.add({
-					'commName': commName,
-				}).draw(false);
-
 				$('#messageContainer').html('<div class="alert alert-success">'+ response.message +'</div>').fadeIn();
-							
+				
+				var row = table.row.add({
+					'commName': commName,
+				}).draw(false).node(1);
+				$(row).addClass('added');
+
 			},
 			error: function(err) {
 				//console.log(err);
@@ -86,6 +85,8 @@ $(document).ready(function() {
 	});
 	
 	var table = $('#chargeMembership').DataTable({
+		paging: false,
+		autoWidth: false,
     ajax: {
 			url: "/charge/assignments/{{ $id }}/ajax",
 // 			data: function(d) {
@@ -103,25 +104,10 @@ $(document).ready(function() {
 		columns: [
 			{ title: 'Committee Name', data: 'commName' },
 			
-			{ title: 'Assignments', data: null, defaultContent: '',
+			{ title: 'Actions', data: null, defaultContent: '', width: '120px',
 				render: function ( data, type, row ) {
-					//console.log('id', data.id);
-    			//return '<button type="button" class="btn btn-light border" onclick="javascrtipt:assignCharge('+ data.id +')">Edit</button>';
-
-					var html='\
-						<div class="editButtons">\
-								<button type="button" class="btn btn-light btn-sm editButton">Edit</button>\
-								<button type="button" class="btn btn-danger btn-sm deleteButton">Delete</button>\
-								<img src="/images/check.svg" class="saved" style="width: 35px; display: none;">\
-							</div>\
-							<div class="delButtons" style="display: none;">\
-									<button type="button" class="btn btn-danger btn-sm confirmDelete" data-id="'+ data.id +'">Confirm</button>\
-									<button type="button" class="btn btn-light btn-sm cancelDelete">Cancel</button>\
-								</div>\
-						';
-						return html;
-	    			
-				}			
+					return getEditButtons(row.id);	    			
+				}	
 			}
 		],
 		
