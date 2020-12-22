@@ -24,10 +24,14 @@ class ChargeController extends Controller {
 	 */
 	public function index() {
 		return view('charge');
-	}
+	} 
 	
 	public function getComms() {
-		return DB::table('committees')->select('id', 'committeename as comm')->get();
+		return DB::table('committees as c')
+		->select('c.id', 'c.committeename as comm', DB::raw('count(cm.committee) as assignments'))
+		->leftJoin('charge_membership as cm', 'c.id', '=', 'cm.committee')
+		->groupBy('c.id')
+		->get();
 	}
 	
 	public function getMembership($commID) {
@@ -58,24 +62,11 @@ class ChargeController extends Controller {
 	}
 	
 	public function store(Request $request) {
-// 		return $request;
-		$validatedData = request()->validate ( [
-				'committee' => 'required',
-		], [
-				'committee.required' => 'Please Enter Committee',
-		] );
-
-		if ($validatedData) {
-			$charge = new ChargeMembership();
-			$charge->user_id = Auth::id();
-			$charge->committee = $request->committee;
-			$charge->charge = $request->charge;
-// 			$charge->save();
-			
-			return response()->json([
-				'message' => 'New Charge Added',
-			]);
-		}
+		$charge = new ChargeMembership();
+		$charge->user_id = Auth::id();
+		$charge->committee = $request->committee;
+		$charge->charge = $request->charge;
+		$charge->save();
 	}
 	
 	public function update(Request $request) {
