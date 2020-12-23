@@ -51,6 +51,15 @@ $(document).ready(function() {
 		autoWidth: false,
 		createdRow: function(row, data, dataIndex) {
 			$('button.addButton', row).click(function() {
+				$(this).hide();
+				$(this).siblings('div.confirmButtons').show();
+			});
+			$('button.cancelButton', row).click(function() {
+				$(this).closest('div.confirmButtons').hide();
+				$(this).closest('div.confirmButtons').siblings('button.addButton').show();
+			});
+			
+			$('button.confirmButton', row).click(function() {
 				var that = $(this);
 				var chargeID = that.attr('data-id');
 				var chargeName = that.closest('tr').find('td.chargeName').text().trim();
@@ -73,7 +82,7 @@ $(document).ready(function() {
 						}).draw(false).node();
 
 						$(row).addClass('added');
-						that.hide().next('button.addedButton').show();
+						that.closest('div.confirmButtons').hide().siblings('button.addedButton').show();
 					}
 		 		});		//ajax
 			});		//$('button.addButton').click
@@ -99,6 +108,10 @@ $(document).ready(function() {
 						html='\
 							<button type="button" class="btn btn-light btn-sm addButton" data-id="'+ data.id +'">Add</button>\
 							<button type="button" class="btn btn-success btn-sm addedButton" style="display: none; opacity: 1;" disabled>Added</button>\
+							<div class="confirmButtons" style="display: none">\
+								<button type="button" class="btn btn-success btn-sm confirmButton" data-id="'+ data.id +'">Confirm</button>\
+								<button type="button" class="btn btn-light btn-sm cancelButton">Cancel</button>\
+							</div>\
 						';
 					}
 					else {
