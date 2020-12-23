@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Community;
 use App\Charges;
 use App\Rank;
+use App\Committees;
 
 class ListController extends Controller {
 	/**
@@ -32,15 +33,8 @@ class ListController extends Controller {
 		->distinct()
 		->get();
 		
-		$chargeComms = DB::table('committees as c')
-		->join('charge_membership as charge', 'c.id', '=', 'charge.committee')
-		->select('c.*')
-		->orderBy('c.committeename', 'asc')
-		->distinct()
-		->get();
 		return view ( 'list', [
-				'chargeComms' => $chargeComms,
-				'communityComms' => $communityComms
+			'communityComms' => $communityComms
 		] );
 	}
 	
@@ -58,8 +52,8 @@ class ListController extends Controller {
 	 * @return \Illuminate\Http\Response
 	 */
 	public function createCommunity() {
-		$charges = DB::table ( 'charge_membership' )->select ( 'id', 'charge_membership' )->get ();
-		$comms = DB::table ( 'committees' )->select ( 'id', 'committeename' )->get ();
+		$charges = Charges::all( 'id', 'charge' );
+		$comms = Committees::all( 'id', 'committeename' );
 
 		return view ( 'community-form', [ 
 				'charges' => $charges,
