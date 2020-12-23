@@ -57,12 +57,12 @@ class ChargeController extends Controller {
 	public function getCharges($commID) {
 		return DB::table('charges as c')
 		->select('c.id', 'c.charge',
-			DB::raw("if(cm.charge is not null, 'yes', 'no') as assigned")
+			DB::raw("if(count(cm.charge) > 0, 'yes', 'no') as assigned")
 		)
 		->leftJoin('charge_membership as cm', function($join) use($commID) {
 			$join->on('c.id', '=', 'cm.charge')->on('cm.committee', '=', DB::raw($commID));
 		})
-		->groupBy('c.id', 'c.charge', 'assigned')
+		->groupBy('c.id')
 		->orderBy('c.charge', 'asc')
 		->get();
 	}
@@ -76,17 +76,17 @@ class ChargeController extends Controller {
 	}
 	
 	public function update(Request $request) {
-		Rank::where('id', $request->id)
-		->update([
-				'user_id' => Auth::id(),
-				'rank' => $request->data
-		]);
+// 		Rank::where('id', $request->id)
+// 		->update([
+// 				'user_id' => Auth::id(),
+// 				'rank' => $request->data
+// 		]);
 		return $request;
 	}
 	
 	public function destroy(Request $request) {
-		Rank::where('id', $request->id)
-		->update([	'active' => 0]);
+// 		Rank::where('id', $request->id)
+// 		->update([	'active' => 0]);
 		return $request;
 	}
 	
