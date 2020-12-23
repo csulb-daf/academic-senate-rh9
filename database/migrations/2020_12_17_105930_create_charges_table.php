@@ -18,7 +18,7 @@ class CreateChargesTable extends Migration
             $table->unsignedBigInteger('user_id');
             $table->string('charge');
             $table->timestamps();
-            $table->boolean('active')->default(1);
+            $table->softDeletes();
         });
     }
 

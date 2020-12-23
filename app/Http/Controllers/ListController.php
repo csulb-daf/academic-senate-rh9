@@ -132,16 +132,13 @@ class ListController extends Controller {
 	 * @return \Illuminate\Http\Response
 	 */
 	public function destroyCommunity(Request $request) {
-		Community::where('id', $request->id)
-		->update([
-				'active' => 0,
-		]);
+		Community::where('id', $request->id)->delete();
 		return $request;
 	}
 	
 	/*** Charge Membership ***/
 	public function getCharges() {
-		return DB::table('charges')->select('id', 'charge')->get();
+		return Charges::all('id', 'charge');
 	}
 	
 	public function storeCharge(Request $request) {
@@ -175,15 +172,13 @@ class ListController extends Controller {
 	}
 
 	public function destroyCharge(Request $request) {
-		Charges::where('id', $request->id)
-		->update([	'active' => 0]);
-		
+		Charges::where('id', $request->id)->delete();
 		return $request;
 	}
 	
 	/*** Rank ***/
 	public function getRank() {
-		return DB::table ( 'rank' )->select('id', 'rank')->get();
+		return Rank::all('id', 'rank');
 	}
 	
 	public function storeRank(Request $request) {
@@ -216,8 +211,7 @@ class ListController extends Controller {
 	}
 
 	public function destroyRank(Request $request) {
-		Rank::where('id', $request->id)
-		->update([	'active' => 0]);
+		Rank::where('id', $request->id)->delete();
 		return $request;
 	}
 

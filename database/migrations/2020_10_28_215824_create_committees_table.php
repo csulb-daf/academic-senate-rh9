@@ -20,7 +20,7 @@ class CreateCommitteesTable extends Migration
             $table->string('meetingtimes_locations',255)->nullable();
             $table->text('notes')->nullable();
             $table->timestamps();
-            $table->boolean('active')->default(1);
+            $table->softDeletes();
         });
     }
 

@@ -31,7 +31,7 @@ class CreateCommitteeMembership extends Migration
             $table->boolean('private')->default(0);
             $table->boolean('alternate')->default(0);
             $table->timestamps();
-            $table->boolean('active')->default(1);
+            $table->softDeletes();
         });
     }
 

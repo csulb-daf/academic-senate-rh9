@@ -23,7 +23,7 @@ class CreateCommunityMembersTable extends Migration
             $table->unsignedBigInteger('committee');
             $table->string('notes')->nullable();
             $table->timestamps();
-            $table->boolean('active')->default(1);
+            $table->softDeletes();
         });
     }
 

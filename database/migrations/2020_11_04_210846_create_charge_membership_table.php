@@ -19,7 +19,7 @@ class CreateChargeMembershipTable extends Migration
             $table->unsignedBigInteger('charge');
 						$table->unsignedBigInteger('committee');
             $table->timestamps();
-            $table->boolean('active')->default(1);
+            $table->softDeletes();
         });
     }
 
