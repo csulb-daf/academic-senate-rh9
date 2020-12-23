@@ -4,34 +4,13 @@
 
 @section('content')
 <nav class="nav nav-tabs" id="tabMenu" style="text-align: center;">
-	<a href="#charge" data-toggle="tab" class="nav-item nav-link active">Charge Membership<span style="display: block">(Requires Committee Selection)</span></a>
-	<a href="#community" data-toggle="tab" class="nav-item nav-link">Community Members<span style="display: block">(Requires Committee Selection)</span></a>
+	<a href="#community" data-toggle="tab" class="nav-item nav-link active">Community Members<span style="display: block">(Requires Committee Selection)</span></a>
+	<a href="#charge" data-toggle="tab" class="nav-item nav-link">Charge Membership<span style="display: block">(Global List)</span></a>
 	<a href="#rank" data-toggle="tab" class="nav-item nav-link">Rank<span style="display: block">(Global List)</span></a>
 </nav>
 
 <div class="tab-content">
-	<div class="tab-pane active" id="charge">
-		<select class="commSelect form-control" style="margin: 20px 0;" name="commSelect" >
-			<option value="" disabled selected>Select Committee</option>
-			<option value="0">Unassigned</option>
-			
-			@foreach($chargeComms as $comm)
-				<option value="{{ $comm->id }}">{{ $comm->committeename }}</option>
-			@endforeach
-		</select>
-	
-		@if(session()->has('charge'))
-		    <div class="alert alert-success">
-		        {{ session()->get('charge') }}
-		    </div>
-		@endif			
-		
-		<button type="button" class="btn btn-primary" id="addCharge" style="margin-bottom: 20px;"  onclick="javascript:addCharge();">Add Charge Membership</button>
-		<h2 class="tableTitle">List Management : <span></span></h2>
-		<table id="chargeTable" class="display" style="width: 100%"></table>
-	</div>
-
-	<div class="tab-pane" id="community">
+	<div class="tab-pane active" id="community">
 		<select class="commSelect form-control" style="margin: 20px 0;" name="commSelect" >
 			<option value="" disabled selected>Select Committee</option>
 		<!-- 	<option value="0">Unassigned</option> -->
@@ -49,6 +28,36 @@
 		<button type="button" class="btn btn-primary" id="addCommunity" style="margin-bottom: 20px;"   onclick="javascript:addCommunity();">Add Community Member</button>
 		<h2 class="tableTitle">List Managment : <span></span></h2>
 		<table id="communityTable" class="display" style="width: 100%"></table>
+	</div>
+	
+	<div class="tab-pane" id="charge">
+		@if ($errors->has('charge'))
+			<div class="alert alert-danger">
+				<ul>
+					@foreach ($errors->all() as $error)
+						<li>{{ $error }}</li>
+					@endforeach
+				</ul>
+			</div>
+		@endif
+	
+		@if(session()->has('charge'))
+		    <div class="alert alert-success">
+		        {{ session()->get('charge') }}
+		    </div>
+		@endif			
+		
+		<h2 class="tableTitle">List Management : Charge Membership<span></span></h2>
+		<table id="chargeTable" class="display" style="width: 100%"></table>
+		<form method="POST" id="chargeForm" action="{{ route('charge.add') }}">
+			@csrf
+			<input type="hidden" name="tabName" value="charge">	
+		
+			<div class="input-group">
+				<button class="btn btn-primary " type="submit" style="text-transform: uppercase;">Add Charge</button>
+				<input class="form-control {{ $errors->has('charge')? 'is-invalid' : '' }}" type="text" name="charge" id="charge" value="" >
+			</div>
+		</form>	
 	</div>
 	
 	<div class="tab-pane" id="rank">
@@ -93,54 +102,13 @@ $(document).ready(function() {
 	/*** Table title ***/
 	$('.commSelect').on('change', function() {
 		$(this).siblings('h2.tableTitle').find('span').text($(this).find('option:selected').text());
-		table1.ajax.reload();
-		table2.ajax.reload();
+		communityTable.ajax.reload();
 	});
 	
-	var table1 = $('#chargeTable').DataTable({
+	var communityTable = $('#communityTable').DataTable({
 		autoWidth: false,
 		createdRow: function(row, data, dataIndex) {
-			//var uri = 	"{{ route('charge.update', [], false) }}";
-			setEdit(row, table1, "{{ route('charge.update', [], false) }}", "{{ route('charge.destroy', [], false) }}");
-		},
-    ajax: {
-			url: 'charge-admin',
-			data: function(d) {
-				d.id = $('#charge .commSelect').val();
-			},
-			dataSrc: '',
-			error: function (xhr, error, thrown) {
-				table1.clear().draw();
-			},
-			complete: function() {}
-    },
-		columns: [
-			{ title: '#', data: null, defaultContent: '', width: '50px'},
-			{ title: 'Charge Membership', data: 'charge_membership',
-				render: function ( data, type, row ) {
-					return getEditableRow(row, data);
-				}
-			},
-			{ title: 'Committee', data: 'committee', width: '50px'},
-			{ title: 'Actions', data: null, defaultContent: '', width: '120px',
-				render: function ( data, type, row ) {
-    			return getEditButtons(row.id);
-				}			
-			}
-		],
-		columnDefs: [{
-			sortable: false,
-			"class": "index",
-			targets: [0, 1, 2, 3],
-		}],
-		order: [[ 1, 'asc' ]],
-	});
-	createIndexColumn(table1);
-	
-	var table2 = $('#communityTable').DataTable({
-		autoWidth: false,
-		createdRow: function(row, data, dataIndex) {
-			setEdit(row, table2, "{{ route('community.update', [], false) }}", "{{ route('community.destroy', [], false) }}");
+			setEdit(row, communityTable, "{{ route('community.update', [], false) }}", "{{ route('community.destroy', [], false) }}");
 		},
     ajax: {
 			url: 'community-members-admin',
@@ -149,7 +117,7 @@ $(document).ready(function() {
 			},
 			dataSrc: '',
 			error: function (xhr, error, thrown) {
-				table2.clear().draw();
+				communityTable.clear().draw();
 			},
 			complete: function() {}	
     },
@@ -172,18 +140,54 @@ $(document).ready(function() {
 		}],
 		order: [[ 1, 'asc' ]],
 	});	
-	createIndexColumn(table2);
+	createIndexColumn(communityTable);
 
-	var table3 = $('#rankTable').DataTable({
+	var chargeTable = $('#chargeTable').DataTable({
 		autoWidth: false,
 		createdRow: function(row, data, dataIndex) {
-			setEdit(row, table3, "{{ route('rank.update', [], false) }}", "{{ route('rank.destroy', [], false) }}");
+			//var uri = 	"{{ route('charge.update', [], false) }}";
+			setEdit(row, chargeTable, "{{ route('charge.update', [], false) }}", "{{ route('charge.destroy', [], false) }}");
+		},
+    ajax: {
+			url: "{{ route('list.charges.ajax', [], false) }}",
+			dataSrc: '',
+			error: function (xhr, error, thrown) {
+				chargeTable.clear().draw();
+			},
+			complete: function() {}
+    },
+		columns: [
+			{ title: '#', data: null, defaultContent: '', width: '50px'},
+			{ title: 'Charge Membership', data: 'charge',
+				render: function ( data, type, row ) {
+					return getEditableRow(row, data);
+				}
+			},
+			{ title: 'Actions', data: null, defaultContent: '', width: '120px',
+				render: function ( data, type, row ) {
+    			return getEditButtons(row.id);
+				}			
+			}
+		],
+		columnDefs: [{
+			sortable: false,
+			"class": "index",
+			targets: [0, 2],
+		}],
+		order: [[ 1, 'asc' ]],
+	});
+	createIndexColumn(chargeTable);
+	
+	var rankTable = $('#rankTable').DataTable({
+		autoWidth: false,
+		createdRow: function(row, data, dataIndex) {
+			setEdit(row, rankTable, "{{ route('rank.update', [], false) }}", "{{ route('rank.destroy', [], false) }}");
 		},
     ajax: {
 			url: 'rank-admin',
 			dataSrc: '',
 			error: function (xhr, error, thrown) {
-				table3.clear().draw();
+				rankTable.clear().draw();
 			},
 			complete: function() {}	
     },
@@ -207,7 +211,7 @@ $(document).ready(function() {
 		}],
 		order: [[ 1, 'asc' ]],
 	});	
-	createIndexColumn(table3);
+	createIndexColumn(rankTable);
 });
 
 function createIndexColumn(table) {
@@ -220,9 +224,6 @@ function createIndexColumn(table) {
 
 function addCommunity() {
 	window.location = "{{ url('/list/community/add') }}";
-}
-function addCharge() {
-	window.location = "{{ url('/list/charge/add') }}";
 }
 
 function getEditableRow(row, data) {

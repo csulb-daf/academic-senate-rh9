@@ -40,7 +40,7 @@ Route::post('/charge/assignments/update', 'ChargeController@update')->name('char
 
 /*** List Pages ***/
 Route::get('/list', 'ListController@index')->name('list');
-Route::get('/charge-admin', 'ListController@getChargeMembership');
+Route::get('/list/charges/ajax', 'ListController@getCharges')->name('list.charges.ajax');
 Route::get('/community-members-admin', 'ListController@getCommunityMembers');
 Route::get('/rank-admin', 'ListController@getRank');
 
@@ -49,7 +49,7 @@ Route::post('/list/community/add', 'ListController@storeCommunity')->name('commu
 Route::post('/list/community/update', 'ListController@updateCommunity')->name('community.update');
 Route::post('/list/community/destroy', 'ListController@destroyCommunity')->name('community.destroy');
 
-Route::get('/list/charge/add', 'ListController@createCharge')->name('charge.add');
+// Route::get('/list/charge/add', 'ListController@createCharge')->name('charge.add');
 Route::post('/list/charge/add', 'ListController@storeCharge')->name('charge.add');
 Route::post('/list/charge/update', 'ListController@updateCharge')->name('charge.update');
 Route::post('/list/charge/destroy', 'ListController@destroyCharge')->name('charge.destroy');

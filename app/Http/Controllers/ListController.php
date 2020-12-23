@@ -140,22 +140,25 @@ class ListController extends Controller {
 	}
 	
 	/*** Charge Membership ***/
-	public function getChargeMembership(Request $request) {
-		return DB::table ( 'charge_membership')
-		->select ('id', 'charge_membership', 'committee' )
-		->where('committee', '=', $request->id)
-		->get();
+	public function getCharges() {
+		return DB::table('charges')->select('id', 'charge')->get();
 	}
+// 	public function getChargeMembership(Request $request) {
+// 		return DB::table ( 'charge_membership')
+// 		->select ('id', 'charge_membership', 'committee' )
+// 		->where('committee', '=', $request->id)
+// 		->get();
+// 	}
 	
-	public function createCharge() {
-		$charges = DB::table ( 'charge_membership' )->select ( 'id', 'charge_membership' )->get ();
-		$comms = DB::table ( 'committees' )->select ( 'id', 'committeename' )->get ();
+// 	public function createCharge() {
+// 		$charges = DB::table ( 'charge_membership' )->select ( 'id', 'charge_membership' )->get ();
+// 		$comms = DB::table ( 'committees' )->select ( 'id', 'committeename' )->get ();
 		
-		return view ( 'charge-form', [
-				'charges' => $charges,
-				'comms' => $comms
-		] );
-	}
+// 		return view ( 'charge-form', [
+// 				'charges' => $charges,
+// 				'comms' => $comms
+// 		] );
+// 	}
 	
 	public function storeCharge(Request $request) {
 		$validatedData = request()->validate ( [
