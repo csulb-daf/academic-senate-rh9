@@ -49,8 +49,7 @@ Route::post('/list/community/add', 'ListController@storeCommunity')->name('commu
 Route::post('/list/community/update', 'ListController@updateCommunity')->name('community.update');
 Route::post('/list/community/destroy', 'ListController@destroyCommunity')->name('community.destroy');
 
-// Route::get('/list/charge/add', 'ListController@createCharge')->name('charge.add');
-Route::post('/list/charge/add', 'ListController@storeCharge')->name('charge.add');
+Route::post('/list/charge/add', 'ListController@storeCharge')->name('list.charge.add');
 Route::post('/list/charge/update', 'ListController@updateCharge')->name('charge.update');
 Route::post('/list/charge/destroy', 'ListController@destroyCharge')->name('charge.destroy');
 

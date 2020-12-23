@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use App\Community;
-use App\Charge;
+use App\Charges;
 use App\Rank;
 
 class ListController extends Controller {
@@ -143,38 +143,19 @@ class ListController extends Controller {
 	public function getCharges() {
 		return DB::table('charges')->select('id', 'charge')->get();
 	}
-// 	public function getChargeMembership(Request $request) {
-// 		return DB::table ( 'charge_membership')
-// 		->select ('id', 'charge_membership', 'committee' )
-// 		->where('committee', '=', $request->id)
-// 		->get();
-// 	}
-	
-// 	public function createCharge() {
-// 		$charges = DB::table ( 'charge_membership' )->select ( 'id', 'charge_membership' )->get ();
-// 		$comms = DB::table ( 'committees' )->select ( 'id', 'committeename' )->get ();
-		
-// 		return view ( 'charge-form', [
-// 				'charges' => $charges,
-// 				'comms' => $comms
-// 		] );
-// 	}
 	
 	public function storeCharge(Request $request) {
 		$validatedData = request()->validate ( [
 				'chargeName' => 'required',
-				'commSelect' => 'required',
 		], [
 				'chargeName.required' => 'Please Enter Charge Membership',
-				'commSelect.required' => 'Please Select a Commiittee',
 		] );
 		
 		if ($validatedData) {
-			$charge = new Charge();
-			$charge->user_id = Auth::id ();
-			$charge->charge_membership = $request->chargeName;
-			$charge->committee = $request->commSelect;
-			$charge->save ();
+			$charges = new Charges();
+			$charges->user_id = Auth::id ();
+			$charges->charge = $request->chargeName;
+			$charges->save();
 			
 			return redirect()->route('list')->withInput($request->all)->with('charge', 'New Charge Membership Added');
 		} 
@@ -184,17 +165,17 @@ class ListController extends Controller {
 	}
 	
 	public function updateCharge(Request $request) {
-		Charge::where('id', $request->id)
+		Charges::where('id', $request->id)
 		->update([
 				'user_id' => Auth::id(),
-				'charge_membership' => $request->data,
+				'charge' => $request->data,
 		]);
 		
 		return $request;
 	}
 
 	public function destroyCharge(Request $request) {
-		Charge::where('id', $request->id)
+		Charges::where('id', $request->id)
 		->update([	'active' => 0]);
 		
 		return $request;

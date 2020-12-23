@@ -31,7 +31,7 @@
 	</div>
 	
 	<div class="tab-pane" id="charge">
-		@if ($errors->has('charge'))
+		@if ($errors->has('chargeName'))
 			<div class="alert alert-danger">
 				<ul>
 					@foreach ($errors->all() as $error)
@@ -49,13 +49,13 @@
 		
 		<h2 class="tableTitle">List Management : Charge Membership<span></span></h2>
 		<table id="chargeTable" class="display" style="width: 100%"></table>
-		<form method="POST" id="chargeForm" action="{{ route('charge.add') }}">
+		<form method="POST" id="chargeForm" action="{{ route('list.charge.add', [], false) }}">
 			@csrf
 			<input type="hidden" name="tabName" value="charge">	
 		
 			<div class="input-group">
 				<button class="btn btn-primary " type="submit" style="text-transform: uppercase;">Add Charge</button>
-				<input class="form-control {{ $errors->has('charge')? 'is-invalid' : '' }}" type="text" name="charge" id="charge" value="" >
+				<input class="form-control {{ $errors->has('chargeName')? 'is-invalid' : '' }}" type="text" name="chargeName" id="chargeName" value="" >
 			</div>
 		</form>	
 	</div>
