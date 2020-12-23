@@ -54,11 +54,16 @@ class ChargeController extends Controller {
 		->get();
 	}
 	
-	public function getCharges() {
-		return DB::table('charges')
-		->select('id', 'charge')
-		->orderBy('charge', 'asc')
+	public function getCharges($commID) {
+		return DB::table('charges as c')
+		->select('c.id', 'c.charge',
+			DB::raw("if(cm.charge is not null and cm.committee = ". $commID .", 'yes', 'no') as assigned")
+		)
+		->leftJoin('charge_membership as cm', 'c.id', '=', 'cm.charge')
+		->groupBy('c.id')
+		->orderBy('c.charge', 'asc')
 		->get();
+// ->toSql();
 	}
 	
 	public function store(Request $request) {

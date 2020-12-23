@@ -80,6 +80,9 @@ $(document).ready(function() {
 		},
     ajax: {
 			url: "/charge/assignments/{{ $commID }}/charges/ajax",
+			data: function(d) {
+				d.commID = {{ $commID }};
+			},
 			dataSrc: '',
 			error: function (xhr, error, thrown) {
 				table.clear().draw();
@@ -90,11 +93,18 @@ $(document).ready(function() {
 			{ title: 'Charge Name', data: 'charge', className: 'chargeName'},
 			{ title: 'Actions', data: null, defaultContent: '', width: '120px',
 				render: function ( data, type, row ) {
-					var html='\
-						<button type="button" class="btn btn-light btn-sm addButton" data-id="'+ data.id +'">Add</button>\
-						<button type="button" class="btn btn-success btn-sm addedButton" style="display: none; opacity: 1;" disabled>Added</button>\
-					';
-						
+					var html;
+					
+					if(data.assigned === 'no') {
+						html='\
+							<button type="button" class="btn btn-light btn-sm addButton" data-id="'+ data.id +'">Add</button>\
+							<button type="button" class="btn btn-success btn-sm addedButton" style="display: none; opacity: 1;" disabled>Added</button>\
+						';
+					}
+					else {
+						html = '<button type="button" class="btn btn-success btn-sm addedButton" style="opacity: 1;" disabled>Added</button>';
+					}
+					
 					return html;
 				}	
 			}
