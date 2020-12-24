@@ -7,6 +7,8 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use App\Members;
 use App\Traits\TableData;
+use App\Charges;
+use App\ChargeMembership;
 
 class MembersController extends Controller {
 	use TableData;
@@ -48,36 +50,23 @@ class MembersController extends Controller {
 	 * @return \Illuminate\Http\Response
 	 */
 	public function create($cid) {
-// 		$charges = DB::table('charge_membership')->select('id', 'charge')->get();
-		$charges = DB::table('charge_membership as cm')
-		->join('charges as c', 'cm.charge', '=', 'c.id')
-		->select('cm.id', 'c.charge')
-		->where('committee', '=', $cid)
+		$charges = DB::table('charge_membership as chm')
+		->join('charges as c', 'chm.charge', '=', 'c.id')
+		->join('committee_membership as cm', 'chm.charge', '<>', 'cm.charge')
+		->select('c.id', 'c.charge')
+		->where('chm.committee', '=', $cid)
 		->get();
-// ->toSql();
-		
-// return $charges;
 		
 		$ranks = DB::table('rank')->select('id', 'rank')->get();
-		
-		$users[0] = array(
-				'fname' => 'Inigo',
-				'lname' => 'Montoya',
-				'campus_id' => '1234566789'
-		);
-		$users[1] = array(
-				'fname' => 'Ismael',
-				'lname' => 'Morales',
-				'campus_id' => '2468101214'
-		);
-		
-		$userObj = (object)$users;
+		$users = DB::table('sample_directory')
+		->orderBy('last_name', 'asc')
+		->get();
 		
 		return view('member-form', [
 				'charges' => $charges,
 				'ranks' => $ranks,
 				'cid' => $cid,
-				'users' =>$userObj,
+				'users' =>$users,
 		]);
 		
 	}

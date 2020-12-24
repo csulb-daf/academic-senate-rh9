@@ -91,3 +91,21 @@
 	</div> {{-- col --}}
 </div>	{{-- row --}}
 @endsection
+
+@section('scripts')
+<script>
+$(document).ready(function() {
+	$('select#userSelect').change(function() {
+		var nameArr = $('select#userSelect option:selected').text().split(',');
+		var campusID = $('select#userSelect option:selected').val();
+		var lastName = nameArr[0].trim();
+		var firstName = nameArr[1].trim();
+		
+		var form = $('#memberForm');
+		form.find('#fName').val(firstName);
+		form.find('#lName').val(lastName);
+		form.find('#campusID').val(campusID);
+	});
+});
+</script>
+@endsection

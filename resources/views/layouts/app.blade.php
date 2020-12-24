@@ -27,7 +27,7 @@
 	<script src="{{ asset('js/datatables-buttons/buttons.html5.min.js') }}"></script>
 	
 	<script src="{{ asset('js/jquery.jeditable.js') }}"></script>
-<!-- 	<script src="{{ asset('js/actions.js') }}"></script> -->
+	<script src="{{ asset('js/select2.min.js') }}"></script>
 	
 	<!-- Fonts -->
 	<link rel="dns-prefetch" href="//fonts.gstatic.com">
@@ -35,6 +35,7 @@
 	
 	<!-- Styles -->
 	<link href="{{asset('css/datatables.min.css')}}" rel="stylesheet">
+	<link href="{{asset('css/select2.min.css')}}" rel="stylesheet">
 	<link href="{{ asset('css/app.css') }}" rel="stylesheet">
 	<link href="{{ asset('css/styles.css') }}" rel="stylesheet">
 	
