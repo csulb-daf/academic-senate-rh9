@@ -26,6 +26,7 @@ class MembersController extends Controller {
 	 * @return \Illuminate\Contracts\Support\Renderable
 	 */
 	public function index($cid) {
+		//$request = Committees::all('committeename');
 		$request = DB::table('committees')
 		->select('committeename')
 		->where('id', '=', $cid)
@@ -38,7 +39,7 @@ class MembersController extends Controller {
 	}
 
 	public function ajax($cid) {
-		return $this->getCommitteeData($cid);
+		return $this->getCommitteeMemberships($cid);
 	}
 	
 	/**
@@ -47,15 +48,15 @@ class MembersController extends Controller {
 	 * @return \Illuminate\Http\Response
 	 */
 	public function create($cid) {
-		$charges = DB::table('charge_membership')->select('id', 'charge')->get();
+// 		$charges = DB::table('charge_membership')->select('id', 'charge')->get();
+		$charges = DB::table('charge_membership as cm')
+		->join('charges as c', 'cm.charge', '=', 'c.id')
+		->select('cm.id', 'c.charge')
+		->where('committee', '=', $cid)
+		->get();
+// ->toSql();
 		
-// 		$charges = DB::table('charge_membership')
-// 		//->join('committee_membership as cm', 'cm.id', '=', 'charge.committee')
-// 		->select('id', 'charge_membership')
-// 		->where('committee', '=', $cid)
-// 		->orderBy('charge_membership', 'asc')
-// 		//->distinct()
-// 		->get();
+// return $charges;
 		
 		$ranks = DB::table('rank')->select('id', 'rank')->get();
 		
@@ -119,7 +120,7 @@ class MembersController extends Controller {
 			$members->firstname = $request->fName;
 			$members->rank = $request->rankSelect;
 			$members->term = $request->termSelect;
-			$members->charge_memberhip = $request->chargeSelect;
+			$members->charge = $request->chargeSelect;
 			if(isset($request->alternate)) { $members->alternate =$request->alternate; }
 			$members->notes = $request->notes;
 			$members->save();

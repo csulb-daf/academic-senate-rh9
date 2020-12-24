@@ -6,8 +6,11 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use App\Committees;
+use App\Traits\TableData;
 
 class CommitteeController extends Controller {
+	use TableData;
+	
 	/**
 	 * Create a new controller instance.
 	 *
@@ -23,11 +26,11 @@ class CommitteeController extends Controller {
 	 * @return \Illuminate\Contracts\Support\Renderable
 	 */
 	public function index() {
-		return view ( 'committee' );
+		return view('committee');
 	}
 	
-	public function getComms() {
-		return DB::table('committees')->select('id', 'committeename')->get();
+	public function displayCommitteeAssignments() {
+		return $this->getCommitteeAssignments();
 	}
 
 	/**
@@ -36,7 +39,7 @@ class CommitteeController extends Controller {
 	 * @return \Illuminate\Http\Response
 	 */
 	public function create() {
-		return view('comm-form');
+		return view('committee-form');
 	}
 
 	/**
@@ -67,10 +70,10 @@ class CommitteeController extends Controller {
 			$committees->notes = $request->notes;
 			$committees->save();
 			
-			return redirect('/committee');
+			return redirect()->route('committee')->withInput($request->all)->with('committee', 'New Committee Added');
 		}
 		else {
-			return redirect('/committee')->withInput()->with('error');
+			return back()->withInput($request->all)->with('error');
 		}
 		
 	}

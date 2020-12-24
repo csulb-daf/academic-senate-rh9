@@ -20,7 +20,7 @@ $(document).ready(function() {
     },
 		columns: [
 			{ title: 'Committee Name', data: 'comm' },
-			{ title: 'Assignments', data: 'assignments' },
+			{ title: 'Charge Memberships', data: 'assignments' },
 			{ title: 'Actions', data: null, defaultContent: '',
 				render: function ( data, type, row ) {
 					//console.log('id', data.id);

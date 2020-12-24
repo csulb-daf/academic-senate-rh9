@@ -37,7 +37,7 @@ class HomeController extends Controller {
 
 	public function ajax(Request $request) {
 		$cid = $request->cid;
-		return $this->getCommitteeData($cid);
+		return $this->getCommitteeMemberships($cid);
 	}
 	
 }

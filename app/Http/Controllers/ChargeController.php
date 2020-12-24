@@ -6,8 +6,11 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use App\ChargeMembership;
+use App\Traits\TableData;
 
 class ChargeController extends Controller {
+	use TableData;
+	
 	/**
 	 * Create a new controller instance.
 	 *
@@ -26,12 +29,8 @@ class ChargeController extends Controller {
 		return view('charge');
 	} 
 	
-	public function getComms() {
-		return DB::table('committees as c')
-		->select('c.id', 'c.committeename as comm', DB::raw('count(cm.committee) as assignments'))
-		->leftJoin('charge_membership as cm', 'c.id', '=', 'cm.committee')
-		->groupBy('c.id')
-		->get();
+	public function displayCommitteeAssignments() {
+		return $this->getCommitteeAssignments();
 	}
 	
 	public function getMembership($commID) {

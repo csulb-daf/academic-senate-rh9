@@ -3,6 +3,12 @@
 @section('title', 'Committee Management')
 
 @section('content')
+@if(session()->has('committee'))
+	<div class="alert alert-success">
+		{{ session()->get('committee') }}
+	</div>
+@endif			
+
 <table id="commAdmin" class="display"></table>
 <button type="button" class="btn btn-primary" id="addComm" style="display: none; float: left;"  onclick="javascript:addComm();">Add New Committee</button>
 @endsection 
@@ -12,7 +18,7 @@
 $(document).ready(function() {
 	var table = $('#commAdmin').DataTable({
     ajax: {
-			url: 'comm-admin',
+			url: "{{ route('committee.admin', [], false) }}",
 			dataSrc: '',
 			error: function (xhr, error, thrown) {
 				table.clear().draw();
@@ -27,9 +33,9 @@ $(document).ready(function() {
 			}
     },
 		columns: [
-			{ title: 'Committee Name', data: 'committeename' },
-			
-			{ title: 'Assignments', data: null, defaultContent: '',
+			{ title: 'Committee Name', data: 'comm' },
+			{ title: 'Charge Memberships', data: 'assignments' },
+			{ title: 'Actions', data: null, defaultContent: '',
 				render: function ( data, type, row ) {
 					//console.log(data);
     			return '<button type="button" class="btn btn-light border" onclick="javascrtipt:assignComm('+ data.id +')">Edit</button>';

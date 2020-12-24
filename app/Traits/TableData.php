@@ -4,7 +4,7 @@ namespace App\Traits;
 use Illuminate\Support\Facades\DB;
 
 trait TableData {
-	public function getCommitteeData($cid) {
+	public function getCommitteeMemberships($cid) {
 		
 		return DB::table('committee_membership as cm')
 		->join('committees as c', 'cm.committee', '=', 'c.id')
@@ -16,4 +16,14 @@ trait TableData {
 		->get();
 // 		->toSql();
 	}
+	
+	public function getCommitteeAssignments() {
+		return DB::table('committees as c')
+		->select('c.id', 'c.committeename as comm', DB::raw('count(cm.committee) as assignments'))
+		->leftJoin('charge_membership as cm', 'c.id', '=', 'cm.committee')
+		->groupBy('c.id')
+		->get();
+// ->toSql();
+	}
+	
 }

@@ -35,8 +35,20 @@ $(document).ready(function() {
     },
 		
 		columns: [
-			{ title: 'Campus ID', data: 'campus_id' },
-			{ title: 'Committee', data: 'committee' },
+			//{ title: 'Campus ID', data: 'campus_id' },
+			{ 
+				title: 'Campus ID', 
+				render: function(data, type, row, meta) {
+					if(row.campus_id == null) {
+						var cid = {{ $cid }};
+						var url = 	"{{ route('members.add', ['id'=>':id'], false) }}";
+						url = url.replace(':id', cid);
+						return '<a href="'+ url +'" data-id="">VACANT</a>';
+					}
+					return row.campus_id;
+				}	
+			},
+			//{ title: 'Committee', data: 'committee' },
 			{ title: 'Last Name', data: 'lastname' },
 			{ title: 'First Name', data: 'firstname' },
 			{ title: 'Rank', data: 'rank' },

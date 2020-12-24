@@ -19,7 +19,7 @@ Route::get('/comm-search', 'HomeController@ajax');
 
 /*** Committee Pages ***/
 Route::get('/committee', 'CommitteeController@index')->name('committee');
-Route::get('/comm-admin', 'CommitteeController@getComms');
+Route::get('/committee/admin', 'CommitteeController@displayCommitteeAssignments')->name('committee.admin');;
 Route::get('/committee/form', 'CommitteeController@create');
 Route::get('/committee/add', 'CommitteeController@create');
 Route::post('/committee/add', 'CommitteeController@store');
@@ -31,7 +31,7 @@ Route::post('/committee/members/{cid}/add', 'MembersController@store')->name('me
 
 /*** Charge Membership Pages ***/
 Route::get('/charge', 'ChargeController@index')->name('charge');
-Route::get('/charge/admin', 'ChargeController@getComms')->name('charge.admin');
+Route::get('/charge/admin', 'ChargeController@getCommitteeAssignments')->name('charge.admin');
 Route::get('/charge/assignments/{id}', 'ChargeController@getMembership')->name('charge.assignments');
 Route::get('/charge/assignments/{id}/ajax', 'ChargeController@getMembershipAjax')->name('charge.assignments.ajax');
 Route::get('/charge/assignments/{id}/charges/ajax', 'ChargeController@getCharges')->name('charges.list.ajax');
