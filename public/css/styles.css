@@ -11,6 +11,9 @@ h2.tableTitle {
 tr.added td {
 	background: #38c172 !important;
 }
+#selectContainer {
+	margin-bottom: 20px;
+}
 
 /*** Nav ***/
 .navbar {
@@ -28,6 +31,11 @@ tr.added td {
     width: 100%;
     justify-content: center;
   }
+}
+
+/*** Tabbed Nav ***/
+.nav-tabs {
+	margin-bottom: 20px;
 }
 
 /*** Charge Membership Pages ***/

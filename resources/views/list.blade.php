@@ -11,23 +11,25 @@
 
 <div class="tab-content">
 	<div class="tab-pane active" id="community">
-		<select class="commSelect form-control" style="margin: 20px 0;" name="commSelect" >
-			<option value="" disabled selected>Select Committee</option>
-		<!-- 	<option value="0">Unassigned</option> -->
-			@foreach($communityComms as $comm)
-				<option value="{{ $comm->id }}">{{ $comm->committeename }}</option>
-			@endforeach
-		</select>
-		
-		@if(session()->has('community'))
-		    <div class="alert alert-success">
+<!-- 		<div class="row"> -->
+<!-- 			<div class="col-sm-4"> -->
+				<div id="selectContainer">
+					@include('partials.committee-select')
+				</div>
+<!-- 			</div> -->
+			
+<!-- 			<div class="col"> -->
+				@if(session()->has('community'))
+			    <div class="alert alert-success">
 		        {{ session()->get('community') }}
-		    </div>
-		@endif			
-		
-		<button type="button" class="btn btn-primary" id="addCommunity" style="margin-bottom: 20px;"   onclick="javascript:addCommunity();">Add Community Member</button>
-		<h2 class="tableTitle">List Managment : <span></span></h2>
-		<table id="communityTable" class="display" style="width: 100%"></table>
+			    </div>
+				@endif
+				
+				<button type="button" class="btn btn-primary" id="addCommunity" style="margin-bottom: 20px;"   onclick="javascript:addCommunity();">Add Community Member</button>
+				<h2 class="tableTitle" id="communityTitle">List Managment : <span></span></h2>
+				<table id="communityTable" class="display" style="width: 100%"></table>
+<!-- 			</div> -->
+<!-- 		</div> -->
 	</div>
 	
 	<div class="tab-pane" id="charge">
@@ -101,7 +103,7 @@ $(document).ready(function() {
 
 	/*** Table title ***/
 	$('.commSelect').on('change', function() {
-		$(this).siblings('h2.tableTitle').find('span').text($(this).find('option:selected').text());
+		$('h2#communityTitle').find('span').text($(this).find('option:selected').text());
 		communityTable.ajax.reload();
 	});
 	

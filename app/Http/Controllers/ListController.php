@@ -26,16 +26,10 @@ class ListController extends Controller {
 	 * @return \Illuminate\Contracts\Support\Renderable
 	 */
 	public function index() {
-		$communityComms = DB::table('committees as c')
-		->join('community_members as cm', 'c.id', '=', 'cm.committee')
-		->select('c.*')
-		->orderBy('c.committeename', 'asc')
-		->distinct()
-		->get();
-		
+		$comms = Committees::all('id', 'committeename');
 		return view ( 'list', [
-			'communityComms' => $communityComms
-		] );
+			'comms' => $comms
+		]);
 	}
 	
 	/*** Commmunity Members ***/

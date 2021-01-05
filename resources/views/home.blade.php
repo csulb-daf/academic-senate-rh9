@@ -3,13 +3,11 @@
 @section('title', 'Home')
 
 @section('content')
-<select class="commSelect form-control" style="margin: 20px 0;" name="commSelect"  id="commSelect">
-	<option value="" disabled selected>Select Committee</option>
-	@foreach($comms as $comm)
-		<option value="{{ $comm->id }}">{{ $comm->committeename }}</option>
-	@endforeach
-</select>
-	
+
+<div id="selectContainer">
+	@include('partials.committee-select')
+</div>
+
 <h2 style="font-weight: bold;">Committee: <span id="tableTitle"></span></h2>
 <table id="commSearch" class="display"></table>
 @endsection 
