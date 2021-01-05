@@ -9,7 +9,7 @@
     </div>
 @endif			
 
-<button type="button" class="btn btn-primary" id="addMember" style="margin-bottom: 20px;"  onclick="javascript:addMember({{ $cid }});">Add New Committee Member</button>
+{{-- <button type="button" class="btn btn-primary" id="addMember" style="margin-bottom: 20px;"  onclick="javascript:addMember({{ $cid }});">Add New Committee Member</button> --}}
 <h2 style="font-weight: bold;">{{ $cname }}</h2>
 <table id="memberAdmin" class="display"></table>
 @endsection 
@@ -18,6 +18,10 @@
 <script>
 $(document).ready(function() {
 	var table = $('#memberAdmin').DataTable({
+		autoWidth: false,
+		createdRow: function(row, data, dataIndex) {
+			//setEdit(row, communityTable, "{{ route('community.update', [], false) }}", "{{ route('community.destroy', [], false) }}");
+		},
     ajax: {
 			url: '/committee/members/{{ $cid }}/ajax',
 			dataSrc: '',
@@ -35,9 +39,7 @@ $(document).ready(function() {
     },
 		
 		columns: [
-			//{ title: 'Campus ID', data: 'campus_id' },
-			{ 
-				title: 'Campus ID', 
+			{ title: 'Campus ID', 
 				render: function(data, type, row, meta) {
 					if(row.campus_id == null) {
 						var cid = {{ $cid }};
@@ -48,7 +50,6 @@ $(document).ready(function() {
 					return row.campus_id;
 				}	
 			},
-			//{ title: 'Committee', data: 'committee' },
 			{ title: 'Last Name', data: 'lastname' },
 			{ title: 'First Name', data: 'firstname' },
 			{ title: 'Rank', data: 'rank' },
@@ -57,19 +58,44 @@ $(document).ready(function() {
 			{ title: 'Ext.', data: 'ext' },
 			{ title: 'Email', data: 'email' },
 			{ title: 'Term', data: 'term' },
-			{ title: 'Charge Memberhip', data: 'charge' },
-			{ title: 'Alternate', data: 'alternate' },
+			{ title: 'Charge Memberhip', data: 'charge', width: '220px'},
+			{ title: 'Alternate', data: null, defaultContent: '',
+				render: function ( data, type, row ) {
+					return data.alternate == 1? 'Y':'';
+				}			
+			},
 			{ title: 'Notes', data: 'notes' },
+			{ title: 'Actions', data: null, defaultContent: '', width: '120px',
+				render: function ( data, type, row ) {
+					return getEditButtons(row.id);
+				}			
+			}
 		],
-		
+		columnDefs: [{
+			targets:  12,
+			sortable: false,
+		}],
 	});		
-	
 });
 
 function addMember(id) {
 	var url = 	"{{ route('members.add', ['cid'=>':id']) }}";
 	url = url.replace(':id', id);
 	window.location = url;
+}
+function getEditButtons(id) {
+	var html='\
+		<div class="editButtons">\
+				<button type="button" class="btn btn-light btn-sm editButton">Edit</button>\
+				<button type="button" class="btn btn-danger btn-sm deleteButton">Vacate</button>\
+				<img src="/images/check.svg" class="saved" style="width: 35px; display: none;">\
+			</div>\
+			<div class="delButtons" style="display: none;">\
+					<button type="button" class="btn btn-danger btn-sm confirmDelete" data-id="'+ id +'">Confirm</button>\
+					<button type="button" class="btn btn-light btn-sm cancelDelete">Cancel</button>\
+				</div>\
+		';
+		return html;
 }
 	
 </script>

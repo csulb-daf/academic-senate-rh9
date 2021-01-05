@@ -52,9 +52,9 @@ class MembersController extends Controller {
 	public function create($cid) {
 		$charges = DB::table('charge_membership as chm')
 		->join('charges as c', 'chm.charge', '=', 'c.id')
-		->join('committee_membership as cm', 'chm.charge', '<>', 'cm.charge')
 		->select('c.id', 'c.charge')
 		->where('chm.committee', '=', $cid)
+		->whereNotIn('chm.charge', DB::table('committee_membership')->pluck('charge'))
 		->get();
 		
 		$ranks = DB::table('rank')->select('id', 'rank')->get();

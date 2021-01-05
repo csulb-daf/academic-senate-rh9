@@ -85,7 +85,7 @@
 			</div>
 		
 			<div class="form-group ">
-				<button class="btn btn-primary mt-3" type="submit">Create Committee</button>
+				<button class="btn btn-primary mt-3" type="submit">Assign to Committee</button>
 			</div>
 		</form>
 	</div> {{-- col --}}
