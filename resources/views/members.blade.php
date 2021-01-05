@@ -11,7 +11,7 @@
 
 {{-- <button type="button" class="btn btn-primary" id="addMember" style="margin-bottom: 20px;"  onclick="javascript:addMember({{ $cid }});">Add New Committee Member</button> --}}
 <h2 style="font-weight: bold;">{{ $cname }}</h2>
-<table id="memberAdmin" class="display"></table>
+<table id="memberAdmin" class="display" style="width: 100%"></table>
 @endsection 
 
 @section('scripts')
@@ -28,7 +28,6 @@ $(document).ready(function() {
 			error: function (xhr, error, thrown) {
 				table.clear().draw();
 			},
-			
 			complete: function() {
 // 				$('.dataTables_length').css({
 // 					'float' : 'right',
@@ -37,9 +36,8 @@ $(document).ready(function() {
 // 				$("button#addMember").prependTo("#memberAdmin_wrapper").show();
 			}
     },
-		
 		columns: [
-			{ title: 'Campus ID', 
+			{ title: 'Campus ID',
 				render: function(data, type, row, meta) {
 					if(row.campus_id == null) {
 						var cid = {{ $cid }};
@@ -66,8 +64,12 @@ $(document).ready(function() {
 			},
 			{ title: 'Notes', data: 'notes' },
 			{ title: 'Actions', data: null, defaultContent: '', width: '120px',
-				render: function ( data, type, row ) {
-					return getEditButtons(row.id);
+				render: function(data, type, row, meta) {
+					console.log('data', data);
+					if(data.id == null) {
+						return null;
+					}
+					return getEditButtons(data.id);
 				}			
 			}
 		],

@@ -24,12 +24,13 @@ class HomeController extends Controller {
 	 * @return \Illuminate\Contracts\Support\Renderable
 	 */
 	public function index() {
-		$comms = DB::table('committees as c')
-		->join('committee_membership as cm', 'c.id', '=', 'cm.committee')
-		->select('c.*')
-		->distinct()
+		$comms = DB::table('charge_membership as chm')
+		->join('committees as c', 'chm.committee', '=', 'c.id')
+		->select('chm.committee as id', 'c.committeename', 'c.meetingtimes_locations', 'c.notes')
 		->orderBy('c.committeename', 'asc')
+		->groupBy('chm.committee')
 		->get();
+		
 		return view ( 'home', [ 
 				'comms' => $comms
 		] );

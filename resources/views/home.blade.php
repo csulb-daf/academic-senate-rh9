@@ -24,6 +24,7 @@ $(document).ready(function() {
 	});
 
 	var table = $('#commSearch').DataTable({
+		autoWidth: false,
 		dom: 'Blfrtip',
 		buttons: [{ 
 			extend: 'pdf',
@@ -34,7 +35,6 @@ $(document).ready(function() {
 			},
 			orientation: 'landscape',
 		}],		
-
 		ajax: {
 			url: 'comm-search',
 			data: function(d) {
@@ -59,7 +59,6 @@ $(document).ready(function() {
 					return row.campus_id;
 				}	
 			},
-			{ title: 'Committee', data: 'committee' },
 			{ title: 'Last Name', data: 'lastname' },
 			{ title: 'First Name', data: 'firstname' },
 			{ title: 'Rank', data: 'rank' },
@@ -69,7 +68,11 @@ $(document).ready(function() {
 			{ title: 'Email', data: 'email' },
 			{ title: 'Term', data: 'term' },
 			{ title: 'Charge Memberhip', data: 'charge' },
-			{ title: 'Alternate', data: 'alternate' },
+			{ title: 'Alternate', data: null, defaultContent: '',
+				render: function(data, type, row) {
+					return data.alternate == 1? 'Y':'';
+				}			
+			},
 			{ title: 'Notes', data: 'notes' },
 		],
 	});
