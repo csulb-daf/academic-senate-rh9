@@ -33,28 +33,6 @@
 	</div>
 	
 	<div class="input-group">
-		<label for="chargeSelect" style="margin-top: 1em;">Charge Membership:</label>
-		<select class="form-control" name="chargeSelect" id="chargeSelect">
-			<option value="">Select</option>
-			
-			@foreach ($charges as $charge)
-				<option value="{{ $charge->id }}" {{ old('chargeSelect') == $charge->id ? 'selected' : '' }}>{{ $charge->charge }}</option>
-			@endForeach
-		</select>
-	</div>
-
-	<div class="input-group">
-		<label for="commSelect" style="margin-top: 1em;">Committee:</label>
-		<select class="form-control" name="commSelect" id="commSelect">
-			<option value="">Select</option>
-			
-			@foreach ($comms as $comm)
-				<option value="{{ $comm->id }}"  {{ old('commSelect') == $comm->id ? 'selected' : '' }}>{{ $comm->committeename }}</option>
-			@endForeach
-		</select>
-	</div>
-	
-	<div class="input-group">
 		<label for="notes" style="margin-top: 1em;">Notes:</label>
 		<textarea class="form-control" name="notes" id="notes" >{{ old('notes') }}</textarea>
 	</div>

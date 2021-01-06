@@ -19,8 +19,6 @@ class CreateCommunityMembersTable extends Migration
             $table->string('firstname');
             $table->string('lastname');
             $table->string('email');
-            $table->unsignedBigInteger('charge_memberhip');
-            $table->unsignedBigInteger('committee');
             $table->string('notes')->nullable();
             $table->timestamps();
             $table->softDeletes();

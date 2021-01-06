@@ -4,32 +4,22 @@
 
 @section('content')
 <nav class="nav nav-tabs" id="tabMenu" style="text-align: center;">
-	<a href="#community" data-toggle="tab" class="nav-item nav-link active">Community Members<span style="display: block">(Requires Committee Selection)</span></a>
+	<a href="#community" data-toggle="tab" class="nav-item nav-link active">Community Members<span style="display: block">(Global List)</span></a>
 	<a href="#charge" data-toggle="tab" class="nav-item nav-link">Charge Membership<span style="display: block">(Global List)</span></a>
 	<a href="#rank" data-toggle="tab" class="nav-item nav-link">Rank<span style="display: block">(Global List)</span></a>
 </nav>
 
 <div class="tab-content">
 	<div class="tab-pane active" id="community">
-<!-- 		<div class="row"> -->
-<!-- 			<div class="col-sm-4"> -->
-				<div id="selectContainer">
-					@include('partials.committee-select')
-				</div>
-<!-- 			</div> -->
-			
-<!-- 			<div class="col"> -->
-				@if(session()->has('community'))
-			    <div class="alert alert-success">
-		        {{ session()->get('community') }}
-			    </div>
-				@endif
+		@if(session()->has('community'))
+	    <div class="alert alert-success">
+        {{ session()->get('community') }}
+	    </div>
+		@endif
 				
-				<button type="button" class="btn btn-primary" id="addCommunity" style="margin-bottom: 20px;"   onclick="javascript:addCommunity();">Add Community Member</button>
-				<h2 class="tableTitle" id="communityTitle">List Managment : <span></span></h2>
-				<table id="communityTable" class="display" style="width: 100%"></table>
-<!-- 			</div> -->
-<!-- 		</div> -->
+		<button type="button" class="btn btn-primary" id="addCommunity" style="margin-bottom: 20px;"   onclick="javascript:addCommunity();">Add Community Member</button>
+		<h2 class="tableTitle" id="communityTitle">List Managment : Community Members</h2>
+		<table id="communityTable" class="display" style="width: 100%"></table>
 	</div>
 	
 	<div class="tab-pane" id="charge">
@@ -49,7 +39,7 @@
 		    </div>
 		@endif			
 		
-		<h2 class="tableTitle">List Management : Charge Membership<span></span></h2>
+		<h2 class="tableTitle">List Management : Charge Membership</h2>
 		<table id="chargeTable" class="display" style="width: 100%"></table>
 		<form method="POST" id="chargeForm" action="{{ route('list.charge.add', [], false) }}">
 			@csrf
@@ -101,22 +91,13 @@ $(document).ready(function() {
 	/*** Show correct tab after form submit ***/
 	$('#tabMenu a[href="#{{ old('tabName') }}"]').tab('show');
 
-	/*** Table title ***/
-	$('.commSelect').on('change', function() {
-		$('h2#communityTitle').find('span').text($(this).find('option:selected').text());
-		communityTable.ajax.reload();
-	});
-	
 	var communityTable = $('#communityTable').DataTable({
 		autoWidth: false,
 		createdRow: function(row, data, dataIndex) {
 			setEdit(row, communityTable, "{{ route('community.update', [], false) }}", "{{ route('community.destroy', [], false) }}");
 		},
     ajax: {
-			url: 'community-members-admin',
-			data: function(d) {
-				d.id = $('#community .commSelect').val();
-			},
+    	url: "{{ route('list.community.admin', [], false) }}",
 			dataSrc: '',
 			error: function (xhr, error, thrown) {
 				communityTable.clear().draw();
@@ -125,20 +106,35 @@ $(document).ready(function() {
     },
 		columns: [
 			{ title: '#', data: null, defaultContent: '', width: '50px'},
-			{ title: 'Community Members', data: 'name',
-				render: function ( data, type, row ) {
+			{ title: 'Last Name', data: 'lastname',
+				render: function(data, type, row) {
+					return getEditableRow(row, data);
+				}
+			},
+			{ title: 'First Name', data: 'firstname',
+				render: function(data, type, row) {
+					return getEditableRow(row, data);
+				}
+			},
+			{ title: 'Email', data: 'email',
+				render: function(data, type, row) {
+					return getEditableRow(row, data);
+				}
+			},
+			{ title: 'Notes', data: 'notes',
+				render: function(data, type, row) {
 					return getEditableRow(row, data);
 				}
 			},
 			{ title: 'Actions', data: null, defaultContent: '', width: '120px',
-				render: function ( data, type, row ) {
-					return getEditButtons(row.id);
+				render: function(data, type, row) {
+					//return getEditButtons(row.id);
 				}			
 			}
 		],
 		columnDefs: [{
 			sortable: false,
-			targets: [0, 2]
+			targets: [0, 5]
 		}],
 		order: [[ 1, 'asc' ]],
 	});	
@@ -147,11 +143,10 @@ $(document).ready(function() {
 	var chargeTable = $('#chargeTable').DataTable({
 		autoWidth: false,
 		createdRow: function(row, data, dataIndex) {
-			//var uri = 	"{{ route('charge.update', [], false) }}";
 			setEdit(row, chargeTable, "{{ route('charge.update', [], false) }}", "{{ route('charge.destroy', [], false) }}");
 		},
     ajax: {
-			url: "{{ route('list.charges.ajax', [], false) }}",
+			url: "{{ route('list.charge.admin', [], false) }}",
 			dataSrc: '',
 			error: function (xhr, error, thrown) {
 				chargeTable.clear().draw();
@@ -186,7 +181,7 @@ $(document).ready(function() {
 			setEdit(row, rankTable, "{{ route('rank.update', [], false) }}", "{{ route('rank.destroy', [], false) }}");
 		},
     ajax: {
-			url: 'rank-admin',
+    	url: "{{ route('list.rank.admin', [], false) }}",
 			dataSrc: '',
 			error: function (xhr, error, thrown) {
 				rankTable.clear().draw();

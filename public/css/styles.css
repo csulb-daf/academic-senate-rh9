@@ -56,7 +56,7 @@ table.dataTable thead .sorting_desc {
 
 /*** jquery editable ***/
 span.edit input {
-	width: 80% !important;
+	width: 60% !important;
 }
 span.edit .saveButton,
 span.edit .cancelButton {

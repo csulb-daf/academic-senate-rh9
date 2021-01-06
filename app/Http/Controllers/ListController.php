@@ -33,11 +33,8 @@ class ListController extends Controller {
 	}
 	
 	/*** Commmunity Members ***/
-	public function getCommunityMembers(Request $request) {
-		return DB::table('community_members')
-		->select('id', DB::raw('CONCAT(firstname, " ", lastname) AS name'))
-		->where('committee', '=', $request->id)
-		->get();
+	public function getCommunityMembers() {
+		return Community::all();
 	}
 	
 	/**
@@ -46,13 +43,7 @@ class ListController extends Controller {
 	 * @return \Illuminate\Http\Response
 	 */
 	public function createCommunity() {
-		$charges = Charges::all( 'id', 'charge' );
-		$comms = Committees::all( 'id', 'committeename' );
-
-		return view ( 'community-form', [ 
-				'charges' => $charges,
-				'comms' => $comms
-		] );
+		return view('community-form');
 	}
 	
 	/**
@@ -66,14 +57,10 @@ class ListController extends Controller {
 				'fName' => 'required',
 				'lName' => 'required',
 				'email' => 'required',
-				'chargeSelect' => 'required',
-				'commSelect' => 'required',
 		], [ 
 				'fName.required' => 'Please Enter First Name',
 				'lName.required' => 'Please Enter Last Name',
 				'email.required' => 'Please Enter your email address',
-				'chargeSelect.required' => 'Please Select Charge Membership',
-				'commSelect.required' => 'Please Select Committee',
 		] );
 
 		if ($validatedData) {
@@ -82,8 +69,6 @@ class ListController extends Controller {
 			$community->firstname = $request->fName;
 			$community->lastname = $request->lName;
 			$community->email = $request->email;
-			$community->charge_memberhip = $request->chargeSelect;
-			$community->committee = $request->commSelect;
 			$community->notes = $request->notes;
 			$community->save ();
 

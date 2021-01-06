@@ -40,9 +40,9 @@ Route::post('/charge/assignments/update', 'ChargeController@update')->name('char
 
 /*** List Pages ***/
 Route::get('/list', 'ListController@index')->name('list');
-Route::get('/list/charges/ajax', 'ListController@getCharges')->name('list.charges.ajax');
-Route::get('/community-members-admin', 'ListController@getCommunityMembers');
-Route::get('/rank-admin', 'ListController@getRank');
+Route::get('/list/charge/admin', 'ListController@getCharges')->name('list.charge.admin');
+Route::get('/list/community/admin', 'ListController@getCommunityMembers')->name('list.community.admin');
+Route::get('/list/rank/admin', 'ListController@getRank')->name('list.rank.admin');
 
 Route::get('/list/community/add', 'ListController@createCommunity');
 Route::post('/list/community/add', 'ListController@storeCommunity')->name('community.add');
