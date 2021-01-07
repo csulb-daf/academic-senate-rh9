@@ -24,7 +24,7 @@ $(document).ready(function() {
 	var table = $('#commSearch').DataTable({
 		autoWidth: false,
 		dom: 'Blfrtip',
-		buttons: [{ 
+		buttons: [{
 			extend: 'pdf',
 			text: 'Export to PDF', 
 			className: 'btn btn-primary',
@@ -32,6 +32,9 @@ $(document).ready(function() {
 				return $('#commSelect').find('option:selected').text();
 			},
 			orientation: 'landscape',
+			exportOptions: {
+				columns: 'th:not(.campusID)'
+			}			
 		}],		
 		ajax: {
 			url: 'comm-search',
@@ -46,13 +49,16 @@ $(document).ready(function() {
     },
 		columns: [
 			{ 
-				title: 'Campus ID', 
+				title: 'Campus ID', className: 'campusID',
 				render: function(data, type, row, meta) {
 					if(row.campus_id == null) {
 						var cid = $('#commSelect').val();
 						var url = 	"{{ route('members.add', ['id'=>':id']) }}";
 						url = url.replace(':id', cid);
 						return '<a href="'+ url +'">VACANT</a>';
+					}
+					if(row.campus_id == 0) {
+						return '<span class="badge badge-primary communityTag" style="color: #fff; font-size: 16px; margin-top: 10px;">CM</span>';
 					}
 					return row.campus_id;
 				}	
