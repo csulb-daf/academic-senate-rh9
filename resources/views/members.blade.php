@@ -68,7 +68,7 @@ $(document).ready(function() {
 			{ title: 'Notes', data: 'notes' },
 			{ title: 'Actions', data: null, defaultContent: '', width: '120px',
 				render: function(data, type, row, meta) {
-					console.log('data', data);
+					//console.log('data', data);
 					if(data.id == null) {
 						return null;
 					}

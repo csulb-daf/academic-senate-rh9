@@ -96,7 +96,7 @@
 <script>
 $(document).ready(function() {
 	$('select#userSelect').change(function() {
-		var nameArr = $('select#userSelect option:selected').text().split(',');
+		var nameArr = $('select#userSelect option:selected').attr('data-name').split(',');
 		var campusID = $('select#userSelect option:selected').val();
 		var lastName = nameArr[0].trim();
 		var firstName = nameArr[1].trim();
