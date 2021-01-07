@@ -9,6 +9,7 @@ use App\Members;
 use App\Traits\TableData;
 use App\Charges;
 use App\ChargeMembership;
+use App\Community;
 
 class MembersController extends Controller {
 	use TableData;
@@ -58,7 +59,10 @@ class MembersController extends Controller {
 		->get();
 		
 		$ranks = DB::table('rank')->select('id', 'rank')->get();
+		$community =  DB::table('community_members')->select('firstname', 'lastname', DB::raw('0 as campus_id'));
 		$users = DB::table('sample_directory')
+		->select('first_name', 'last_name', 'campus_id')
+		->unionAll($community)
 		->orderBy('last_name', 'asc')
 		->get();
 		

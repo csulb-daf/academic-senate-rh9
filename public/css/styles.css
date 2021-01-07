@@ -43,6 +43,8 @@ tr.added td {
 	margin-bottom: 30px;
 }
 
+/*** Committee Membership Pages ***/
+
 /*** datatables override ***/
 table.dataTable thead .sorting {
 	background-image: url("/images/sort_both.png")
