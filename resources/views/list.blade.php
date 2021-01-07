@@ -94,7 +94,7 @@ $(document).ready(function() {
 	var communityTable = $('#communityTable').DataTable({
 		autoWidth: false,
 		createdRow: function(row, data, dataIndex) {
-			setEdit(row, communityTable, "{{ route('community.update', [], false) }}", "{{ route('community.destroy', [], false) }}");
+// 			setEdit(row, communityTable, "{{ route('community.update', [], false) }}", "{{ route('community.destroy', [], false) }}");
 		},
     ajax: {
     	url: "{{ route('list.community.admin', [], false) }}",
@@ -107,28 +107,29 @@ $(document).ready(function() {
 		columns: [
 			{ title: '#', data: null, defaultContent: '', width: '50px'},
 			{ title: 'Last Name', data: 'lastname',
-				render: function(data, type, row) {
-					return getEditableRow(row, data);
-				}
+// 				render: function(data, type, row) {
+// 					return getEditableRow(row, data);
+// 				}
 			},
 			{ title: 'First Name', data: 'firstname',
-				render: function(data, type, row) {
-					return getEditableRow(row, data);
-				}
+// 				render: function(data, type, row) {
+// 					return getEditableRow(row, data);
+// 				}
 			},
 			{ title: 'Email', data: 'email',
-				render: function(data, type, row) {
-					return getEditableRow(row, data);
-				}
+// 				render: function(data, type, row) {
+// 					return getEditableRow(row, data);
+// 				}
 			},
 			{ title: 'Notes', data: 'notes',
-				render: function(data, type, row) {
-					return getEditableRow(row, data);
-				}
+// 				render: function(data, type, row) {
+// 					return getEditableRow(row, data);
+// 				}
 			},
 			{ title: 'Actions', data: null, defaultContent: '', width: '120px',
 				render: function(data, type, row) {
 					//return getEditButtons(row.id);
+					return '<button type="button" class="btn btn-light btn-sm editButton">Edit</button>';
 				}			
 			}
 		],
