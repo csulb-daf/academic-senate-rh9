@@ -6,15 +6,12 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use App\Members;
-use App\Traits\TableData;
 use App\Charges;
 use App\ChargeMembership;
 use App\Community;
 use App\Committees;
 
 class MembersController extends Controller {
-	use TableData;
-	
 	/**
 	 * Create a new controller instance.
 	 *

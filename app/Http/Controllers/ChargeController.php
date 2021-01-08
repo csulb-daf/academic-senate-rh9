@@ -6,11 +6,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use App\ChargeMembership;
-use App\Traits\TableData;
 
 class ChargeController extends Controller {
-	use TableData;
-	
 	/**
 	 * Create a new controller instance.
 	 *
