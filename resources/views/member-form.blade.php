@@ -6,7 +6,7 @@
 
 		<h2 style="font-weight: bold; text-align: center; margin-bottom: 20px;">{{ $cname }}</h2>
 <div class="row">
-	@if(empty($uid))
+	@if(empty($mid))
 	<div class="col-sm-4">
 		@include('partials.directory-search')		
 	</div>
@@ -23,15 +23,16 @@
 			</div>
 		@endif
 
-		@if(empty($uid))
+		@if(empty($mid))
 			@php $route =  route('members.add', ['cid' => $cid]) @endphp
 		@else
-			@php $route = route('members.update', ['uid' => $uid]) @endphp
+			@php $route = route('members.update', ['mid' => $mid]) @endphp
 		@endif
 		
 		<form method="POST" id="memberForm" action="{{ $route }}">
 			@csrf
 			<input type="hidden" name="cid" value="{{ $cid }}">
+			<input type="hidden" name="mid" value="{{ isset($mid)? $mid:'' }}">
 			
 			<div class="input-group">
 				<label for="fName" style="margin-top: 1em;">First Name:</label>
@@ -98,7 +99,7 @@
 			</div>
 		
 			<div class="form-group ">
-				<button class="btn btn-primary mt-3" type="submit">{{ empty($uid)? 'Assign to Committee':'Update' }}</button>
+				<button class="btn btn-primary mt-3" type="submit">{{ empty($mid)? 'Assign to Committee':'Update' }}</button>
 			</div>
 		</form>
 	</div> {{-- col --}}

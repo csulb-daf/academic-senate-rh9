@@ -27,9 +27,10 @@ Route::post('/committee/add', 'CommitteeController@store');
 Route::get('/committee/members/{cid}', 'MembersController@index')->name('comm.assign');
 Route::get('/committee/members/{cid}/ajax', 'MembersController@ajax')->name('comm.ajax');
 Route::get('/committee/members/{cid}/add', 'MembersController@create')->name('members.add');
-Route::get('/committee/members/{cid}/edit/{uid}', 'MembersController@create')->name('members.edit');
 Route::post('/committee/members/{cid}/add', 'MembersController@store')->name('members.add');
-Route::post('/committee/members/update/{uid}', 'MembersController@update')->name('members.update');
+Route::get('/committee/members/{cid}/edit/{mid}', 'MembersController@create')->name('members.edit');
+Route::post('/committee/members/update/{mid}', 'MembersController@update')->name('members.update');
+Route::post('/committee/members/destroy/{mid}', 'MembersController@destroy')->name('members.destroy');
 
 /*** Charge Membership Pages ***/
 Route::get('/charge', 'ChargeController@index')->name('charge');

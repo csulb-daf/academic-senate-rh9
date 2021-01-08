@@ -51,7 +51,7 @@ class MembersController extends Controller {
 	 *
 	 * @return \Illuminate\Http\Response
 	 */
-	public function create($cid, $uid=0) {
+	public function create($cid, $mid=0) {
 		$cname = Committees::where('id', $cid)->pluck('committeename')->first();
 		$charges = DB::table('charge_membership as chm')
 		->join('charges as c', 'chm.charge', '=', 'c.id')
@@ -74,11 +74,11 @@ class MembersController extends Controller {
 				'cid' => $cid,
 				'users' =>$users,
 				'cname' => $cname,
-				'uid' => $uid,
+				'mid' => $mid,
 		);
 		
-		if(!empty($uid)) {
-			$row = Members::where('id', $uid)->first();
+		if(!empty($mid)) {
+			$row = Members::where('id', $mid)->first();
 			$chargeName = Charges::where('id', $row->charge)->pluck('charge')->first();
 			$formData = array_merge($formData,[
 				'fname' => $row->firstname,
@@ -146,16 +146,50 @@ class MembersController extends Controller {
 	}
 	
 	public function update(Request $request) {
-// 		Rank::where('id', $request->id)
-// 		->update([
-// 				'user_id' => Auth::id(),
-// 				'rank' => $request->data
-// 		]);
-		return $request;
+		$validatedData = request()->validate(
+			[
+					'fName' => 'required',
+					'lName' => 'required',
+					'campusID' => 'required',
+					'termSelect' => 'required',
+					'chargeSelect' => 'required',
+					'rankSelect' => 'required',
+			],
+			
+			[
+					'fName.required' => 'Please Enter First Name',
+					'lName.required' => 'Please Enter Last Name',
+					'campusID.required' => 'Please Enter the Campus ID',
+					'termSelect.required' => 'Please Select the Term',
+					'chargeSelect.required' => 'Please Select the Charge Membership',
+					'rankSelect.required' => 'Please Select the Rank',
+			]
+			);
+		
+		if($validatedData) {
+			Members::where('id', $request->mid)
+			->update([
+				'user_id' => Auth::id(),
+				'firstname' => $request->fName,
+				'lastname' => $request->lName,
+				'campus_id' => $request->campusID,
+				'term' => $request->termSelect,
+				'charge' => $request->chargeSelect,
+				'rank' => $request->rankSelect,
+				'notes' => $request->notes,
+				'alternate' => isset($request->alternate)? $request->alternate:0,
+		]);
+		return redirect()->route('comm.assign', ['cid'=>$request->cid])->withInput($request->all)->with('member', 'Committee Member Updated Successfully');
+		}
+		else {
+			return back()->withInput($request->all)->with('error');
+		}
+		
 	}
 	
 	public function destroy(Request $request) {
-// 		Rank::where('id', $request->id)->delete();
+		Members::where('id', $request->id)->update(['user_id' => Auth::id()]);
+		Members::where('id', $request->id)->delete();
 		return $request;
 	}
 }

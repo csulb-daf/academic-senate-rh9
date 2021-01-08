@@ -20,6 +20,15 @@ $(document).ready(function() {
 		autoWidth: false,
 		createdRow: function(row, data, dataIndex) {
 			//setEdit(row, communityTable, "{{ route('community.update', [], false) }}", "{{ route('community.destroy', [], false) }}");
+			$('button.deleteButton', row).click(function() {
+				$(this).closest('div.editButtons').hide();
+				$(this).closest('div.editButtons').siblings('div.delButtons').show();
+			});
+			$('button.cancelDelete', row).click(function() {
+				$(this).closest('div.delButtons').hide();
+				$(this).closest('div.delButtons').siblings('div.editButtons').show();
+			});
+			
 		},
     ajax: {
 			url: '/committee/members/{{ $cid }}/ajax',
@@ -82,19 +91,36 @@ function editMember(id) {
 	url = url.replace(':uid', id);
 	window.location = url;
 }
+function deleteMember(id) {
+	var url = 	"{{ route('members.destroy', ['user'=>':uid']) }}";
+	url = url.replace(':uid', id);
+	//window.location = url;
+	$.ajax({
+		headers: {
+			'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+		},
+		type: 'post',
+		url: url,
+		data: {
+			id: id,
+		},
+	});
+	
+	table.draw();
+}
+
 function getEditButtons(id) {
 	var html='\
 		<div class="editButtons">\
-				<button type="button" class="btn btn-light btn-sm editButton" onclick="editMember('+ id +')">Edit</button>\
-				<button type="button" class="btn btn-danger btn-sm deleteButton">Vacate</button>\
-				<img src="/images/check.svg" class="saved" style="width: 35px; display: none;">\
-			</div>\
-			<div class="delButtons" style="display: none;">\
-					<button type="button" class="btn btn-danger btn-sm confirmDelete" data-id="'+ id +'">Confirm</button>\
-					<button type="button" class="btn btn-light btn-sm cancelDelete">Cancel</button>\
-				</div>\
-		';
-		return html;
+			<button type="button" class="btn btn-light btn-sm editButton" onclick="editMember('+ id +')">Edit</button>\
+			<button type="button" class="btn btn-danger btn-sm deleteButton">Vacate</button>\
+		</div>\
+		<div class="delButtons" style="display: none;">\
+			<button type="button" class="btn btn-danger btn-sm confirmDelete"  onclick="deleteMember('+ id +')">Confirm</button>\
+			<button type="button" class="btn btn-light btn-sm cancelDelete">Cancel</button>\
+		</div>\
+	';
+	return html;
 }
 	
 </script>

@@ -44,6 +44,11 @@ tr.added td {
 }
 
 /*** Committee Membership Pages ***/
+#memberAdmin button {
+	padding: 3px 5px;
+	width: 60px;
+	margin-bottom: 5px;	
+}
 
 /*** datatables override ***/
 table.dataTable thead .sorting {
