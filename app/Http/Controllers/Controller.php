@@ -7,6 +7,7 @@ use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Support\Facades\DB;
+use App\Members;
 
 class Controller extends BaseController
 {
@@ -17,12 +18,14 @@ class Controller extends BaseController
     	return DB::table('committee_membership as cm')
     	->join('committees as c', 'cm.committee', '=', 'c.id')
     	->join('rank as r', 'cm.rank', '=', 'r.id')
-    	->rightJoin('charge_membership as chm', 'cm.charge', '=', 'chm.charge')
+    	->rightJoin('charge_membership as chm', function($join) {
+    		$join->on('cm.charge', '=', 'chm.charge')->whereNull('cm.deleted_at');
+    	})
     	->join('charges', 'charges.id', '=', 'chm.charge')
     	->select('cm.*', 'c.id as committee',  'r.rank as rank', 'charges.charge')
     	->where('chm.committee', '=', $cid)
     	->get();
-    	// 		->toSql();
+// 	->toSql();
     }
     
     public function getCommitteeAssignments() {

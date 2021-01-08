@@ -7,8 +7,6 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use App\Members;
 use App\Charges;
-use App\ChargeMembership;
-use App\Community;
 use App\Committees;
 
 class MembersController extends Controller {
@@ -54,7 +52,7 @@ class MembersController extends Controller {
 		->join('charges as c', 'chm.charge', '=', 'c.id')
 		->select('c.id', 'c.charge')
 		->where('chm.committee', '=', $cid)
-		->whereNotIn('chm.charge', DB::table('committee_membership')->pluck('charge'))
+		->whereNotIn('chm.charge', Members::all()->pluck('charge'))
 		->get();
 		
 		$ranks = DB::table('rank')->select('id', 'rank')->get();

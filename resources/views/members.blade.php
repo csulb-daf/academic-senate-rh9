@@ -94,7 +94,6 @@ function editMember(id) {
 function deleteMember(id) {
 	var url = 	"{{ route('members.destroy', ['user'=>':uid']) }}";
 	url = url.replace(':uid', id);
-	//window.location = url;
 	$.ajax({
 		headers: {
 			'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -104,9 +103,10 @@ function deleteMember(id) {
 		data: {
 			id: id,
 		},
+		success: function(data) {
+			$('#memberAdmin').DataTable().ajax.reload();
+		}
 	});
-	
-	table.draw();
 }
 
 function getEditButtons(id) {

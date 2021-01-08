@@ -119,6 +119,10 @@ $(document).ready(function() {
 		form.find('#fName').val(firstName);
 		form.find('#lName').val(lastName);
 		form.find('#campusID').val(campusID);
+
+		if(campusID == 0) {
+			form.find('#campusID').prop('readonly', true);
+		}
 	});
 });
 </script>
