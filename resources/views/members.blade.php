@@ -9,7 +9,6 @@
     </div>
 @endif			
 
-{{-- <button type="button" class="btn btn-primary" id="addMember" style="margin-bottom: 20px;"  onclick="javascript:addMember({{ $cid }});">Add New Committee Member</button> --}}
 <h2 style="font-weight: bold;">{{ $cname }}</h2>
 <table id="memberAdmin" class="display" style="width: 100%"></table>
 @endsection 
@@ -28,13 +27,7 @@ $(document).ready(function() {
 			error: function (xhr, error, thrown) {
 				table.clear().draw();
 			},
-			complete: function() {
-// 				$('.dataTables_length').css({
-// 					'float' : 'right',
-// 					'margin-left' : '30px'
-// 				});
-// 				$("button#addMember").prependTo("#memberAdmin_wrapper").show();
-			}
+			complete: function() {}
     },
 		columns: [
 			{ title: 'Campus ID',
@@ -83,15 +76,16 @@ $(document).ready(function() {
 	});		
 });
 
-function addMember(id) {
-	var url = 	"{{ route('members.add', ['cid'=>':id']) }}";
-	url = url.replace(':id', id);
+function editMember(id) {
+	var url = 	"{{ route('members.update', ['cid'=>':cid', 'user'=>':uid']) }}";
+	url = url.replace(':cid', {{ $cid }});
+	url = url.replace(':uid', id);
 	window.location = url;
 }
 function getEditButtons(id) {
 	var html='\
 		<div class="editButtons">\
-				<button type="button" class="btn btn-light btn-sm editButton">Edit</button>\
+				<button type="button" class="btn btn-light btn-sm editButton" onclick="editMember('+ id +')">Edit</button>\
 				<button type="button" class="btn btn-danger btn-sm deleteButton">Vacate</button>\
 				<img src="/images/check.svg" class="saved" style="width: 35px; display: none;">\
 			</div>\

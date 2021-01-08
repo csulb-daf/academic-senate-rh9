@@ -10,6 +10,7 @@ use App\Traits\TableData;
 use App\Charges;
 use App\ChargeMembership;
 use App\Community;
+use App\Committees;
 
 class MembersController extends Controller {
 	use TableData;
@@ -50,7 +51,8 @@ class MembersController extends Controller {
 	 *
 	 * @return \Illuminate\Http\Response
 	 */
-	public function create($cid) {
+	public function create($cid, $uid=0) {
+		$cname = Committees::where('id', $cid)->pluck('committeename')->first();
 		$charges = DB::table('charge_membership as chm')
 		->join('charges as c', 'chm.charge', '=', 'c.id')
 		->select('c.id', 'c.charge')
@@ -65,16 +67,33 @@ class MembersController extends Controller {
 		->unionAll($community)
 		->orderBy('last_name', 'asc')
 		->get();
-		
-		return view('member-form', [
+
+		$formData = Array(
 				'charges' => $charges,
 				'ranks' => $ranks,
 				'cid' => $cid,
 				'users' =>$users,
-		]);
+				'cname' => $cname,
+				'uid' => $uid
+		);
 		
+		if(!empty($uid)) {
+			$row = Members::where('id', $uid)->first();
+			$chargeName = Charges::where('id', $row->charge)->pluck('charge')->first();
+			$formData = array_merge($formData,[
+				'fname' => $row->firstname,
+				'lname' => $row->lastname,
+				'campusID' => $row->campus_id,
+				'notes' => $row->notes,
+				'termID' => $row->term,
+				'chargeID' => $row->charge,
+				'chargeName' => $chargeName,
+				'rankID' => $row->rank,
+			]);
+		}
+		return view('member-form', $formData);
 	}
-
+	
 	/**
 	 * Store a newly created resource in storage.
 	 *
