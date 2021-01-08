@@ -95,6 +95,11 @@ $(document).ready(function() {
 		autoWidth: false,
 		createdRow: function(row, data, dataIndex) {
 // 			setEdit(row, communityTable, "{{ route('community.update', [], false) }}", "{{ route('community.destroy', [], false) }}");
+			setButtonActions(row);
+// 			$('button.editButton', row).one('click', function() {
+// 				editRow(row);
+// 			});
+
 		},
     ajax: {
     	url: "{{ route('list.community.admin', [], false) }}",
@@ -106,30 +111,30 @@ $(document).ready(function() {
     },
 		columns: [
 			{ title: '#', data: null, defaultContent: '', width: '50px'},
-			{ title: 'Last Name', data: 'lastname',
+			{ title: 'Last Name', data: 'lastname', className: 'editable',
 // 				render: function(data, type, row) {
 // 					return getEditableRow(row, data);
 // 				}
 			},
-			{ title: 'First Name', data: 'firstname',
+			{ title: 'First Name', data: 'firstname', className: 'editable',
 // 				render: function(data, type, row) {
 // 					return getEditableRow(row, data);
 // 				}
 			},
-			{ title: 'Email', data: 'email',
+			{ title: 'Email', data: 'email', className: 'editable',
 // 				render: function(data, type, row) {
 // 					return getEditableRow(row, data);
 // 				}
 			},
-			{ title: 'Notes', data: 'notes',
+			{ title: 'Notes', data: 'notes', className: 'editable',
 // 				render: function(data, type, row) {
 // 					return getEditableRow(row, data);
 // 				}
 			},
 			{ title: 'Actions', data: null, defaultContent: '', width: '120px',
 				render: function(data, type, row) {
-					//return getEditButtons(row.id);
-					return '<button type="button" class="btn btn-light btn-sm editButton">Edit</button>';
+					return getEditButtons(row.id);
+					//return '<button type="button" class="btn btn-light btn-sm editButton">Edit</button>';
 				}			
 			}
 		],
@@ -233,6 +238,10 @@ function getEditButtons(id) {
 		<div class="editButtons">\
 				<button type="button" class="btn btn-light btn-sm editButton">Edit</button>\
 				<button type="button" class="btn btn-danger btn-sm deleteButton">Delete</button>\
+			</div>\
+			<div class="submitButtons" style="display: none;">\
+				<button type="button" class="btn btn-success btn-sm submit" >Submit</button>\
+				<button type="button" class="btn btn-light btn-sm cancelEdit" >Cancel</button>\
 				<img src="/images/check.svg" class="saved" style="width: 35px; display: none;">\
 			</div>\
 			<div class="delButtons" style="display: none;">\
@@ -241,6 +250,36 @@ function getEditButtons(id) {
 				</div>\
 		';
 		return html;
+}
+function editRow(row) {
+	$('td.editable', row).each(function() {
+		$(this).html('<input type="text" value="' + $(this).html() + '" />');
+	});
+}
+function cancelEdit(row) {
+	$('td.editable', row).each(function() {
+		$(this).html($(this).find('input').val());
+	});
+}
+function setButtonActions(row) {
+	$('button.editButton', row).click(function() {
+		editRow(row);
+		$(this).closest('div.editButtons').hide();
+		$(this).closest('div.editButtons').siblings('div.submitButtons').show();
+	});
+	$('button.cancelEdit', row).click(function() {
+		cancelEdit(row);
+		$(this).closest('div.submitButtons').hide();
+		$(this).closest('div.submitButtons').siblings('div.editButtons').show();
+	});
+	$('button.deleteButton', row).click(function() {
+		$(this).closest('div.editButtons').hide();
+		$(this).closest('div.editButtons').siblings('div.delButtons').show();
+	});
+	$('button.cancelDelete', row).click(function() {
+		$(this).closest('div.delButtons').hide();
+		$(this).closest('div.delButtons').siblings('div.editButtons').show();
+	});
 }
 
 function setEdit(row, table, updateURL, delURL) {
