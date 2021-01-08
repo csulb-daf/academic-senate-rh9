@@ -23,7 +23,13 @@
 			</div>
 		@endif
 
-		<form method="POST" id="memberForm" action="{{ route('members.add', ['cid' => $cid]) }}">
+		@if(empty($uid))
+			@php $route =  route('members.add', ['cid' => $cid]) @endphp
+		@else
+			@php $route = route('members.update', ['uid' => $uid]) @endphp
+		@endif
+		
+		<form method="POST" id="memberForm" action="{{ $route }}">
 			@csrf
 			<input type="hidden" name="cid" value="{{ $cid }}">
 			
@@ -32,7 +38,7 @@
 				<input class="form-control" type="text" name="fName" id="fName" value="{{ old('fName', isset($fname)? $fname:'') }}" >
 				
 				<div class="form-check">
-					<input type="checkbox" class="form-check-input" name="alternate" id="alternate" value="1" {{ old('alternate') == '1' ? 'checked' : '' }}>
+					<input type="checkbox" class="form-check-input" name="alternate" id="alternate" value="1" {{ old('alternate', isset($alternate)? $alternate:'') == '1' ? 'checked' : '' }}>
 					<label class="form-check-label" for="alternate">Alternate</label>
 				</div>				
 			</div>

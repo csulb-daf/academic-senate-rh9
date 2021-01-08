@@ -77,7 +77,7 @@ $(document).ready(function() {
 });
 
 function editMember(id) {
-	var url = 	"{{ route('members.update', ['cid'=>':cid', 'user'=>':uid']) }}";
+	var url = 	"{{ route('members.edit', ['cid'=>':cid', 'user'=>':uid']) }}";
 	url = url.replace(':cid', {{ $cid }});
 	url = url.replace(':uid', id);
 	window.location = url;

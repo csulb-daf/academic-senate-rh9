@@ -74,7 +74,7 @@ class MembersController extends Controller {
 				'cid' => $cid,
 				'users' =>$users,
 				'cname' => $cname,
-				'uid' => $uid
+				'uid' => $uid,
 		);
 		
 		if(!empty($uid)) {
@@ -89,6 +89,7 @@ class MembersController extends Controller {
 				'chargeID' => $row->charge,
 				'chargeName' => $chargeName,
 				'rankID' => $row->rank,
+				'alternate' => $row->alternate,
 			]);
 		}
 		return view('member-form', $formData);
@@ -142,6 +143,19 @@ class MembersController extends Controller {
 		else {
 			return redirect()->route('committee')->withInput($request->all)->with('error');
 		}
-		
+	}
+	
+	public function update(Request $request) {
+// 		Rank::where('id', $request->id)
+// 		->update([
+// 				'user_id' => Auth::id(),
+// 				'rank' => $request->data
+// 		]);
+		return $request;
+	}
+	
+	public function destroy(Request $request) {
+// 		Rank::where('id', $request->id)->delete();
+		return $request;
 	}
 }
