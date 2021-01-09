@@ -192,6 +192,12 @@ class ListController extends Controller {
 	}
 
 	public function updateRank(Request $request) {
+		request()->validate([
+				'rankName' => 'required',
+		], [
+				'rankName.required' => 'Please Enter Rank',
+		]);
+		
 		Rank::where('id', $request->id)
 		->update([
 				'user_id' => Auth::id(),

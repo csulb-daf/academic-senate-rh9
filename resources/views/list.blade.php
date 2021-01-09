@@ -251,6 +251,7 @@ function cancelEdit(row) {
 			$(this).html($(this).find('input').val());
 		}
 	});
+	$('#validation-errors').html('').removeClass();
 }
 function submit(id, row, updateURL) {
 	var inputData = {};
@@ -271,6 +272,7 @@ function submit(id, row, updateURL) {
 			cancelEdit(row);
 			$(row).find('div.submitButtons').hide();
 			$(row).find('div.submitButtons').siblings('span.saved').show();
+			$('#validation-errors').html('').removeClass();
 		},
 		error: function(xhr) {
 			$('#validation-errors').html('');
