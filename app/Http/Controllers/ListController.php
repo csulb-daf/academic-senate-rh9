@@ -116,7 +116,6 @@ class ListController extends Controller {
 	 * @return \Illuminate\Http\Response
 	 */
 	public function destroyCommunity(Request $request) {
-		return $request;
 		Community::where('id', $request->id)->delete();
 		return $request;
 	}

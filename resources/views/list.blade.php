@@ -90,8 +90,7 @@ $(document).ready(function() {
 	var communityTable = $('#communityTable').DataTable({
 		autoWidth: false,
 		createdRow: function(row, data, dataIndex) {
-// 			setEdit(row, communityTable, "{{ route('community.update', [], false) }}", "{{ route('community.destroy', [], false) }}");
-			setButtonActions(row, communityTable, "{{ route('community.update', [], false) }}", "{{ route('community.destroy', [], false) }}");
+			setButtonActions(row, "{{ route('community.update', [], false) }}", "{{ route('community.destroy', [], false) }}");
 		},
     ajax: {
     	url: "{{ route('list.community.admin', [], false) }}",
@@ -107,38 +106,25 @@ $(document).ready(function() {
 				createdCell: function(td, cellData, rowData, row, col) {
 					$(td).attr('data-name', 'lastname');
 				}
-// 				render: function(data, type, row) {
-// 					return getEditableRow(row, data);
-// 				}
 			},
 			{ title: 'First Name', data: 'firstname', className: 'editable',
 				createdCell: function(td, cellData, rowData, row, col) {
 					$(td).attr('data-name', 'firstname');
 				}
-// 				render: function(data, type, row) {
-// 					return getEditableRow(row, data);
-// 				}
 			},
 			{ title: 'Email', data: 'email', className: 'editable',
 				createdCell: function(td, cellData, rowData, row, col) {
 					$(td).attr('data-name', 'email');
 				}
-// 				render: function(data, type, row) {
-// 					return getEditableRow(row, data);
-// 				}
 			},
 			{ title: 'Notes', data: 'notes', className: 'editable',
 				createdCell: function(td, cellData, rowData, row, col) {
 					$(td).attr('data-name', 'notes');
 				}
-// 				render: function(data, type, row) {
-// 					return getEditableRow(row, data);
-// 				}
 			},
 			{ title: 'Actions', data: null, defaultContent: '', width: '120px',
 				render: function(data, type, row) {
 					return getEditButtons(row.id);
-					//return '<button type="button" class="btn btn-light btn-sm editButton">Edit</button>';
 				}			
 			}
 		],
@@ -262,7 +248,12 @@ function editRow(row) {
 }
 function cancelEdit(row) {
 	$('td.editable', row).each(function() {
-		$(this).html($(this).find('input').val());
+		if($(this).find('input').hasClass('error')) {
+			$(this).html($(this).find('input').attr('value'));
+		}
+		else {
+			$(this).html($(this).find('input').val());
+		}
 	});
 }
 function submit(id, row, updateURL) {
@@ -291,36 +282,32 @@ function submit(id, row, updateURL) {
 			$(row).find('div.submitButtons').hide();
 			$(row).find('div.submitButtons').siblings('span.saved').show();
 		},
-		error: function (xhr) {
-// 			console.log(xhr);
-			
+		error: function(xhr) {
 			$('#validation-errors').html('');
 			$('#validation-errors').addClass('alert alert-danger');
 			$.each(xhr.responseJSON.errors, function(key, value) {
+				$(row).find('input[name='+ key +']').addClass('error border border-danger');
 				$('#validation-errors').append('<div>'+value+'</div>');
 			}); 
 		},
 	});
 }
 function destroy(id, delURL, row) {
-// 	$.ajax({
-// 		headers: {
-// 			'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-// 		},
-// 		type: 'post',
-// 		url: delURL,
-// 		data: {
-// 			id: id,
-// 			firstname: inputData.firstname,
-// 			lastname: inputData.lastname,
-// 			email: inputData.email,
-// 			notes: inputData.notes,
-// 		},
-// 	});
-	
-	$(row).remove();
+	$.ajax({
+		headers: {
+			'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+		},
+		type: 'post',
+		url: delURL,
+		data: {
+			id: id,
+		},
+		success: function() {
+			$(row).remove();
+		}
+	});
 }
-function setButtonActions(row, table, updateURL, delURL) {
+function setButtonActions(row, updateURL, delURL) {
 	$('button.editButton', row).click(function() {
 		editRow(row);
 		$(this).closest('div.editButtons').hide();
