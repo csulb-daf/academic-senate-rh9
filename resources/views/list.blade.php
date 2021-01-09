@@ -139,7 +139,7 @@ $(document).ready(function() {
 	var chargeTable = $('#chargeTable').DataTable({
 		autoWidth: false,
 		createdRow: function(row, data, dataIndex) {
-			setEdit(row, chargeTable, "{{ route('charge.update', [], false) }}", "{{ route('charge.destroy', [], false) }}");
+			setButtonActions(row, "{{ route('charge.update', [], false) }}", "{{ route('charge.destroy', [], false) }}");
 		},
     ajax: {
 			url: "{{ route('list.charge.admin', [], false) }}",
@@ -151,9 +151,9 @@ $(document).ready(function() {
     },
 		columns: [
 			{ title: '#', data: null, defaultContent: '', width: '50px'},
-			{ title: 'Charge Membership', data: 'charge',
-				render: function ( data, type, row ) {
-					return getEditableRow(row, data);
+			{ title: 'Charge Membership', data: 'charge', className: 'editable',
+				createdCell: function(td, cellData, rowData, row, col) {
+					$(td).attr('data-name', 'chargeName');
 				}
 			},
 			{ title: 'Actions', data: null, defaultContent: '', width: '120px',
@@ -174,7 +174,7 @@ $(document).ready(function() {
 	var rankTable = $('#rankTable').DataTable({
 		autoWidth: false,
 		createdRow: function(row, data, dataIndex) {
-			setEdit(row, rankTable, "{{ route('rank.update', [], false) }}", "{{ route('rank.destroy', [], false) }}");
+			setButtonActions(row, "{{ route('rank.update', [], false) }}", "{{ route('rank.destroy', [], false) }}");
 		},
     ajax: {
     	url: "{{ route('list.rank.admin', [], false) }}",
@@ -186,9 +186,9 @@ $(document).ready(function() {
     },
 		columns: [
 			{ title: '#', data: null, defaultContent: '', width: '50px'},
-			{ title: 'Rank', data: 'rank',
-				render: function ( data, type, row ) {
-					return getEditableRow(row, data);
+			{ title: 'Rank', data: 'rank', className: 'editable',
+				createdCell: function(td, cellData, rowData, row, col) {
+					$(td).attr('data-name', 'chargeName');
 				}
 			},
 			{ title: 'Actions', data: null, defaultContent: '', width: '120px',
@@ -219,10 +219,6 @@ function addCommunity() {
 	window.location = "{{ url('/list/community/add') }}";
 }
 
-function getEditableRow(row, data) {
-	return '<span class="edit" data-id="'+ row.id +'">'+ data +'</span><img src="/images/check.svg" class="saved" style="width: 35px; display: none;">';	
-}
-
 function getEditButtons(id) {
 	var html='\
 		<div class="editButtons">\
@@ -243,7 +239,7 @@ function getEditButtons(id) {
 }
 function editRow(row) {
 	$('td.editable', row).each(function() {
-		$(this).html('<input type="text" name="'+ $(this).data('name') +'" value="' + $(this).html() + '" />');
+		$(this).html('<input type="text" name="'+ $(this).data('name') +'" value="' + $(this).html() + '" style="width: 100%;" />');
 	});
 }
 function cancelEdit(row) {
@@ -263,6 +259,18 @@ function submit(id, row, updateURL) {
 	});
 // 	var jsonData = JSON.stringify(inputData);
 // 	console.log(jsonData);
+
+// 		$.ajax({
+// 			headers: {
+// 				'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+// 			},
+// 			type: 'post',
+// 			url: updateURL,
+// 			data: {
+// 				id: id,
+// 				data: value,
+// 			},
+// 		});
 
 	$.ajax({
 		headers: {
@@ -333,74 +341,6 @@ function setButtonActions(row, updateURL, delURL) {
 	$('button.confirmDelete', row).click(function() {
 		var id = $(this).data('id');
 		destroy(id, delURL, row);
-});
-	
-}
-
-function setEdit(row, table, updateURL, delURL) {
-	$('.edit', row).editable(function(value, settings) {
-		var id = $(this).attr('data-id');
-
-		$.ajax({
-			headers: {
-				'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-			},
-			type: 'post',
-			url: updateURL,
-			data: {
-				id: id,
-				data: value,
-			},
-		});
-		return value;
-	}, {
-		indicator : '<img src="/images/spinner.svg" />',
-		cancel: 'Cancel',
-		cancelcssclass: 'btn btn-light btn-sm cancelButton',
-		submit : 'Save',
-		submitcssclass:  'btn btn-light btn-sm saveButton',
-		//onblur: 'ignore',
-		onedit: function() {
-			$(this).closest('tr').find('.editButtons button').prop('disabled', true);
-		},
-		onreset: function() {
-			$(this).closest('tr').find('.editButtons button').prop('disabled', false);
-			$(this).closest('tr').find('.editButtons button').prop('disabled', false);
-		},
-		onsubmit: function() {
-			$(this).closest('td').find('img.saved').show();
-		},
-	});
-
-	$('button.editButton', row).click(function() {
-		$(this).closest('tr').find('span.edit').trigger('click');
-	});
-	$('button.deleteButton', row).click(function() {
-		$(this).closest('div.editButtons').hide();
-		$(this).closest('div.editButtons').siblings('div.delButtons').show();
-	});
-	$('button.cancelDelete', row).click(function() {
-		$(this).closest('div.delButtons').hide();
-		$(this).closest('div.delButtons').siblings('div.editButtons').show();
-	});
-	$('button.confirmDelete', row).click(function() {
-		var id = $(this).attr('data-id');
-		
-		$.ajax({
-			headers: {
-				'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-			},
-			type: 'post',
-			url: delURL,
-			data: {
-				id: id,
-			},
-		});
-		
-		table
-			.row( $(this).parents('tr') )
-			.remove()
-			.draw();
 	});
 }
 </script>

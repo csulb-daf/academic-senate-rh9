@@ -26,7 +26,6 @@
 	<script src="{{ asset('js/datatables-buttons/vfs_fonts.js') }}"></script>
 	<script src="{{ asset('js/datatables-buttons/buttons.html5.min.js') }}"></script>
 	
-	<script src="{{ asset('js/jquery.jeditable.js') }}"></script>
 	<script src="{{ asset('js/select2.min.js') }}"></script>
 	
 	<!-- Fonts -->

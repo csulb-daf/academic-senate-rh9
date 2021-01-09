@@ -60,12 +60,3 @@ table.dataTable thead .sorting_asc {
 table.dataTable thead .sorting_desc {
 	background-image: url("/images/sort_desc.png")
 }
-
-/*** jquery editable ***/
-span.edit input {
-	width: 60% !important;
-}
-span.edit .saveButton,
-span.edit .cancelButton {
-	margin-left: 10px;
-}
