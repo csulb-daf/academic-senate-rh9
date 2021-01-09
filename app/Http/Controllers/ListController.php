@@ -87,12 +87,23 @@ class ListController extends Controller {
 	 * @return \Illuminate\Http\Response
 	 */
 	public function updateCommunity(Request $request) {
-		$nameArr = explode(' ', $request->data);
+		request()->validate([
+				'firstname' => 'required',
+				'lastname' => 'required',
+				'email' => 'required',
+		], [
+				'firstname.required' => 'Please Enter First Name',
+				'lastname.required' => 'Please Enter Last Name',
+				'email.required' => 'Please Enter your email address',
+		]);
+		
 		Community::where('id', $request->id)
 		->update([
 				'user_id' => Auth::id(),
-				'firstname' => $nameArr[0],
-				'lastname' => $nameArr[1],
+				'firstname' => $request->firstname,
+				'lastname' => $request->lastname,
+				'email' => $request->email,
+				'notes' => $request->notes,
 		]);
 		
 		return $request;
@@ -105,6 +116,7 @@ class ListController extends Controller {
 	 * @return \Illuminate\Http\Response
 	 */
 	public function destroyCommunity(Request $request) {
+		return $request;
 		Community::where('id', $request->id)->delete();
 		return $request;
 	}
