@@ -126,11 +126,11 @@ class ListController extends Controller {
 	}
 	
 	public function storeCharge(Request $request) {
-		$validatedData = request()->validate ( [
+		$validatedData = request()->validate([
 				'chargeName' => 'required',
 		], [
 				'chargeName.required' => 'Please Enter Charge Membership',
-		] );
+		]);
 		
 		if ($validatedData) {
 			$charges = new Charges();
@@ -146,10 +146,16 @@ class ListController extends Controller {
 	}
 	
 	public function updateCharge(Request $request) {
+		request()->validate([
+			'chargeName' => 'required',
+		], [
+			'chargeName.required' => 'Please Enter Charge Membership',
+		]);
+		
 		Charges::where('id', $request->id)
 		->update([
 				'user_id' => Auth::id(),
-				'charge' => $request->data,
+				'charge' => $request->chargeName,
 		]);
 		
 		return $request;
@@ -189,7 +195,7 @@ class ListController extends Controller {
 		Rank::where('id', $request->id)
 		->update([
 				'user_id' => Auth::id(),
-				'rank' => $request->data
+				'rank' => $request->rankName
 		]);
 		return $request;
 	}

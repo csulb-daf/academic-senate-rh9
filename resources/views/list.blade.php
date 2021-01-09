@@ -188,7 +188,7 @@ $(document).ready(function() {
 			{ title: '#', data: null, defaultContent: '', width: '50px'},
 			{ title: 'Rank', data: 'rank', className: 'editable',
 				createdCell: function(td, cellData, rowData, row, col) {
-					$(td).attr('data-name', 'chargeName');
+					$(td).attr('data-name', 'rankName');
 				}
 			},
 			{ title: 'Actions', data: null, defaultContent: '', width: '120px',
@@ -257,20 +257,7 @@ function submit(id, row, updateURL) {
 	$('td.editable input', row).each(function() {
 		inputData[$(this).attr('name')] = $(this).val();
 	});
-// 	var jsonData = JSON.stringify(inputData);
-// 	console.log(jsonData);
-
-// 		$.ajax({
-// 			headers: {
-// 				'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-// 			},
-// 			type: 'post',
-// 			url: updateURL,
-// 			data: {
-// 				id: id,
-// 				data: value,
-// 			},
-// 		});
+	inputData['id'] = id;
 
 	$.ajax({
 		headers: {
@@ -278,13 +265,8 @@ function submit(id, row, updateURL) {
 		},
 		type: 'post',
 		url: updateURL,
-		data: {
-			id: id,
-			firstname: inputData.firstname,
-			lastname: inputData.lastname,
-			email: inputData.email,
-			notes: inputData.notes,
-		},
+		data: inputData,
+		dataType: 'json',
 		success: function() {
 			cancelEdit(row);
 			$(row).find('div.submitButtons').hide();
