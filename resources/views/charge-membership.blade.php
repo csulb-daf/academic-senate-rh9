@@ -17,6 +17,55 @@ $(document).ready(function() {
 		searching: false,
 		//info: false,
 		autoWidth: false,
+		createdRow: function(row, data, dataIndex) {
+			$('button.removeButton', row).click(function() {
+				var that = $(this);
+				var chargeID = that.attr('data-id');
+				var chargeName = that.closest('tr').find('td.chargeName').text().trim();
+				var assigned = that.closest('tr').find('td.assignedTo');
+				if(assigned.text().trim() !== '') {
+					//console.log('assigned', assigned.text().trim());
+					var msg = assigned.text().trim() +' will be vacated Are you sure?';
+					console.log(msg);
+					assigned.popover({
+						content: msg,
+						placement: 'left',
+					});
+					assigned.trigger('click');
+				}
+				$(this).hide();
+				$(this).siblings('div.confirmButtons').show();
+			});
+			$('button.cancelRemove', row).click(function() {
+				$(this).closest('div.confirmButtons').hide();
+				$(this).closest('div.confirmButtons').siblings('button.removeButton').show();
+			});
+			$('button.confirmRemove', row).click(function() {
+				var that = $(this);
+				var chargeID = that.attr('data-id');
+				var chargeName = that.closest('tr').find('td.chargeName').text().trim();
+				
+				$.ajax({
+		 			headers: {
+		 				'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+		 			},
+		 			type: 'post',
+		 			url: '{{ route('charge.assignments.destroy') }}',
+		 			data: {
+		 				charge: chargeID,
+		 				committee: {{ $commID }}
+		 			},
+					success:  function(response) {
+						console.log(response);
+// 						$('#messageContainer').html('<div class="alert alert-success">'+ response.message +'</div>').fadeIn();
+// 						$(row).addClass('added');
+// 						that.closest('div.confirmButtons').hide().siblings('button.addedButton').show();
+					}
+		 		});		//ajax
+			});		//$('button.addButton').click
+	
+			
+		},
     ajax: {
 			url: "/charge/assignments/{{ $commID }}/ajax",
 			dataSrc: '',
@@ -28,13 +77,14 @@ $(document).ready(function() {
     },
 		columns: [
 			{ title: 'Charge Name', data: 'chargeName' },
+			{ title: 'Assigned To', data: 'assigned_to', className: 'assignedTo', width: '150px'},
 			{ title: 'Actions', data: null, defaultContent: '', width: '120px',
 				render: function ( data, type, row ) {
 					var html='\
 						<button type="button" class="btn btn-danger btn-sm removeButton" data-id="'+ data.charge +'">Remove</button>\
-						<div class="delButtons" style="display: none;">\
-							<button type="button" class="btn btn-danger btn-sm confirmDelete">Confirm</button>\
-							<button type="button" class="btn btn-light btn-sm cancelDelete">Cancel</button>\
+						<div class="confirmButtons" style="display: none;">\
+							<button type="button" class="btn btn-danger btn-sm confirmRemove" data-id="'+ data.charge +'">Confirm</button>\
+							<button type="button" class="btn btn-light btn-sm cancelRemove">Cancel</button>\
 						</div>\
 						';
 						return html;
@@ -42,7 +92,7 @@ $(document).ready(function() {
 			}
 		],
 		columnDefs: [{		//Assignments column
-			targets:  1,
+			targets:  [1, 2],
 			sortable: false,
 		}],
 	});	
@@ -58,7 +108,6 @@ $(document).ready(function() {
 				$(this).closest('div.confirmButtons').hide();
 				$(this).closest('div.confirmButtons').siblings('button.addButton').show();
 			});
-			
 			$('button.confirmButton', row).click(function() {
 				var that = $(this);
 				var chargeID = that.attr('data-id');

@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use App\ChargeMembership;
+use App\Members;
 
 class ChargeController extends Controller {
 	/**
@@ -45,9 +46,13 @@ class ChargeController extends Controller {
 	public function getMembershipAjax($commID) {
 		return  DB::table( 'charge_membership as chm' )
 		->join('charges as c', 'chm.charge', '=', 'c.id')
-		->select('chm.charge', 'c.charge as chargeName' )
+		->leftJoin('committee_membership as cm', function($join) {
+			$join->on('chm.charge', '=', 'cm.charge')->whereNull('cm.deleted_at');
+		})
+		->select('chm.charge', 'c.charge as chargeName', DB::raw('concat_ws(" ", cm.firstname, cm.lastname) as assigned_to'))
 		->where('chm.committee', '=', $commID)
 		->get();
+// ->toSql();
 	}
 	
 	public function getCharges($commID) {
@@ -69,6 +74,7 @@ class ChargeController extends Controller {
 		$charge->committee = $request->committee;
 		$charge->charge = $request->charge;
 		$charge->save();
+		return $request;
 	}
 	
 	public function update(Request $request) {
@@ -81,6 +87,8 @@ class ChargeController extends Controller {
 	}
 	
 	public function destroy(Request $request) {
+// 		return $request;
+		
 // 		Rank::where('id', $request->id)
 // 		->update([	'active' => 0]);
 		return $request;
