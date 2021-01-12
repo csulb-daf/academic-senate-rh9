@@ -19,13 +19,12 @@ class Controller extends BaseController
     	->join('committees as c', 'cm.committee', '=', 'c.id')
     	->join('rank as r', 'cm.rank', '=', 'r.id')
     	->rightJoin('charge_membership as chm', function($join) {
-    		$join->on('cm.charge', '=', 'chm.charge');
+    		$join->on('cm.charge', '=', 'chm.charge')->whereNull('cm.deleted_at');
     	})
     	->join('charges', 'charges.id', '=', 'chm.charge')
     	->select('cm.*', 'c.id as committee',  'r.rank as rank', 'charges.charge')
     	->where('chm.committee', '=', $cid)
     	->whereNull('chm.deleted_at')
-    	->whereNull('cm.deleted_at')
     	->get();
 // 	->toSql();
     }
