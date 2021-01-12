@@ -47,6 +47,7 @@ class MembersController extends Controller {
 	 * @return \Illuminate\Http\Response
 	 */
 	public function create($cid, $mid=0) {
+		//TODO: rewrite query in Eloquent to automatically filter out soft deletes
 		$cname = Committees::where('id', $cid)->pluck('committeename')->first();
 		$charges = DB::table('charge_membership as chm')
 		->join('charges as c', 'chm.charge', '=', 'c.id')

@@ -14,7 +14,7 @@ class Controller extends BaseController
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
     
     public function getCommitteeMemberships($cid) {
-    	
+			//TODO: rewrite these in Eloquent to automatically filter out soft deletes    	
     	return DB::table('committee_membership as cm')
     	->join('committees as c', 'cm.committee', '=', 'c.id')
     	->join('rank as r', 'cm.rank', '=', 'r.id')
@@ -30,6 +30,7 @@ class Controller extends BaseController
     }
     
     public function getCommitteeAssignments() {
+    	//TODO: rewrite these in Eloquent to automatically filter out soft deletes
     	return DB::table('committees as c')
     	->select('c.id', 'c.committeename as comm', DB::raw('count(cm.committee) as assignments'))
     	->leftJoin('charge_membership as cm', 'c.id', '=', 'cm.committee')

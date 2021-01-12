@@ -44,6 +44,7 @@ class ChargeController extends Controller {
 	}
 
 	public function getMembershipAjax($commID) {
+		//TODO: rewrite query in Eloquent to automatically filter out soft deletes
 		return  DB::table( 'charge_membership as chm' )
 		->join('charges as c', 'chm.charge', '=', 'c.id')
 		->leftJoin('committee_membership as cm', function($join) {
@@ -57,6 +58,7 @@ class ChargeController extends Controller {
 	}
 	
 	public function getCharges($commID) {
+		//TODO: rewrite query in Eloquent to automatically filter out soft deletes
 		return DB::table('charges as c')
 		->select('c.id', 'c.charge',
 			DB::raw("if(count(chm.charge) > 0, 'yes', 'no') as assigned")
