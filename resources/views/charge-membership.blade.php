@@ -20,30 +20,36 @@ $(document).ready(function() {
 		createdRow: function(row, data, dataIndex) {
 			$('button.removeButton', row).click(function() {
 				var that = $(this);
-				var chargeID = that.attr('data-id');
-				var chargeName = that.closest('tr').find('td.chargeName').text().trim();
 				var assigned = that.closest('tr').find('td.assignedTo');
+				$('button.cancelRemove').not(this).trigger('click');
+
 				if(assigned.text().trim() !== '') {
-					//console.log('assigned', assigned.text().trim());
-					var msg = assigned.text().trim() +' will be vacated Are you sure?';
-					console.log(msg);
+					var msg = assigned.text().trim() +' will be unassigned. Are you sure?';
 					assigned.popover({
-						content: msg,
+						html: true,
+						content: function() {
+							return '<div class="alert alert-danger">'+ msg +'</div>';
+						},
+						container: assigned,
 						placement: 'left',
 					});
-					assigned.trigger('click');
+					assigned.trigger('manual');
 				}
+				assigned.popover('show');
 				$(this).hide();
 				$(this).siblings('div.confirmButtons').show();
 			});
 			$('button.cancelRemove', row).click(function() {
 				$(this).closest('div.confirmButtons').hide();
 				$(this).closest('div.confirmButtons').siblings('button.removeButton').show();
+				$('td.assignedTo').popover('dispose');
 			});
 			$('button.confirmRemove', row).click(function() {
 				var that = $(this);
-				var chargeID = that.attr('data-id');
+				var id = that.data('id');
+				var chargeID = that.data('charge');
 				var chargeName = that.closest('tr').find('td.chargeName').text().trim();
+				var assigned = (that.closest('tr').find('td.assignedTo').text().trim()) !== '';
 				
 				$.ajax({
 		 			headers: {
@@ -52,14 +58,16 @@ $(document).ready(function() {
 		 			type: 'post',
 		 			url: '{{ route('charge.assignments.destroy') }}',
 		 			data: {
+		 				id: id,
 		 				charge: chargeID,
-		 				committee: {{ $commID }}
+		 				comm: {{ $commID }},
+		 				assigned: assigned,
 		 			},
 					success:  function(response) {
-						console.log(response);
-// 						$('#messageContainer').html('<div class="alert alert-success">'+ response.message +'</div>').fadeIn();
-// 						$(row).addClass('added');
-// 						that.closest('div.confirmButtons').hide().siblings('button.addedButton').show();
+						//console.log(response);
+						var button = $('#charges_wrapper').find('button.addedButton[data-id=' + chargeID + ']');
+						button.hide();
+						button.siblings('button.addButton').show();
 					}
 		 		});		//ajax
 			});		//$('button.addButton').click
@@ -81,9 +89,9 @@ $(document).ready(function() {
 			{ title: 'Actions', data: null, defaultContent: '', width: '120px',
 				render: function ( data, type, row ) {
 					var html='\
-						<button type="button" class="btn btn-danger btn-sm removeButton" data-id="'+ data.charge +'">Remove</button>\
+						<button type="button" class="btn btn-danger btn-sm removeButton" data-id="'+ data.id +'">Remove</button>\
 						<div class="confirmButtons" style="display: none;">\
-							<button type="button" class="btn btn-danger btn-sm confirmRemove" data-id="'+ data.charge +'">Confirm</button>\
+							<button type="button" class="btn btn-danger btn-sm confirmRemove" data-id="'+ data.id +'" data-charge="'+ data.charge +'">Confirm</button>\
 							<button type="button" class="btn btn-light btn-sm cancelRemove">Cancel</button>\
 						</div>\
 						';
@@ -127,6 +135,7 @@ $(document).ready(function() {
 						//$('#messageContainer').html('<div class="alert alert-success">'+ response.message +'</div>').fadeIn();
 						var row = table.row.add({
 							'charge': chargeID,
+							'assigned_to': '',
 							'chargeName': chargeName,
 						}).draw(false).node();
 
@@ -156,7 +165,7 @@ $(document).ready(function() {
 					if(data.assigned === 'no') {
 						html='\
 							<button type="button" class="btn btn-light btn-sm addButton" data-id="'+ data.id +'">Add</button>\
-							<button type="button" class="btn btn-success btn-sm addedButton" style="display: none; opacity: 1;" disabled>Added</button>\
+							<button type="button" class="btn btn-success btn-sm addedButton" style="display: none; opacity: 1;" data-id="'+ data.id +'" disabled>Added</button>\
 							<div class="confirmButtons" style="display: none">\
 								<button type="button" class="btn btn-success btn-sm confirmButton" data-id="'+ data.id +'">Confirm</button>\
 								<button type="button" class="btn btn-light btn-sm cancelButton">Cancel</button>\
@@ -164,7 +173,14 @@ $(document).ready(function() {
 						';
 					}
 					else {
-						html = '<button type="button" class="btn btn-success btn-sm addedButton" style="opacity: 1;" disabled>Added</button>';
+						html='\
+							<button type="button" class="btn btn-light btn-sm addButton" data-id="'+ data.id +'" style="display: none;">Add</button>\
+							<button type="button" class="btn btn-success btn-sm addedButton" style="opacity: 1;" data-id="'+ data.id +'" disabled>Added</button>\
+							<div class="confirmButtons" style="display: none">\
+								<button type="button" class="btn btn-success btn-sm confirmButton" data-id="'+ data.id +'">Confirm</button>\
+								<button type="button" class="btn btn-light btn-sm cancelButton">Cancel</button>\
+							</div>\
+						';
 					}
 					
 					return html;

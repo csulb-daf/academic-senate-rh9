@@ -49,8 +49,9 @@ class ChargeController extends Controller {
 		->leftJoin('committee_membership as cm', function($join) {
 			$join->on('chm.charge', '=', 'cm.charge')->whereNull('cm.deleted_at');
 		})
-		->select('chm.charge', 'c.charge as chargeName', DB::raw('concat_ws(" ", cm.firstname, cm.lastname) as assigned_to'))
+		->select('chm.id', 'chm.charge', 'c.charge as chargeName', DB::raw('concat_ws(" ", cm.firstname, cm.lastname) as assigned_to'))
 		->where('chm.committee', '=', $commID)
+		->whereNull('chm.deleted_at')
 		->get();
 // ->toSql();
 	}
@@ -58,14 +59,17 @@ class ChargeController extends Controller {
 	public function getCharges($commID) {
 		return DB::table('charges as c')
 		->select('c.id', 'c.charge',
-			DB::raw("if(count(cm.charge) > 0, 'yes', 'no') as assigned")
+			DB::raw("if(count(chm.charge) > 0, 'yes', 'no') as assigned")
 		)
-		->leftJoin('charge_membership as cm', function($join) use($commID) {
-			$join->on('c.id', '=', 'cm.charge')->on('cm.committee', '=', DB::raw($commID));
+		->leftJoin('charge_membership as chm', function($join) use($commID) {
+			$join->on('c.id', '=', 'chm.charge')
+				->on('chm.committee', '=', DB::raw($commID))
+				->whereNull('chm.deleted_at');
 		})
 		->groupBy('c.id')
 		->orderBy('c.charge', 'asc')
 		->get();
+// ->toSql();
 	}
 	
 	public function store(Request $request) {
@@ -88,9 +92,18 @@ class ChargeController extends Controller {
 	
 	public function destroy(Request $request) {
 // 		return $request;
+		ChargeMembership::where('id', $request->id)->update(['user_id' => Auth::id()]);
+		ChargeMembership::where('id', $request->id)->delete();
 		
-// 		Rank::where('id', $request->id)
-// 		->update([	'active' => 0]);
+		if($request->assigned) {
+			Members::where('committee', $request->comm)
+			->where('charge', $request->charge)
+			->update(['user_id' => Auth::id()]);
+			Members::where('committee', $request->comm)->where('charge', $request->charge)
+// 			->delete();
+			->toSql();
+		}
+		
 		return $request;
 	}
 	

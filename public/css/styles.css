@@ -42,6 +42,14 @@ tr.added td {
 #chargeMembership_wrapper {
 	margin-bottom: 30px;
 }
+#chargeMembership_wrapper .popover-body {
+	padding: 0;
+}
+#chargeMembership_wrapper .popover-body div.alert {
+	margin: 0;
+	font-size: 16px;
+	text-align: center;
+}
 
 /*** Committee Membership Pages ***/
 #memberAdmin button {
