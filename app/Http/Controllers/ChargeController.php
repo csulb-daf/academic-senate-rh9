@@ -91,7 +91,6 @@ class ChargeController extends Controller {
 	}
 	
 	public function destroy(Request $request) {
-// 		return $request;
 		ChargeMembership::where('id', $request->id)->update(['user_id' => Auth::id()]);
 		ChargeMembership::where('id', $request->id)->delete();
 		
@@ -100,8 +99,7 @@ class ChargeController extends Controller {
 			->where('charge', $request->charge)
 			->update(['user_id' => Auth::id()]);
 			Members::where('committee', $request->comm)->where('charge', $request->charge)
-// 			->delete();
-			->toSql();
+			->delete();
 		}
 		
 		return $request;

@@ -53,6 +53,7 @@ class MembersController extends Controller {
 		->select('c.id', 'c.charge')
 		->where('chm.committee', '=', $cid)
 		->whereNotIn('chm.charge', Members::all()->pluck('charge'))
+		->whereNull('chm.deleted_at')
 		->get();
 		
 		$ranks = DB::table('rank')->select('id', 'rank')->get();

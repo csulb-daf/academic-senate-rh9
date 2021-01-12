@@ -68,6 +68,7 @@ $(document).ready(function() {
 						var button = $('#charges_wrapper').find('button.addedButton[data-id=' + chargeID + ']');
 						button.hide();
 						button.siblings('button.addButton').show();
+						$(row).remove();
 					}
 		 		});		//ajax
 			});		//$('button.addButton').click
