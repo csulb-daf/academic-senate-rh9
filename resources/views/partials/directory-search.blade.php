@@ -1,4 +1,4 @@
-<select class="form-control  js-example-basic-single" name="userSelect"  id="userSelect" >
+<select class="form-control  userSearch" name="userSelect"  id="userSelect" >
 	<option value="" disabled selected>Select User</option>
 	@foreach($users as $user)
 		<option value="{{ $user->campus_id }}" class="{{ $user->campus_id == 0? 'community':'' }}" data-name="{{ $user->last_name }}, {{ $user->first_name }}">
@@ -10,7 +10,7 @@
 
 <script>
 $(document).ready(function() {
-	$('.js-example-basic-single').select2();
+	$('.userSearch').select2();
 
 	$('select#userSelect').change(function() {
 		var option = $('select#userSelect option:selected');

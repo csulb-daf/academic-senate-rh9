@@ -16,6 +16,8 @@ Auth::routes();
 Route::redirect('home', '/');
 Route::get('/', 'HomeController@index')->name('home');
 Route::get('/comm-search', 'HomeController@ajax');
+Route::get('/member/search', 'HomeController@memberSearch')->name('member.search');
+Route::post('/member/search', 'HomeController@memberSearch')->name('member.search');
 
 /*** Committee Pages ***/
 Route::get('/committee', 'CommitteeController@index')->name('committee');

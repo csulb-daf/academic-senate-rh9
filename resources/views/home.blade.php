@@ -9,13 +9,23 @@
 </div>
 
 <h2 style="font-weight: bold;">Committee: <span id="tableTitle"></span></h2>
+<form  method="POST" id="memberSearch" action="{{ route('member.search', [], false) }}">
+	<div class="form-group">
+		<label>Name Search</label>
+		@include('partials.directory-search')
+		<button type="submit" class="btn btn-primary btn-sm">Search</button>
+	</div>
+</form>
 <table id="commSearch" class="display"></table>
 @endsection 
 
 @section('scripts')
 <script>
 $(document).ready(function() {
-
+	$('.userSearch').select2({
+		width: '20%',
+	});
+	
 	$('#commSelect').on('change', function() {
 		$('#tableTitle').text($(this).find('option:selected').text());
 		table.ajax.reload();
@@ -23,7 +33,7 @@ $(document).ready(function() {
 
 	var table = $('#commSearch').DataTable({
 		autoWidth: false,
-		dom: 'Blfrtip',
+		dom: 'Blrtip',
 		buttons: [{
 			extend: 'pdf',
 			text: 'Export to PDF', 
@@ -45,7 +55,9 @@ $(document).ready(function() {
 			error: function(xhr, error, thrown) {
 				table.clear().draw();
 			},
-			complete: function() {}	
+			complete: function() {
+				$('form#memberSearch').insertAfter('#commSearch_wrapper .dataTables_length').show();
+			}	
     },
 		columns: [
 			{ 

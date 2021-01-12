@@ -38,6 +38,14 @@ tr.added td {
 	margin-bottom: 20px;
 }
 
+/*** Home Page ***/
+form#memberSearch {
+	text-align: right;
+}
+form#memberSearch .select2 {
+	text-align: left;
+}
+
 /*** Charge Membership Pages ***/
 #chargeMembership_wrapper {
 	margin-bottom: 30px;
@@ -57,6 +65,7 @@ tr.added td {
 	width: 60px;
 	margin-bottom: 5px;	
 }
+
 
 /*** datatables override ***/
 table.dataTable thead .sorting {

@@ -28,14 +28,32 @@ class HomeController extends Controller {
 		->groupBy('chm.committee')
 		->get();
 		
+		$community =  DB::table('community_members')->select('firstname', 'lastname', DB::raw('0 as campus_id'));
+		$users = DB::table('sample_directory')
+		->select('first_name', 'last_name', 'campus_id')
+		->unionAll($community)
+		->orderBy('last_name', 'asc')
+		->get();
+		
+		
 		return view ( 'home', [ 
-				'comms' => $comms
+				'comms' => $comms,
+				'users' => $users,
 		] );
 	}
 
 	public function ajax(Request $request) {
 		$cid = $request->cid;
 		return $this->getCommitteeMemberships($cid);
+	}
+	
+	public function memberSearch(Request $request) {
+// 		return $request;
+		return view('member-search', [
+// 				'comms' => $comms,
+// 				'users' => $users,
+		]);
+		
 	}
 	
 }
