@@ -27,6 +27,7 @@
 	<script src="{{ asset('js/datatables-buttons/buttons.html5.min.js') }}"></script>
 	
 	<script src="{{ asset('js/select2.min.js') }}"></script>
+	<script src="{{ asset('js/actions.js') }}"></script>
 	
 	<!-- Fonts -->
 	<link rel="dns-prefetch" href="//fonts.gstatic.com">

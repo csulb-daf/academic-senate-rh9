@@ -11,7 +11,9 @@
 
 <script>
 $(document).ready(function() {
-	$('.userSearch').select2();
+	$('.userSearch').select2({
+		matcher: matchCustom,
+	});
 
 	$('select#userSelect').change(function() {
 		var option = $('select#userSelect option:selected');
