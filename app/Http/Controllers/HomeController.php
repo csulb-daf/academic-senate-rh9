@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use App\Members;
 
 class HomeController extends Controller {
 	/**
@@ -28,13 +29,11 @@ class HomeController extends Controller {
 		->groupBy('chm.committee')
 		->get();
 		
-		$community =  DB::table('community_members')->select('firstname', 'lastname', DB::raw('0 as campus_id'));
-		$users = DB::table('sample_directory')
-		->select('first_name', 'last_name', 'campus_id')
-		->unionAll($community)
-		->orderBy('last_name', 'asc')
+		$users = Members::distinct()
+		->select('firstname as first_name', 'lastname as last_name', 'campus_id')
+		->orderBy('last_name')
 		->get();
-		
+// 		return $users;
 		
 		return view ( 'home', [ 
 				'comms' => $comms,
@@ -50,10 +49,28 @@ class HomeController extends Controller {
 	public function memberSearch(Request $request) {
 // 		return $request;
 		return view('member-search', [
-// 				'comms' => $comms,
-// 				'users' => $users,
+				'campusID' => $request->userSelect,
+				'firstName' => $request->firstname,
+				'lastName' => $request->lastname,
 		]);
+	}
+	
+	public function memberSearchResult(Request $request) {
+		$sql =  DB::Table('committee_membership as cm')
+		->join('committees as c', 'cm.committee', '=', 'c.id')
+		->join('charges as ch', 'cm.charge', '=', 'ch.id')
+		->join('rank as r', 'cm.rank', '=', 'r.id')
+		->select('cm.*', 'c.committeename', 'ch.charge as chargeName', 'r.rank as rankName');
 		
+		if($request->campus_id === 0) {
+			$sql->where('firstname', "$request->first_name");
+			$sql->where('lastname', "$request->last_name");
+		}
+		else {
+			$sql->where('campus_id', "$request->campus_id");
+		}
+		
+		return $sql->get();
 	}
 	
 }
