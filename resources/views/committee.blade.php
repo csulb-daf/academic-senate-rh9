@@ -35,7 +35,7 @@ $(document).ready(function() {
 			}
     },
 		columns: [
-			{ title: 'Committee Name', data: 'comm' },
+			{ title: 'Committee Name', data: 'comm', width: '800px'},
 			{ title: 'Charge Memberships', data: 'assignments' },
 			{ title: 'Actions', data: null, defaultContent: '',
 				render: function ( data, type, row ) {
@@ -50,7 +50,7 @@ $(document).ready(function() {
 		],
 		
 		columnDefs: [{		//Assignments column
-			targets:  1,
+			targets:  [1, 2],
 			sortable: false,
 		}],
 		

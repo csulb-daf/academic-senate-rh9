@@ -26,6 +26,8 @@
 @section('scripts')
 <script>
 $(document).ready(function() {
+	$('div.container').addClass('wide');
+		
 	$('.userSearch').select2({
 		width: '20%',
 		matcher: matchCustom,
@@ -45,7 +47,7 @@ $(document).ready(function() {
 	});
 
 	var table = $('#commSearch').DataTable({
-// 		responsive: true,
+		responsive: true,
 		autoWidth: false,
 		dom: 'Blrtip',
 
@@ -83,7 +85,7 @@ $(document).ready(function() {
     },
 		columns: [
 			{ 
-				title: 'Campus ID', className: 'campusID',
+				title: 'Campus ID', className: 'campusID', defaultContent: '',
 				render: function(data, type, row, meta) {
 					if(row.campus_id == null) {
 						var cid = $('#commSelect').val();

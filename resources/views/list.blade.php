@@ -143,7 +143,7 @@ $(document).ready(function() {
 		],
 		columnDefs: [{
 			sortable: false,
-			targets: [0, 5]
+			targets: [0, 4, 5]
 		}],
 		order: [[ 1, 'asc' ]],
 	});	

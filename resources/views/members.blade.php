@@ -16,8 +16,13 @@
 @section('scripts')
 <script>
 $(document).ready(function() {
+	$('div.container').addClass('wide');
+
+	var url = 	"{{ route('members.table', ['id'=>':id'], false) }}";
+	url = url.replace(':id', {{ $cid }});
+	
 	var table = $('#memberAdmin').DataTable({
-// 		responsive: true,
+		responsive: true,
 		autoWidth: false,
 		createdRow: function(row, data, dataIndex) {
 			//setEdit(row, communityTable, "{{ route('community.update', [], false) }}", "{{ route('community.destroy', [], false) }}");
@@ -29,10 +34,9 @@ $(document).ready(function() {
 				$(this).closest('div.delButtons').hide();
 				$(this).closest('div.delButtons').siblings('div.editButtons').show();
 			});
-			
 		},
     ajax: {
-			url: '/committee/members/{{ $cid }}/ajax',
+			url: url,
 			dataSrc: '',
 			error: function (xhr, error, thrown) {
 				table.clear().draw();
@@ -40,7 +44,7 @@ $(document).ready(function() {
 			complete: function() {}
     },
 		columns: [
-			{ title: 'Campus ID',
+			{ title: 'Campus ID', defaultContent: '',
 				render: function(data, type, row, meta) {
 					if(row.campus_id == null) {
 						var cid = {{ $cid }};
@@ -80,7 +84,7 @@ $(document).ready(function() {
 			}
 		],
 		columnDefs: [{
-			targets:  12,
+			targets: [6, 10, 11, 12],
 			sortable: false,
 		}],
 	});		

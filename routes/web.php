@@ -28,7 +28,7 @@ Route::get('/committee/add', 'CommitteeController@create');
 Route::post('/committee/add', 'CommitteeController@store');
 
 Route::get('/committee/members/{cid}', 'MembersController@index')->name('comm.assign');
-Route::get('/committee/members/{cid}/ajax', 'MembersController@ajax')->name('comm.ajax');
+Route::get('/committee/members/{cid}/memberships', 'MembersController@getMemberships')->name('members.table');
 Route::get('/committee/members/{cid}/add', 'MembersController@create')->name('members.add');
 Route::post('/committee/members/{cid}/add', 'MembersController@store')->name('members.add');
 Route::get('/committee/members/{cid}/edit/{mid}', 'MembersController@create')->name('members.edit');

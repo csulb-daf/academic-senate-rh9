@@ -31,7 +31,7 @@ $(document).ready(function() {
 			}
 		],
 		columnDefs: [{
-			targets:  1,
+			targets:  [1, 2],
 			sortable: false,
 		}],
 	});		

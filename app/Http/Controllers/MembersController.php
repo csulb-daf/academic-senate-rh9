@@ -37,7 +37,7 @@ class MembersController extends Controller {
 		]);
 	}
 
-	public function ajax($cid) {
+	public function getMemberships($cid) {
 		return $this->getCommitteeMemberships($cid);
 	}
 	
