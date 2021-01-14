@@ -48,18 +48,26 @@ $(document).ready(function() {
 // 		responsive: true,
 		autoWidth: false,
 		dom: 'Blrtip',
-		buttons: [{
-			extend: 'pdf',
-			text: 'Export to PDF', 
-			className: 'btn btn-primary',
-			title: function() {
-				return $('#commSelect').find('option:selected').text();
-			},
-			orientation: 'landscape',
-			exportOptions: {
-				columns: 'th:not(.campusID)'
-			}			
-		}],		
+
+		buttons: {
+			buttons: [{
+				extend: 'pdf',
+				text: 'Export to PDF', 
+				className: 'btn-primary',
+				title: function() {
+					return $('#commSelect').find('option:selected').text();
+				},
+				orientation: 'landscape',
+				exportOptions: {
+					columns: 'th:not(.campusID)'
+				}	,
+			}],
+			dom: {
+				button: {
+					className: 'btn'
+				}
+			}
+		},
 		ajax: {
 			url: 'comm-search',
 			data: function(d) {

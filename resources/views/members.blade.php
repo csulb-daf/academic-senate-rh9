@@ -9,7 +9,7 @@
     </div>
 @endif			
 
-<h2 style="font-weight: bold;">{{ $cname }}</h2>
+<h2 class="tableTitle">{{ $cname }}</h2>
 <table id="memberAdmin" class="display"></table>
 @endsection 
 

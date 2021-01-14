@@ -3,6 +3,7 @@
 @section('title', 'List Management')
 
 @section('content') 
+<h2 class="tableTitle form">LIST MANAGMENT : COMMUNITY MEMBERS</h2>
 @if ($errors->any())
 	<div class="alert alert-danger">
 		<ul>

@@ -3,7 +3,7 @@
 @section('title', 'Charge Management')
 
 @section('content')
-<h2 style="font-weight: bold;">{{ $commName }}</h2>
+<h2 class="tableTitle">{{ $commName }}</h2>
 <div id="messageContainer" style="display: none;"></div>
 <table id="chargeMembership" class="display"></table>
 <table id="charges" class="display"></table>

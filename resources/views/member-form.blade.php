@@ -4,7 +4,7 @@
 
 @section('content') 
 
-<h2 style="font-weight: bold; text-align: center; margin-bottom: 20px;">{{ $cname }}</h2>
+<h2 class="tableTitle form">{{ $cname }}</h2>
 <div class="row">
 	@if(empty($mid))
 	<div class="col-sm-4">
