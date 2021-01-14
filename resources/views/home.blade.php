@@ -8,7 +8,7 @@
 	@include('partials.committee-select')
 </div>
 
-<h2 style="font-weight: bold;">Committee: <span id="tableTitle"></span></h2>
+<h2 class="tableTitle">Committee: <span id="tableTitle"></span></h2>
 <table id="commSearch" class="display"></table>
 <form  method="POST" id="memberSearch" action="{{ route('member.search', [], false) }}" style="display: none;">
 	@csrf
@@ -18,7 +18,7 @@
 	<div class="form-group">
 		<label>Name Search</label>
 		@include('partials.directory-search')
-		<button type="submit" class="btn btn-primary btn-sm" disabled>Search</button>
+		<button type="submit" class="btn btn-primary btn-sm">Search</button>
 	</div>
 </form>
 @endsection 

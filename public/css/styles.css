@@ -66,8 +66,14 @@ form#memberSearch .select2 {
 }
 #chargeMembership_wrapper .popover-body div.alert {
 	margin: 0;
-	font-size: 16px;
+	font-size: 13px;
 	text-align: center;
+	padding: 3px 5px;
+	 width: 150px;
+}
+#chargeMembership_wrapper .popover {
+	left: -4% !important;
+	top: 5% !important;
 }
 
 /*** Committee Membership Pages ***/
@@ -89,15 +95,6 @@ form#chargeForm button {
 #tabMenuMobile {
 	display: none;
 }
-/* RWD */
-@media (max-width: 520px) {
-	#tabMenu {
-		display: none;
-	}
-	#tabMenuMobile {
-		display: block;
-	}
-}
 
 /*** datatables override ***/
 table.dataTable thead .sorting {
@@ -108,4 +105,28 @@ table.dataTable thead .sorting_asc {
 }
 table.dataTable thead .sorting_desc {
 	background-image: url("/images/sort_desc.png")
+}
+
+/*** Popover ***/
+.bs-popover-top > .arrow::after {
+  border-top-color: #f9d6d5;
+}
+.popover .popover-body .alert {
+	border: none;
+}
+
+/****** RWD ******/
+@media (max-width: 520px) {
+	/* Charge Membership Pages */
+	#chargeMembership_wrapper .popover {
+		top: 13% !important;
+	}
+	
+	/* List Management Pages */
+	#tabMenu {
+		display: none;
+	}
+	#tabMenuMobile {
+		display: block;
+	}
 }

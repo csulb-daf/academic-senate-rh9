@@ -60,7 +60,8 @@ class HomeController extends Controller {
 		->join('committees as c', 'cm.committee', '=', 'c.id')
 		->join('charges as ch', 'cm.charge', '=', 'ch.id')
 		->join('rank as r', 'cm.rank', '=', 'r.id')
-		->select('cm.*', 'c.committeename', 'ch.charge as chargeName', 'r.rank as rankName');
+		->select('cm.*', 'c.committeename', 'ch.charge as chargeName', 'r.rank as rankName')
+		->whereNull('cm.deleted_at');
 		
 		if($request->campus_id === 0) {
 			$sql->where('firstname', "$request->first_name");

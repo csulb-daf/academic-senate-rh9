@@ -31,7 +31,7 @@ $(document).ready(function() {
 							return '<div class="alert alert-danger">'+ msg +'</div>';
 						},
 						container: assigned,
-						placement: 'left',
+						placement: 'top',
 					});
 					assigned.trigger('manual');
 				}
@@ -86,7 +86,11 @@ $(document).ready(function() {
     },
 		columns: [
 			{ title: 'Charge Name', data: 'chargeName' },
-			{ title: 'Assigned To', data: 'assigned_to', className: 'assignedTo', width: '150px'},
+			{ title: 'Assigned To', data: null, defaultContent: '', className: 'assignedTo', width: '150px',
+				render: function ( data, type, row ) {
+					return '<div class="name">'+ data.assigned_to +'</div>';
+				}
+			},
 			{ title: 'Actions', data: null, defaultContent: '', width: '120px',
 				render: function ( data, type, row ) {
 					var html='\
