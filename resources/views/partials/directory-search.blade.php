@@ -7,22 +7,11 @@
 		</option>
 	@endforeach
 </select>
-<span class="badge badge-primary communityTag" style="display: none; color: #fff; font-size: 16px; margin-top: 10px;">CM</span>
 
 <script>
 $(document).ready(function() {
 	$('.userSearch').select2({
 		matcher: matchCustom,
-	});
-
-	$('select#userSelect').change(function() {
-		var option = $('select#userSelect option:selected');
-		if(option.hasClass('community')) {
-			$('span.communityTag').show();
-		}
-		else {
-			$('span.communityTag').hide();
-		}
 	});
 });
 </script>

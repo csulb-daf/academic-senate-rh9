@@ -66,6 +66,15 @@ form#memberSearch .select2 {
 	margin-bottom: 5px;	
 }
 
+/*** List Management Pages ***/
+form#rankForm,
+form#chargeForm {
+	margin-top: 20px;
+}
+form#rankForm button,
+form#chargeForm button {
+	margin-right: 20px;
+}
 
 /*** datatables override ***/
 table.dataTable thead .sorting {

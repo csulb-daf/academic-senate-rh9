@@ -68,7 +68,7 @@ $(document).ready(function() {
 						var button = $('#charges_wrapper').find('button.addedButton[data-id=' + chargeID + ']');
 						button.hide();
 						button.siblings('button.addButton').show();
-						$(row).remove();
+						table.ajax.reload();
 					}
 		 		});		//ajax
 			});		//$('button.addButton').click
@@ -133,7 +133,6 @@ $(document).ready(function() {
 		 				committee: {{ $commID }}
 		 			},
 					success:  function(response) {
-						//$('#messageContainer').html('<div class="alert alert-success">'+ response.message +'</div>').fadeIn();
 						var row = table.row.add({
 							'charge': chargeID,
 							'assigned_to': '',

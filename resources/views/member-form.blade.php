@@ -34,71 +34,86 @@
 			<input type="hidden" name="cid" value="{{ $cid }}">
 			<input type="hidden" name="mid" value="{{ isset($mid)? $mid:'' }}">
 			
-			<div class="input-group">
-				<label for="fName" style="margin-top: 1em;">First Name:</label>
-				<input class="form-control" type="text" name="fName" id="fName" value="{{ old('fName', isset($fname)? $fname:'') }}" >
-				
-				<div class="form-check">
-					<input type="checkbox" class="form-check-input" name="alternate" id="alternate" value="1" {{ old('alternate', isset($alternate)? $alternate:'') == '1' ? 'checked' : '' }}>
-					<label class="form-check-label" for="alternate">Alternate</label>
-				</div>				
+			<div class="form-group row">
+				<label for="fName" class="col-sm-2 col-form-label">First Name:</label>
+				<div class="col">
+					<input class="form-control" type="text" name="fName" id="fName" value="{{ old('fName', isset($fname)? $fname:'') }}" >
+					
+					<div class="form-check" style="margin-top: 10px;">
+						<input type="checkbox" class="form-check-input" name="alternate" id="alternate" value="1" {{ old('alternate', isset($alternate)? $alternate:'') == '1' ? 'checked' : '' }}>
+						<label class="form-check-label" for="alternate">Alternate</label>
+					</div>
+				</div>
 			</div>
 		
-			<div class="input-group">
-				<label for="lName" style="margin-top: 1em;">Last Name:</label>
-				<input class="form-control" type="text" name="lName" id="lName" value="{{ old('lName', isset($lname)? $lname:'') }}" >
+			
+			<div class="form-group row">
+				<label for="lName" class="col-sm-2 col-form-label">Last Name:</label>
+				<div class="col-sm-10">
+					<input class="form-control" type="text" name="lName" id="lName" value="{{ old('lName', isset($lname)? $lname:'') }}" >
+				</div>
 			</div>
 			
-			<div class="input-group">
-				<label for="campusID" style="margin-top: 1em;">Campus ID:</label>
-				<input class="form-control" type="text" name="campusID" id="campusID" value="{{ old('campusID', isset($campusID)? $campusID:'') }}">
+			<div class="form-group row">
+				<label for="campusID" class="col-sm-2 col-form-label">Campus ID:</label>
+				<div class="col-sm-10">
+					<input class="form-control" type="text" name="campusID" id="campusID" value="{{ old('campusID', isset($campusID)? $campusID:'') }}">
+				</div>
 			</div>
 			
-			<div class="input-group">
-				<label for="termSelect" style="margin-top: 1em;">Term:</label>
-				<select class="form-control" name="termSelect" id="termSelect">
-					<option value="">Select</option>
-					
-					@for ($year = date('Y'); $year <= date('Y') + 4; $year++)
-						<option value="{{$year}}" {{ old('termSelect', isset($termID)? $termID:'') == $year ? 'selected' : '' }}>{{$year}}</option>
-					@endfor
-					
-					<option value="Ex-Officio" {{ old('termSelect', isset($term)? $term:'') === 'Ex-Officio' ? 'selected' : '' }}>Ex-Officio</option>
-				</select>
+			<div class="form-group row">
+				<label for="termSelect" class="col-sm-2 col-form-label">Term:</label>
+				<div class="col-sm-10">
+					<select class="form-control" name="termSelect" id="termSelect">
+						<option value="">Select</option>
+						
+						@for ($year = date('Y'); $year <= date('Y') + 4; $year++)
+							<option value="{{$year}}" {{ old('termSelect', isset($termID)? $termID:'') == $year ? 'selected' : '' }}>{{$year}}</option>
+						@endfor
+						
+						<option value="Ex-Officio" {{ old('termSelect', isset($term)? $term:'') === 'Ex-Officio' ? 'selected' : '' }}>Ex-Officio</option>
+					</select>
+					</div>
 			</div>
 			
-			<div class="input-group">
-				<label for="chargeSelect" style="margin-top: 1em;">Charge Membership:</label>
-				<select class="form-control" name="chargeSelect" id="chargeSelect">
-					<option value="">Select</option>
-					
-					@if(isset($chargeID))
-						<option value="{{ $chargeID }}" selected>{{ $chargeName }}</option>
-					@endif
-					
-					@foreach ($charges as $charge)
-						<option value="{{ $charge->id }}" {{ old('chargeSelect') == $charge->id ? 'selected' : '' }} >{{ $charge->charge }}</option>
-					@endForeach
-				</select>
+			<div class="form-group row">
+				<label for="chargeSelect" class="col-sm-2 col-form-label">Charge Membership:</label>
+				<div class="col-sm-10">
+					<select class="form-control" name="chargeSelect" id="chargeSelect">
+						<option value="">Select</option>
+						
+						@if(isset($chargeID))
+							<option value="{{ $chargeID }}" selected>{{ $chargeName }}</option>
+						@endif
+						
+						@foreach ($charges as $charge)
+							<option value="{{ $charge->id }}" {{ old('chargeSelect') == $charge->id ? 'selected' : '' }} >{{ $charge->charge }}</option>
+						@endForeach
+					</select>
+				</div>
 			</div>
 		
-			<div class="input-group">
-				<label for="rankSelect" style="margin-top: 1em;">Rank:</label>
-				<select class="form-control" name="rankSelect" id="rankSelect">
-					<option value="">Select</option>
-					
-					@foreach ($ranks as $rank)
-						<option value="{{ $rank->id }}" {{ old('rankSelect', isset($rankID)? $rankID:'') == $rank->id ? 'selected' : '' }}>{{ $rank->rank }}</option>
-					@endForeach
-				</select>
+			<div class="form-group row">
+				<label for="rankSelect" class="col-sm-2 col-form-label">Rank:</label>
+				<div class="col-sm-10">
+					<select class="form-control" name="rankSelect" id="rankSelect">
+						<option value="">Select</option>
+						
+						@foreach ($ranks as $rank)
+							<option value="{{ $rank->id }}" {{ old('rankSelect', isset($rankID)? $rankID:'') == $rank->id ? 'selected' : '' }}>{{ $rank->rank }}</option>
+						@endForeach
+					</select>
+				</div>
 			</div>
 			
-			<div class="input-group">
-				<label for="notes" style="margin-top: 1em;">Notes:</label>
-				<textarea class="form-control" name="notes" id="notes" >{{ old('notes', isset($notes)? $notes:'') }}</textarea>
+			<div class="form-group row">
+				<label for="notes" class="col-sm-2 col-form-label">Notes:</label>
+				<div class="col-sm-10">
+					<textarea class="form-control" name="notes" id="notes" >{{ old('notes', isset($notes)? $notes:'') }}</textarea>
+				</div>
 			</div>
 		
-			<div class="form-group ">
+			<div class="form-group">
 				<button class="btn btn-primary mt-3" type="submit">{{ empty($mid)? 'Assign to Committee':'Update' }}</button>
 			</div>
 		</form>
