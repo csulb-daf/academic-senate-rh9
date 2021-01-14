@@ -88,6 +88,7 @@ $(document).ready(function() {
 	$('#tabMenu a[href="#{{ old('tabName') }}"]').tab('show');
 
 	var communityTable = $('#communityTable').DataTable({
+		responsive: true,
 		autoWidth: false,
 		createdRow: function(row, data, dataIndex) {
 			setButtonActions(row, "{{ route('community.update', [], false) }}", "{{ route('community.destroy', [], false) }}");
@@ -101,7 +102,7 @@ $(document).ready(function() {
 			complete: function() {}	
     },
 		columns: [
-			{ title: '#', data: null, defaultContent: '', width: '50px'},
+			{ title: '#', data: null, defaultContent: '', width: '15px'},
 			{ title: 'Last Name', data: 'lastname', className: 'editable',
 				createdCell: function(td, cellData, rowData, row, col) {
 					$(td).attr('data-name', 'lastname');
@@ -122,7 +123,7 @@ $(document).ready(function() {
 					$(td).attr('data-name', 'notes');
 				}
 			},
-			{ title: 'Actions', data: null, defaultContent: '', width: '120px',
+			{ title: 'Actions', data: null, defaultContent: '', width: '120px', responsivePriority: 1,
 				render: function(data, type, row) {
 					return getEditButtons(row.id);
 				}			
@@ -137,6 +138,7 @@ $(document).ready(function() {
 	createIndexColumn(communityTable);
 
 	var chargeTable = $('#chargeTable').DataTable({
+		responsive: true,
 		autoWidth: false,
 		createdRow: function(row, data, dataIndex) {
 			setButtonActions(row, "{{ route('charge.update', [], false) }}", "{{ route('charge.destroy', [], false) }}");
@@ -150,7 +152,7 @@ $(document).ready(function() {
 			complete: function() {}
     },
 		columns: [
-			{ title: '#', data: null, defaultContent: '', width: '50px'},
+			{ title: '#', data: null, defaultContent: '', width: '15px'},
 			{ title: 'Charge Membership', data: 'charge', className: 'editable',
 				createdCell: function(td, cellData, rowData, row, col) {
 					$(td).attr('data-name', 'chargeName');
@@ -172,6 +174,7 @@ $(document).ready(function() {
 	createIndexColumn(chargeTable);
 	
 	var rankTable = $('#rankTable').DataTable({
+		responsive: true,
 		autoWidth: false,
 		createdRow: function(row, data, dataIndex) {
 			setButtonActions(row, "{{ route('rank.update', [], false) }}", "{{ route('rank.destroy', [], false) }}");
@@ -185,7 +188,7 @@ $(document).ready(function() {
 			complete: function() {}	
     },
 		columns: [
-			{ title: '#', data: null, defaultContent: '', width: '50px'},
+			{ title: '#', data: null, defaultContent: '', width: '15px'},
 			{ title: 'Rank', data: 'rank', className: 'editable',
 				createdCell: function(td, cellData, rowData, row, col) {
 					$(td).attr('data-name', 'rankName');
