@@ -13,10 +13,10 @@
 <script>
 $(document).ready(function() {
 	var table = $('#chargeMembership').DataTable({
+		responsive: true,
+		autoWidth: false,
 		paging: false,
 		searching: false,
-		//info: false,
-		autoWidth: false,
 		createdRow: function(row, data, dataIndex) {
 			$('button.removeButton', row).click(function() {
 				var that = $(this);

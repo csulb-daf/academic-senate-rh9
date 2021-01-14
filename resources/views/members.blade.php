@@ -10,13 +10,14 @@
 @endif			
 
 <h2 style="font-weight: bold;">{{ $cname }}</h2>
-<table id="memberAdmin" class="display" style="width: 100%"></table>
+<table id="memberAdmin" class="display"></table>
 @endsection 
 
 @section('scripts')
 <script>
 $(document).ready(function() {
 	var table = $('#memberAdmin').DataTable({
+// 		responsive: true,
 		autoWidth: false,
 		createdRow: function(row, data, dataIndex) {
 			//setEdit(row, communityTable, "{{ route('community.update', [], false) }}", "{{ route('community.destroy', [], false) }}");

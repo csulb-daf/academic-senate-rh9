@@ -17,27 +17,35 @@
 	@csrf
 	<input type="hidden" name="tabName" value="community">
 
-	<div class="input-group">
-		<label for="fName" style="margin-top: 1em;">First Name:</label>
-		<input class="form-control" type="text" name="fName" id="fName" value="{{ old('fName') }}" >
+	<div class="form-group row">
+		<label for="fName" class="col-sm-2 col-form-label">First Name:</label>
+		<div class="col">
+			<input class="form-control" type="text" name="fName" id="fName" value="{{ old('fName') }}" >
+		</div>
 	</div>
 
-	<div class="input-group">
-		<label for="lName" style="margin-top: 1em;">Last Name:</label>
-		<input class="form-control" type="text" name="lName" id="lName" value="{{ old('lName') }}" >
+	<div class="form-group row">
+		<label for="lName" class="col-sm-2 col-form-label">Last Name:</label>
+		<div class="col">
+			<input class="form-control" type="text" name="lName" id="lName" value="{{ old('lName') }}" >
+		</div>
 	</div>
 	
-	<div class="input-group">
-		<label for="campusID" style="margin-top: 1em;">Email:</label>
-		<input class="form-control" type="text" name="email" id="email" value="{{ old('email') }}" >
+	<div class="form-group row">
+		<label for="campusID" class="col-sm-2 col-form-label">Email:</label>
+		<div class="col">
+			<input class="form-control" type="text" name="email" id="email" value="{{ old('email') }}" >
+		</div>
 	</div>
 	
-	<div class="input-group">
-		<label for="notes" style="margin-top: 1em;">Notes:</label>
-		<textarea class="form-control" name="notes" id="notes" >{{ old('notes') }}</textarea>
+	<div class="form-group row">
+		<label for="notes" class="col-sm-2 col-form-label">Notes:</label>
+		<div class="col">
+			<textarea class="form-control" name="notes" id="notes" >{{ old('notes') }}</textarea>
+		</div>
 	</div>
 
-	<div class="form-group ">
+	<div class="form-group">
 		<button class="btn btn-primary mt-3" type="submit">Create Community Member</button>
 	</div>
 

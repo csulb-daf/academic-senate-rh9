@@ -17,6 +17,8 @@
 <script>
 $(document).ready(function() {
 	var table = $('#commAdmin').DataTable({
+		responsive: true,
+		autoWidth: false,
     ajax: {
 			url: "{{ route('committee.admin', [], false) }}",
 			dataSrc: '',

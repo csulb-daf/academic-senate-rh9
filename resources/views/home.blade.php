@@ -45,6 +45,7 @@ $(document).ready(function() {
 	});
 
 	var table = $('#commSearch').DataTable({
+// 		responsive: true,
 		autoWidth: false,
 		dom: 'Blrtip',
 		buttons: [{

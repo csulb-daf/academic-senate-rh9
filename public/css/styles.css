@@ -34,7 +34,8 @@ tr.added td {
 }
 
 /*** Tabbed Nav ***/
-.nav-tabs {
+.nav-tabs,
+.nav-pills {
 	margin-bottom: 20px;
 }
 
@@ -74,6 +75,18 @@ form#chargeForm {
 form#rankForm button,
 form#chargeForm button {
 	margin-right: 20px;
+}
+#tabMenuMobile {
+	display: none;
+}
+/* RWD */
+@media (max-width: 520px) {
+	#tabMenu {
+		display: none;
+	}
+	#tabMenuMobile {
+		display: block;
+	}
 }
 
 /*** datatables override ***/

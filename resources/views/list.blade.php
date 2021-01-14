@@ -9,6 +9,18 @@
 	<a href="#rank" data-toggle="tab" class="nav-item nav-link">Rank<span style="display: block">(Global List)</span></a>
 </nav>
 
+<ul class="nav flex-column nav-pills" id="tabMenuMobile" style="text-align: center;">
+	<li class="nav-item">
+		<a class="nav-link active" href="#community" data-toggle="tab">Community Members (Global List)</a>
+	</li>
+	<li class="nav-item">
+		<a class="nav-link" href="#charge" data-toggle="tab">Charge Membership (Global List)</a>
+	</li>
+	<li class="nav-item">
+		<a class="nav-link" href="#rank" data-toggle="tab">Rank (Global List)</a>
+	</li>
+</ul>
+
 <div id="validation-errors"></div>
 <div class="tab-content">
 	<div class="tab-pane active" id="community">

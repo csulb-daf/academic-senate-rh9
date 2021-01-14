@@ -10,6 +10,8 @@
 <script>
 $(document).ready(function() {
 	var table = $('#chargeAdmin').DataTable({
+		responsive: true,
+		autoWidth: false,
     ajax: {
 			url: "{{ route('charge.admin') }}",
 			dataSrc: '',
