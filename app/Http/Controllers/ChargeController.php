@@ -28,7 +28,7 @@ class ChargeController extends Controller {
 	} 
 	
 	public function displayCommitteeAssignments() {
-		return $this->getCommitteeAssignments();
+		return $this->getCommitteeChargeCount();
 	}
 	
 	public function getMembership($commID) {
@@ -43,12 +43,14 @@ class ChargeController extends Controller {
 		]);
 	}
 
-	public function getMembershipAjax($commID) {
+	public function getChargeMemberships($commID) {
 		//TODO: rewrite query in Eloquent to automatically filter out soft deletes
 		return  DB::table( 'charge_membership as chm' )
 		->join('charges as c', 'chm.charge', '=', 'c.id')
 		->leftJoin('committee_membership as cm', function($join) {
-			$join->on('chm.charge', '=', 'cm.charge')->whereNull('cm.deleted_at');
+			$join->on('chm.charge', '=', 'cm.charge')
+			->on('cm.committee', '=', 'chm.committee')
+			->whereNull('cm.deleted_at');
 		})
 		->select('chm.id', 'chm.charge', 'c.charge as chargeName', DB::raw('concat_ws(" ", cm.firstname, cm.lastname) as assigned_to'))
 		->where('chm.committee', '=', $commID)

@@ -31,7 +31,7 @@ class Controller extends BaseController
 // 	->toSql();
     }
     
-    public function getCommitteeAssignments() {
+    public function getCommitteeChargeCount() {
     	//TODO: rewrite these in Eloquent to automatically filter out soft deletes
     	return DB::table('committees as c')
     	->select('c.id', 'c.committeename as comm', DB::raw('count(cm.committee) as assignments'))

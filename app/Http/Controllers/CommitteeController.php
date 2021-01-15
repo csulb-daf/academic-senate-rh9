@@ -27,7 +27,7 @@ class CommitteeController extends Controller {
 	}
 	
 	public function displayCommitteeAssignments() {
-		return $this->getCommitteeAssignments();
+		return $this->getCommitteeChargeCount();
 	}
 
 	/**
