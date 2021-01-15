@@ -56,6 +56,7 @@ class HomeController extends Controller {
 	}
 	
 	public function memberSearchResult(Request $request) {
+		return $request;
 		$sql =  DB::Table('committee_membership as cm')
 		->join('committees as c', 'cm.committee', '=', 'c.id')
 		->join('charges as ch', 'cm.charge', '=', 'ch.id')

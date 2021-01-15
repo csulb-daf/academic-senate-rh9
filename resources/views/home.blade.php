@@ -35,7 +35,6 @@ $(document).ready(function() {
 	});
 	
 	$('select#userSelect').change(function() {
-		//$('form#memberSearch').find('button').prop('disabled', false);
 		var firstName = $('select#userSelect option:selected').data('firstname');
 		var lastName = $('select#userSelect option:selected').data('lastname');
 		$('form#memberSearch input[name=firstname]').val(firstName);
