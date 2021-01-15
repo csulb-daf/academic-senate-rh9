@@ -15,10 +15,11 @@
 	<input type="hidden" name="firstname" value="">
 	<input type="hidden" name="lastname" value="">
 	
-	<div class="form-group">
-		<label>Name Search</label>
-		@include('partials.directory-search')
-		<button type="submit" class="btn btn-primary btn-sm">Search</button>
+	<div class="form-group row">
+		<label for="userSelect" class="col-form-label">Name Search</label>
+		<div class="col">
+			@include('partials.directory-search')
+		</div>
 	</div>
 </form>
 @endsection 
@@ -29,12 +30,12 @@ $(document).ready(function() {
 	$('div.container').addClass('wide');
 		
 	$('.userSearch').select2({
-		width: '20%',
+		width: '100%',
 		matcher: matchCustom,
 	});
 	
 	$('select#userSelect').change(function() {
-		$('form#memberSearch').find('button').prop('disabled', false);
+		//$('form#memberSearch').find('button').prop('disabled', false);
 		var firstName = $('select#userSelect option:selected').data('firstname');
 		var lastName = $('select#userSelect option:selected').data('lastname');
 		$('form#memberSearch input[name=firstname]').val(firstName);
@@ -50,7 +51,6 @@ $(document).ready(function() {
 		responsive: true,
 		autoWidth: false,
 		dom: 'Blrtip',
-
 		buttons: {
 			buttons: [{
 				extend: 'pdf',

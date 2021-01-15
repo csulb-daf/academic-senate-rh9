@@ -51,10 +51,8 @@ div.container.wide {
 
 /*** Home Page ***/
 form#memberSearch {
-	text-align: right;
-}
-form#memberSearch .select2 {
-	text-align: left;
+	float: right;
+	width: 25%;
 }
 #commSearch_wrapper button.buttons-pdf {
 	margin-right: 10px;
@@ -119,17 +117,49 @@ table.dataTable thead .sorting_desc {
 }
 
 /****** RWD ******/
+@media (max-width: 740px) {
+	/* Home Page */
+	form#memberSearch {
+		width: 47%;
+	}
+}
+
 @media (max-width: 520px) {
-	/* Charge Membership Pages */
+	/* Home Page */
+	form#memberSearch {
+		float: none;
+		clear: both;
+		padding-top: 20px;
+		width: 100%;
+	}
+	form#memberSearch .row {
+		margin: 0;
+	}
+	
+	/* Committee Page */
+	#commAdmin_filter {
+    clear: both;
+    padding-top: 20px;
+	}
+	
+	/* Charge Membership Page */
 	#chargeMembership_wrapper .popover {
 		top: 13% !important;
 	}
 	
-	/* List Management Pages */
+	/* List Management Page */
 	#tabMenu {
 		display: none;
 	}
 	#tabMenuMobile {
 		display: block;
+	}
+
+	/* datatables */
+	div.dt-buttons {
+		float: left !important;
+	}
+	.dataTables_wrapper .dataTables_length {
+		float: right;
 	}
 }
