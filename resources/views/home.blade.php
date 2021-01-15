@@ -10,7 +10,7 @@
 
 <h2 class="tableTitle">Committee: <span id="tableTitle"></span></h2>
 <table id="commSearch" class="display"></table>
-<form  method="POST" id="memberSearch" action="{{ route('member.search', [], false) }}" style="display: none;">
+<form  method="POST" id="memberSearch" action="javascript:void(0);" style="display: none;">
 	@csrf
 	<input type="hidden" name="firstname" value="">
 	<input type="hidden" name="lastname" value="">
@@ -32,6 +32,7 @@ $(document).ready(function() {
 	$('.userSearch').select2({
 		width: '100%',
 		matcher: matchCustom,
+		placeholder: 'Select User',
 	});
 	
 	$('select#userSelect').change(function() {
@@ -39,11 +40,16 @@ $(document).ready(function() {
 		var lastName = $('select#userSelect option:selected').data('lastname');
 		$('form#memberSearch input[name=firstname]').val(firstName);
 		$('form#memberSearch input[name=lastname]').val(lastName);
-	});	
-	
+		params = $('form#memberSearch').serialize();
+		var url = "{{ route('member.search', [], false) }}?"+ params;
+		table.ajax.url(url).load();
+		$('#commSelect option:eq(0)').prop('selected', true); //set option of index 0 to selected
+	});
+		
 	$('#commSelect').on('change', function() {
 		$('#tableTitle').text($(this).find('option:selected').text());
-		table.ajax.reload();
+		table.ajax.url('comm-search').load();
+		$('#userSelect option:eq(0)').prop('selected', true); //set option of index 0 to selected
 	});
 
 	var table = $('#commSearch').DataTable({
@@ -113,7 +119,21 @@ $(document).ready(function() {
 				}			
 			},
 			{ title: 'Notes', data: 'notes' },
+			{ title: 'Actions', data: null, defaultContent: '',
+				render: function(data, type, row) {
+					if(row.id == null) {
+						return null;
+					}
+					var url = 	"{{ route('comm.assign', ['id'=>':id'], false) }}";
+					url = url.replace(':id', data.committee);
+					return '<a href="'+ url +'" data-id="">Change</a>';
+				}			
+			},
 		],
+		columnDefs: [{
+			targets:  [11, 12],
+			sortable: false,
+		}],
 	});
 });
 

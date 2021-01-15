@@ -48,20 +48,11 @@ class HomeController extends Controller {
 	
 	public function memberSearch(Request $request) {
 // 		return $request;
-		return view('member-search', [
-				'campusID' => $request->userSelect,
-				'firstName' => $request->firstname,
-				'lastName' => $request->lastname,
-		]);
-	}
-	
-	public function memberSearchResult(Request $request) {
-		return $request;
 		$sql =  DB::Table('committee_membership as cm')
 		->join('committees as c', 'cm.committee', '=', 'c.id')
 		->join('charges as ch', 'cm.charge', '=', 'ch.id')
 		->join('rank as r', 'cm.rank', '=', 'r.id')
-		->select('cm.*', 'c.committeename', 'ch.charge as chargeName', 'r.rank as rankName')
+		->select('cm.*', 'c.id as committee',  'r.rank', 'ch.charge')
 		->whereNull('cm.deleted_at');
 		
 		if($request->campus_id === 0) {
@@ -69,10 +60,11 @@ class HomeController extends Controller {
 			$sql->where('lastname', "$request->last_name");
 		}
 		else {
-			$sql->where('campus_id', "$request->campus_id");
+			$sql->where('campus_id', "$request->userSelect");
 		}
 		
 		return $sql->get();
+// 		return $sql->toSql();
 	}
 	
 }
