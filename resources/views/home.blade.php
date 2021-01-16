@@ -8,7 +8,7 @@
 	@include('partials.committee-select')
 </div>
 
-<h2 class="tableTitle">Committee: <span id="tableTitle"></span></h2>
+<h2 class="tableTitle"></h2>
 <table id="commSearch" class="display"></table>
 <form  method="POST" id="memberSearch" action="javascript:void(0);" style="display: none;">
 	@csrf
@@ -37,20 +37,22 @@ $(document).ready(function() {
 	$('select#userSelect').change(function() {
 		var firstName = $('select#userSelect option:selected').data('firstname');
 		var lastName = $('select#userSelect option:selected').data('lastname');
+		
+		$('.tableTitle').text('Search Results: '+ firstName +' '+ lastName);
 		$('form#memberSearch input[name=firstname]').val(firstName);
 		$('form#memberSearch input[name=lastname]').val(lastName);
 		params = $('form#memberSearch').serialize();
 		var url = "{{ route('member.search', [], false) }}?"+ params;
 		table.ajax.url(url).load();
 		$('#commSelect option:eq(0)').prop('selected', true); //set option of index 0 to selected
-		$("#commSelect").select2();
+		$("#commSelect").select2();		//reload select box
 	});
 		
 	$('#commSelect').on('change', function() {
-		$('#tableTitle').text($(this).find('option:selected').text());
+		$('.tableTitle').text('Committee: '+ $(this).find('option:selected').text());	
 		table.ajax.url('comm-search').load();
 		$('#userSelect option:eq(0)').prop('selected', true); //set option of index 0 to selected
-		$("#userSelect").select2({matcher: matchCustom});
+		$("#userSelect").select2({matcher: matchCustom});		//reload select box
 	});
 
 	var table = $('#commSearch').DataTable({
@@ -67,7 +69,7 @@ $(document).ready(function() {
 				},
 				orientation: 'landscape',
 				exportOptions: {
-					columns: 'th:not(.campusID)'
+					columns: 'th:not(.campusID, .actions)'  
 				}	,
 			}],
 			dom: {
@@ -120,7 +122,7 @@ $(document).ready(function() {
 				}			
 			},
 			{ title: 'Notes', data: 'notes' },
-			{ title: 'Actions', data: null, defaultContent: '',
+			{ title: 'Actions', data: null, defaultContent: '', className: 'actions',
 				render: function(data, type, row) {
 					if(row.id == null) {
 						return null;
