@@ -65,7 +65,7 @@ $(document).ready(function() {
 				text: 'Export to PDF', 
 				className: 'btn-primary',
 				title: function() {
-					return $('#commSelect').find('option:selected').text();
+					return $('.tableTitle').text();
 				},
 				orientation: 'landscape',
 				exportOptions: {
