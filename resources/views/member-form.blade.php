@@ -37,7 +37,7 @@
 			<div class="form-group row">
 				<label for="fName" class="col-sm-2 col-form-label">First Name:</label>
 				<div class="col">
-					<input class="form-control" type="text" name="fName" id="fName" value="{{ old('fName', isset($fname)? $fname:'') }}" >
+					<input class="form-control" type="text" name="fName" id="fName" value="{{ old('fName', isset($fname)? $fname:'') }}" readonly>
 					
 					<div class="form-check" style="margin-top: 10px;">
 						<input type="checkbox" class="form-check-input" name="alternate" id="alternate" value="1" {{ old('alternate', isset($alternate)? $alternate:'') == '1' ? 'checked' : '' }}>
@@ -50,21 +50,21 @@
 			<div class="form-group row">
 				<label for="lName" class="col-sm-2 col-form-label">Last Name:</label>
 				<div class="col-sm-10">
-					<input class="form-control" type="text" name="lName" id="lName" value="{{ old('lName', isset($lname)? $lname:'') }}" >
+					<input class="form-control" type="text" name="lName" id="lName" value="{{ old('lName', isset($lname)? $lname:'') }}" readonly>
 				</div>
 			</div>
 			
 			<div class="form-group row">
 				<label for="campusID" class="col-sm-2 col-form-label">Campus ID:</label>
 				<div class="col-sm-10">
-					<input class="form-control" type="text" name="campusID" id="campusID" value="{{ old('campusID', isset($campusID)? $campusID:'') }}">
+					<input class="form-control" type="text" name="campusID" id="campusID" value="{{ old('campusID', isset($campusID)? $campusID:'') }}" readonly>
 				</div>
 			</div>
 			
 			<div class="form-group row">
 				<label for="termSelect" class="col-sm-2 col-form-label">Term:</label>
 				<div class="col-sm-10">
-					<select class="form-control" name="termSelect" id="termSelect">
+					<select class="form-control" name="termSelect" id="termSelect" required>
 						<option value="">Select</option>
 						
 						@for ($year = date('Y'); $year <= date('Y') + 4; $year++)
@@ -79,7 +79,7 @@
 			<div class="form-group row">
 				<label for="chargeSelect" class="col-sm-2 col-form-label">Charge Membership:</label>
 				<div class="col-sm-10">
-					<select class="form-control" name="chargeSelect" id="chargeSelect">
+					<select class="form-control" name="chargeSelect" id="chargeSelect" required>
 						<option value="">Select</option>
 						
 						@if(isset($chargeID))
@@ -96,7 +96,7 @@
 			<div class="form-group row">
 				<label for="rankSelect" class="col-sm-2 col-form-label">Rank:</label>
 				<div class="col-sm-10">
-					<select class="form-control" name="rankSelect" id="rankSelect">
+					<select class="form-control" name="rankSelect" id="rankSelect" required>
 						<option value="">Select</option>
 						
 						@foreach ($ranks as $rank)
@@ -114,7 +114,7 @@
 			</div>
 		
 			<div class="form-group">
-				<button class="btn btn-primary mt-3" type="submit">{{ empty($mid)? 'Assign to Committee':'Update' }}</button>
+				<button class="btn btn-primary mt-3" type="submit" id="submitButton" disabled>{{ empty($mid)? 'Assign to Committee':'Update' }}</button>
 			</div>
 		</form>
 	</div> {{-- col --}}
@@ -135,9 +135,7 @@ $(document).ready(function() {
 		form.find('#lName').val(lastName);
 		form.find('#campusID').val(campusID);
 
-		if(campusID == 0) {
-			form.find('#campusID').prop('readonly', true);
-		}
+		$('button#submitButton').prop('disabled', false);
 	});
 });
 </script>
