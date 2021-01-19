@@ -32,7 +32,7 @@
 		<form method="POST" id="memberForm" action="{{ $route }}">
 			@csrf
 			<input type="hidden" name="cid" value="{{ $cid }}">
-			<input type="hidden" name="mid" value="{{ isset($mid)? $mid:'' }}">
+			<input type="hidden" name="mid" value="{{ !empty($mid)? $mid:'' }}">
 			
 			<div class="form-group row">
 				<label for="fName" class="col-sm-2 col-form-label">First Name:</label>
@@ -114,7 +114,7 @@
 			</div>
 		
 			<div class="form-group">
-				<button class="btn btn-primary mt-3" type="submit" id="submitButton" disabled>{{ empty($mid)? 'Assign to Committee':'Update' }}</button>
+				<button class="btn btn-primary mt-3" type="submit" id="submitButton" {{ !empty($mid)? '':'disabled' }}>{{ empty($mid)? 'Assign to Committee':'Update' }}</button>
 			</div>
 		</form>
 	</div> {{-- col --}}
