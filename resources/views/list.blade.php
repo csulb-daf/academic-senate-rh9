@@ -55,7 +55,7 @@
 		
 			<div class="input-group">
 				<button class="btn btn-primary " type="submit" style="text-transform: uppercase;">Add Charge</button>
-				<input class="form-control {{ $errors->has('chargeName')? 'is-invalid' : '' }}" type="text" name="chargeName" id="chargeName" value="" >
+				<input class="form-control {{ $errors->has('chargeName')? 'is-invalid' : '' }}" type="text" name="chargeName" id="chargeName" value="" required>
 			</div>
 		</form>	
 	</div>
@@ -86,7 +86,7 @@
 		
 			<div class="input-group">
 				<button class="btn btn-primary " type="submit">ADD RANK</button>
-				<input class="form-control {{ $errors->has('rank')? 'is-invalid' : '' }}" type="text" name="rank" id="rank" value="" >
+				<input class="form-control {{ $errors->has('rank')? 'is-invalid' : '' }}" type="text" name="rank" id="rank" value="" required>
 			</div>
 		</form>	
 	</div>

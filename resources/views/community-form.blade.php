@@ -21,21 +21,21 @@
 	<div class="form-group row">
 		<label for="fName" class="col-sm-2 col-form-label">First Name:</label>
 		<div class="col">
-			<input class="form-control" type="text" name="fName" id="fName" value="{{ old('fName') }}" >
+			<input class="form-control" type="text" name="fName" id="fName" value="{{ old('fName') }}" required>
 		</div>
 	</div>
 
 	<div class="form-group row">
 		<label for="lName" class="col-sm-2 col-form-label">Last Name:</label>
 		<div class="col">
-			<input class="form-control" type="text" name="lName" id="lName" value="{{ old('lName') }}" >
+			<input class="form-control" type="text" name="lName" id="lName" value="{{ old('lName') }}" required>
 		</div>
 	</div>
 	
 	<div class="form-group row">
 		<label for="campusID" class="col-sm-2 col-form-label">Email:</label>
 		<div class="col">
-			<input class="form-control" type="text" name="email" id="email" value="{{ old('email') }}" >
+			<input class="form-control" type="text" name="email" id="email" value="{{ old('email') }}" required>
 		</div>
 	</div>
 	
