@@ -53,7 +53,7 @@ class MembersController extends Controller {
 		->join('charges as c', 'chm.charge', '=', 'c.id')
 		->select('c.id', 'c.charge')
 		->where('chm.committee', '=', $cid)
-		->whereNotIn('chm.charge', Members::all()->pluck('charge'))
+		->whereNotIn('chm.charge', Members::where('committee', $cid)->pluck('charge'))
 		->whereNull('chm.deleted_at')
 		->get();
 		
