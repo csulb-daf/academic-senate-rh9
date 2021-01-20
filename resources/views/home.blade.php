@@ -8,7 +8,7 @@
 	@include('partials.committee-select')
 </div>
 
-<h2 class="tableTitle"></h2>
+<h2 class="tableTitle">Please select a committee from the 'select committee' drop down or a name from the name search.</h2>
 <table id="commSearch" class="display"></table>
 <form  method="POST" id="memberSearch" action="javascript:void(0);" style="display: none;">
 	@csrf
