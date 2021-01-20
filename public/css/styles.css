@@ -108,8 +108,15 @@ form#chargeForm button {
 	border-color: 	#4C6696;
 }
 .btn-danger {
-	background: #A21B16;
-	border: #A21B16;
+	background-color: #A21B16;
+	border-color: #A21B16;
+}
+.btn-success,
+.badge-success,
+.btn-success.disabled,
+.btn-success:disabled {
+	border-color: #1C5F38;
+	background-color: #1C5F38;
 }
 
 /*** datatables override ***/
