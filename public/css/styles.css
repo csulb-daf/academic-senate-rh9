@@ -1,3 +1,8 @@
+/*** Global ***/
+a {
+	color: #4C6696;
+}
+
 /*** Common ***/
 h1.pageHeader {
 	text-align: center;
@@ -78,6 +83,11 @@ form#memberSearch {
 }
 
 /*** Committee Membership Pages ***/
+.communityTag {
+	background: #4C6696;
+	color: #fff;
+	font-size: 16px;
+}
 
 /*** List Management Pages ***/
 form#rankForm,
@@ -90,6 +100,16 @@ form#chargeForm button {
 }
 #tabMenuMobile {
 	display: none;
+}
+
+/*** Bootstrap override ***/
+.btn-primary {
+	background-color: #4C6696;
+	border-color: 	#4C6696;
+}
+.btn-danger {
+	background: #A21B16;
+	border: #A21B16;
 }
 
 /*** datatables override ***/

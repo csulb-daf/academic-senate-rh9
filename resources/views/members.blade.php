@@ -53,7 +53,7 @@ $(document).ready(function() {
 						return '<a href="'+ url +'" data-id="">VACANT</a>';
 					}
 					if(row.campus_id == 0) {
-						return '<span class="badge badge-primary communityTag" style="color: #fff; font-size: 16px; margin-top: 10px;">CM</span>';
+						return '<span class="badge badge-primary communityTag">CM</span>';
 					}
 					return row.campus_id;
 				}	
