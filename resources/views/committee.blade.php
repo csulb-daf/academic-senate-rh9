@@ -41,10 +41,10 @@ $(document).ready(function() {
 				render: function ( data, type, row ) {
 					//console.log(data);
 					if(data.assignments == 0) {
-						return '<button type="button" class="btn btn-light border" onclick="javascrtipt:void(0);" disabled>Edit</button>';
+						return '<button type="button" class="btn btn-light btn-sm border" onclick="javascrtipt:void(0);" disabled>Edit</button>';
 					}
 						
-    			return '<button type="button" class="btn btn-light border" onclick="javascrtipt:assignComm('+ data.id +')">Edit</button>';
+    			return '<button type="button" class="btn btn-light btn-sm border" onclick="javascrtipt:assignComm('+ data.id +')">Edit</button>';
 				}			
 			}
 		],

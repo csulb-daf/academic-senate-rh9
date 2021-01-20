@@ -26,7 +26,7 @@ $(document).ready(function() {
 			{ title: 'Actions', data: null, defaultContent: '',
 				render: function ( data, type, row ) {
 					//console.log('id', data.id);
-    			return '<button type="button" class="btn btn-light border" onclick="javascrtipt:assignCharge('+ data.id +')">Edit</button>';
+    			return '<button type="button" class="btn btn-light btn-sm border" onclick="javascrtipt:assignCharge('+ data.id +')">Edit</button>';
 				}			
 			}
 		],

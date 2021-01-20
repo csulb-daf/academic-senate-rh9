@@ -237,16 +237,16 @@ function addCommunity() {
 function getEditButtons(id) {
 	var html='\
 		<div class="editButtons">\
-			<button type="button" class="btn btn-light btn-sm editButton">Edit</button>\
+			<button type="button" class="btn btn-light btn-sm border editButton">Edit</button>\
 			<button type="button" class="btn btn-danger btn-sm deleteButton">Delete</button>\
 		</div>\
 		<div class="submitButtons" style="display: none;">\
 			<button type="button" class="btn btn-success btn-sm submit" data-id="'+ id +'">Submit</button>\
-			<button type="button" class="btn btn-light btn-sm cancelEdit">Cancel</button>\
+			<button type="button" class="btn btn-light btn-sm border cancelEdit">Cancel</button>\
 		</div>\
 		<div class="delButtons" style="display: none;">\
 			<button type="button" class="btn btn-danger btn-sm confirmDelete" data-id="'+ id +'">Confirm</button>\
-			<button type="button" class="btn btn-light btn-sm cancelDelete">Cancel</button>\
+			<button type="button" class="btn btn-light btn-sm border cancelDelete">Cancel</button>\
 		</div>\
 		<span class="badge badge-success saved" style="font-size: 14px; padding: 5px 10px; display: none;">Saved</span>\
 	';

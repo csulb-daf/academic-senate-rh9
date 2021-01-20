@@ -117,12 +117,12 @@ function deleteMember(id) {
 function getEditButtons(id) {
 	var html='\
 		<div class="editButtons">\
-			<button type="button" class="btn btn-light btn-sm editButton" onclick="editMember('+ id +')">Edit</button>\
+			<button type="button" class="btn btn-light btn-sm border editButton" onclick="editMember('+ id +')">Edit</button>\
 			<button type="button" class="btn btn-danger btn-sm deleteButton">Vacate</button>\
 		</div>\
 		<div class="delButtons" style="display: none;">\
 			<button type="button" class="btn btn-danger btn-sm confirmDelete"  onclick="deleteMember('+ id +')">Confirm</button>\
-			<button type="button" class="btn btn-light btn-sm cancelDelete">Cancel</button>\
+			<button type="button" class="btn btn-light btn-sm border cancelDelete">Cancel</button>\
 		</div>\
 	';
 	return html;

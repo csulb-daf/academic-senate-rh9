@@ -97,7 +97,7 @@ $(document).ready(function() {
 						<button type="button" class="btn btn-danger btn-sm removeButton" data-id="'+ data.id +'">Remove</button>\
 						<div class="confirmButtons" style="display: none;">\
 							<button type="button" class="btn btn-danger btn-sm confirmRemove" data-id="'+ data.id +'" data-charge="'+ data.charge +'">Confirm</button>\
-							<button type="button" class="btn btn-light btn-sm cancelRemove">Cancel</button>\
+							<button type="button" class="btn btn-light btn-sm border cancelRemove">Cancel</button>\
 						</div>\
 						';
 						return html;
@@ -168,11 +168,11 @@ $(document).ready(function() {
 					
 					if(data.assigned === 'no') {
 						html='\
-							<button type="button" class="btn btn-light btn-sm addButton" data-id="'+ data.id +'">Add</button>\
+							<button type="button" class="btn btn-light btn-sm border addButton" data-id="'+ data.id +'">Add</button>\
 							<button type="button" class="btn btn-success btn-sm addedButton" style="display: none; opacity: 1;" data-id="'+ data.id +'" disabled>Added</button>\
 							<div class="confirmButtons" style="display: none">\
 								<button type="button" class="btn btn-success btn-sm confirmButton" data-id="'+ data.id +'">Confirm</button>\
-								<button type="button" class="btn btn-light btn-sm cancelButton">Cancel</button>\
+								<button type="button" class="btn btn-light btn-sm border cancelButton">Cancel</button>\
 							</div>\
 						';
 					}
@@ -182,7 +182,7 @@ $(document).ready(function() {
 							<button type="button" class="btn btn-success btn-sm addedButton" style="opacity: 1;" data-id="'+ data.id +'" disabled>Added</button>\
 							<div class="confirmButtons" style="display: none">\
 								<button type="button" class="btn btn-success btn-sm confirmButton" data-id="'+ data.id +'">Confirm</button>\
-								<button type="button" class="btn btn-light btn-sm cancelButton">Cancel</button>\
+								<button type="button" class="btn btn-light btn-sm border cancelButton">Cancel</button>\
 							</div>\
 						';
 					}

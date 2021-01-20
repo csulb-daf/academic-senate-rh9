@@ -24,7 +24,7 @@ Route::get('/committee', 'CommitteeController@index')->name('committee');
 Route::get('/committee/admin', 'CommitteeController@displayCommitteeAssignments')->name('committee.admin');;
 Route::get('/committee/form', 'CommitteeController@create');
 Route::get('/committee/add', 'CommitteeController@create');
-Route::post('/committee/add', 'CommitteeController@store');
+Route::post('/committee/add', 'CommitteeController@store')->name('committee.add');
 
 Route::get('/committee/members/{cid}', 'MembersController@index')->name('comm.assign');
 Route::get('/committee/members/{cid}/memberships', 'MembersController@getMemberships')->name('members.table');
