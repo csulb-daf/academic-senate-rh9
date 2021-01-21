@@ -23,16 +23,21 @@
             <a href="{{ route('list') }}" class="nav-link {{ request()->is('list*') ? 'active' : '' }}">List Management</a>
         </li>
 			</ul>
+			
+			<!-- Right Side Of Navbar -->
+			<ul class="navbar-nav ml-auto">
+				@if (Route::has('register'))
+					<li class="nav-item"><a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a></li>
+				@endif
+			</ul>
 			@endauth
 
 			<!-- Right Side Of Navbar -->
 			<ul class="navbar-nav ml-auto">
 				<!-- Authentication Links -->
 				@guest
-					<li class="nav-item"><a class="nav-link" href="{{ route('login') }}">{{
-							__('Login') }}</a></li> @if (Route::has('register'))
-					<li class="nav-item"><a class="nav-link"
-						href="{{ route('register') }}">{{ __('Register') }}</a></li> @endif
+<!-- 					<li class="nav-item"><a class="nav-link" href="{{ route('login') }}">{{__('Login') }}</a></li> -->
+					<li><span style="color: #fff; padding: 0.5rem 1rem; display: block;">Please Login to Continue</span></li>
 				@else
 					<li class="nav-item dropdown">
 						<a id="navbarDropdown"
