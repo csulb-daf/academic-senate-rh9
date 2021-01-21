@@ -47,10 +47,7 @@ $(document).ready(function() {
 			{ title: 'Campus ID', defaultContent: '', responsivePriority: 1,
 				render: function(data, type, row, meta) {
 					if(row.campus_id == null) {
-						var cid = {{ $cid }};
-						var url = 	"{{ route('members.add', ['id'=>':id'], false) }}";
-						url = url.replace(':id', cid);
-						return '<a href="'+ url +'" data-id="">VACANT</a>';
+						return '<span class="badge badge-primary">Vacant</span>';
 					}
 					if(row.campus_id == 0) {
 						return '<span class="badge badge-primary">CM</span>';
@@ -76,9 +73,11 @@ $(document).ready(function() {
 			{ title: 'Actions', data: null, defaultContent: '', width: '120px', responsivePriority: 2,
 				render: function(data, type, row, meta) {
 					if(data.id == null) {
-						return null;
+						var cid = {{ $cid }};
+						var url = 	"{{ route('members.add', ['id'=>':id'], false) }}";
+						url = url.replace(':id', cid);
+						return '<a href="'+ url +'" class="btn btn-light btn-sm border">Assign</button>';
 					}
-
 					var html='\
 						<div class="editButtons">\
 							<button type="button" class="btn btn-light btn-sm border editButton" onclick="editMember('+ data.id +')">Edit</button>\

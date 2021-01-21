@@ -96,7 +96,7 @@ $(document).ready(function() {
 				title: 'Campus ID', className: 'campusID', defaultContent: '', responsivePriority: 1,
 				render: function(data, type, row, meta) {
 					if(row.campus_id == null) {
-						return '<span class="badge badge-primary">Vacant</span>'
+						return '<span class="badge badge-primary">Vacant</span>';
 					}
 					if(row.campus_id == 0) {
 						return '<span class="badge badge-primary">CM</span>';
