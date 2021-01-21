@@ -27,7 +27,7 @@
 			<!-- Right Side Of Navbar -->
 			<ul class="navbar-nav ml-auto">
 				@if (Route::has('register'))
-					<li class="nav-item"><a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a></li>
+					<li class="nav-item"><a href="{{ route('register') }}" class="nav-link {{ request()->is('register*') ? 'active' : '' }}">{{ __('Register') }}</a></li>
 				@endif
 			</ul>
 			@endauth

@@ -53,7 +53,7 @@ $(document).ready(function() {
 						return '<a href="'+ url +'" data-id="">VACANT</a>';
 					}
 					if(row.campus_id == 0) {
-						return '<span class="badge badge-primary communityTag">CM</span>';
+						return '<span class="badge badge-primary">CM</span>';
 					}
 					return row.campus_id;
 				}	
@@ -75,7 +75,6 @@ $(document).ready(function() {
 			{ title: 'Notes', data: 'notes' },
 			{ title: 'Actions', data: null, defaultContent: '', width: '120px', responsivePriority: 2,
 				render: function(data, type, row, meta) {
-					//console.log('data', data);
 					if(data.id == null) {
 						return null;
 					}

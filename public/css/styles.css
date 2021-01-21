@@ -83,11 +83,6 @@ form#memberSearch {
 }
 
 /*** Committee Membership Pages ***/
-.communityTag {
-	background: #4C6696;
-	color: #fff;
-	font-size: 16px;
-}
 
 /*** List Management Pages ***/
 form#rankForm,
@@ -120,6 +115,12 @@ form#chargeForm button {
 }
 .navbar-light .navbar-toggler-icon {
 	background-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='30' height='30' viewBox='0 0 30 30'><path stroke='rgba(255, 255, 255, 1)' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/></svg>");
+}
+.badge-primary {
+	background: #4C6696;
+	color: #fff;
+	font-size: 13px;
+	text-transform: uppercase;
 }
 
 /*** datatables override ***/
