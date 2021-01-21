@@ -44,7 +44,7 @@ $(document).ready(function() {
 			complete: function() {}
     },
 		columns: [
-			{ title: 'Campus ID', defaultContent: '',
+			{ title: 'Campus ID', defaultContent: '', responsivePriority: 1,
 				render: function(data, type, row, meta) {
 					if(row.campus_id == null) {
 						var cid = {{ $cid }};
@@ -73,13 +73,24 @@ $(document).ready(function() {
 				}			
 			},
 			{ title: 'Notes', data: 'notes' },
-			{ title: 'Actions', data: null, defaultContent: '', width: '120px',
+			{ title: 'Actions', data: null, defaultContent: '', width: '120px', responsivePriority: 2,
 				render: function(data, type, row, meta) {
 					//console.log('data', data);
 					if(data.id == null) {
 						return null;
 					}
-					return getEditButtons(data.id);
+
+					var html='\
+						<div class="editButtons">\
+							<button type="button" class="btn btn-light btn-sm border editButton" onclick="editMember('+ data.id +')">Edit</button>\
+							<button type="button" class="btn btn-danger btn-sm deleteButton">Vacate</button>\
+						</div>\
+						<div class="delButtons" style="display: none;">\
+							<button type="button" class="btn btn-danger btn-sm confirmDelete"  onclick="deleteMember('+ data.id +')">Confirm</button>\
+							<button type="button" class="btn btn-light btn-sm border cancelDelete">Cancel</button>\
+						</div>\
+					';
+					return html;
 				}			
 			}
 		],
@@ -113,20 +124,5 @@ function deleteMember(id) {
 		}
 	});
 }
-
-function getEditButtons(id) {
-	var html='\
-		<div class="editButtons">\
-			<button type="button" class="btn btn-light btn-sm border editButton" onclick="editMember('+ id +')">Edit</button>\
-			<button type="button" class="btn btn-danger btn-sm deleteButton">Vacate</button>\
-		</div>\
-		<div class="delButtons" style="display: none;">\
-			<button type="button" class="btn btn-danger btn-sm confirmDelete"  onclick="deleteMember('+ id +')">Confirm</button>\
-			<button type="button" class="btn btn-light btn-sm border cancelDelete">Cancel</button>\
-		</div>\
-	';
-	return html;
-}
-	
 </script>
 @endsection

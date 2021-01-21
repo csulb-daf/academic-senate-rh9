@@ -35,9 +35,9 @@ $(document).ready(function() {
 			}
     },
 		columns: [
-			{ title: 'Committee Name', data: 'comm', width: '800px'},
+			{ title: 'Committee Name', data: 'comm', width: '800px', responsivePriority: 1},
 			{ title: 'Charge Memberships', data: 'assignments' },
-			{ title: 'Actions', data: null, defaultContent: '',
+			{ title: 'Actions', data: null, defaultContent: '', responsivePriority: 2,
 				render: function ( data, type, row ) {
 					//console.log(data);
 					if(data.assignments == 0) {
