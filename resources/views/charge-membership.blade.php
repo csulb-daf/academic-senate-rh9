@@ -85,13 +85,13 @@ $(document).ready(function() {
 			}
     },
 		columns: [
-			{ title: 'Charge Name', data: 'chargeName' },
+			{ title: 'Charge Name', data: 'chargeName', responsivePriority: 1},
 			{ title: 'Assigned To', data: null, defaultContent: '', className: 'assignedTo', width: '150px',
 				render: function ( data, type, row ) {
 					return '<div class="name">'+ data.assigned_to +'</div>';
 				}
 			},
-			{ title: 'Actions', data: null, defaultContent: '', width: '120px',
+			{ title: 'Actions', data: null, defaultContent: '', width: '120px', responsivePriority: 2,
 				render: function ( data, type, row ) {
 					var html='\
 						<button type="button" class="btn btn-danger btn-sm removeButton" data-id="'+ data.id +'">Remove</button>\

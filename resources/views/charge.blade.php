@@ -21,9 +21,9 @@ $(document).ready(function() {
 			complete: function() {}
     },
 		columns: [
-			{ title: 'Committee Name', data: 'comm' },
+			{ title: 'Committee Name', data: 'comm', responsivePriority: 1},
 			{ title: 'Charge Memberships', data: 'assignments' },
-			{ title: 'Actions', data: null, defaultContent: '',
+			{ title: 'Actions', data: null, defaultContent: '', responsivePriority: 2,
 				render: function ( data, type, row ) {
 					//console.log('id', data.id);
     			return '<button type="button" class="btn btn-light btn-sm border" onclick="javascrtipt:assignCharge('+ data.id +')">Edit</button>';
