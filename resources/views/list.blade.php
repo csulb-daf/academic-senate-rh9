@@ -256,6 +256,20 @@ function editRow(row) {
 	$('td.editable', row).each(function() {
 		$(this).html('<input type="text" name="'+ $(this).data('name') +'" value="' + $(this).html() + '" style="width: 100%;" />');
 	});
+
+	/* Responsive */
+	if(!$(row).hasClass('parent')) {
+		$('td.dtr-control', row).trigger('click');
+	}
+	if($(row).hasClass('parent')) {
+		$(row).next('tr.child').find('li.editable span.dtr-data').each(function() {
+			var colIndex = $(this).closest('li.editable').data('dt-column');
+			var parentCol = $(row).find('td').eq(colIndex);
+			var name = parentCol.data('name');
+			var text = $(this).text();
+			$(this).html('<input type="text" name="'+name +'" value="' + $(this).text() + '" style="width: 100%;" />');
+		});
+	}
 }
 function cancelEdit(row) {
 	$('td.editable', row).each(function() {
@@ -266,6 +280,13 @@ function cancelEdit(row) {
 			$(this).html($(this).find('input').val());
 		}
 	});
+
+	/* Responsive */
+	if($(row).hasClass('parent')) {
+		$('td.dtr-control', row).trigger('click');
+		$('#communityTable').DataTable().ajax.reload();
+	}
+	
 	$('#validation-errors').html('').removeClass();
 }
 function submit(id, row, updateURL) {
@@ -274,6 +295,13 @@ function submit(id, row, updateURL) {
 		inputData[$(this).attr('name')] = $(this).val();
 	});
 	inputData['id'] = id;
+
+	/* Responsive */
+	if($(row).hasClass('parent')) {
+		$(row).next('tr.child').find('li.editable span.dtr-data input').each(function() {
+			inputData[$(this).attr('name')] = $(this).val();			
+		});		
+	}
 
 	$.ajax({
 		headers: {
