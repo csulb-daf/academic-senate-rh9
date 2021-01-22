@@ -79,7 +79,7 @@ form#memberSearch {
 }
 #chargeMembership_wrapper .popover {
 	left: -4% !important;
-	top: 5% !important;
+	top: 4% !important;
 }
 
 /*** Committee Membership Pages ***/
@@ -148,6 +148,13 @@ table.dataTable thead .sorting_desc {
 	form#memberSearch {
 		width: 47%;
 	}
+	
+	/* Charge Membership Page */
+	#chargeMembership_wrapper .popover {
+		left: -9% !important;
+		top: 7% !important;
+	}
+	
 }
 
 @media (max-width: 520px) {
@@ -170,7 +177,8 @@ table.dataTable thead .sorting_desc {
 	
 	/* Charge Membership Page */
 	#chargeMembership_wrapper .popover {
-		top: 13% !important;
+		left: -4% !important;
+		top: 8% !important;
 	}
 	
 	/* List Management Page */
