@@ -52,6 +52,7 @@ $(document).ready(function() {
 					if(data.assignments == 0) {
 						var html = '\
 							<div class="editButtons">\
+								<button type="button" class="btn btn-light btn-sm border" onclick="javascrtipt:void(0);" disabled>Edit</button>\
 								<button type="button" class="btn btn-danger btn-sm deleteButton">Delete</button>\
 							</div>\
 							<div class="delButtons" style="display: none;">\
@@ -81,7 +82,7 @@ function assignComm(id) {
 	url = url.replace(':id', id);
 	window.location = url;
 }
-function deleteComm(id, row) {
+function deleteComm(id) {
 	var url = 	"{{ route('committee.destroy', [], false) }}";
 	$.ajax({
 		headers: {
