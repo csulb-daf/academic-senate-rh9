@@ -72,6 +72,11 @@ class CommitteeController extends Controller {
 		else {
 			return back()->withInput($request->all)->with('error');
 		}
-		
+	}
+	
+	public function destroy(Request $request) {
+		Committees::where('id', $request->id)->update(['user_id' => Auth::id()]);
+		Committees::where('id', $request->id)->delete();
+		return $request;
 	}
 }

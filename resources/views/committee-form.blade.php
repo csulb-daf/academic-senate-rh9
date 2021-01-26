@@ -19,14 +19,14 @@
 	<div class="form-group row">
 		<label for="commName" class="col-sm-2 col-form-label">Committee Name:</label>
 		<div class="col-sm-10">
-			<input class="form-control" type="text" name="commName" id="commName" value="{{ old('commName') }}" >
+			<input class="form-control" type="text" name="commName" id="commName" value="{{ old('commName') }}" required>
 		</div>
 	</div>
 
 	<div class="form-group row">
 		<label for="meetTime" class="col-sm-2 col-form-label">Meeting Time and Location:</label>
 		<div class="col-sm-10">
-			<input class="form-control" type="text" name="meetTime" id="meetTime" value="{{ old('meetTime') }}" >
+			<input class="form-control" type="text" name="meetTime" id="meetTime" value="{{ old('meetTime') }}" required>
 		</div>
 	</div>
 	

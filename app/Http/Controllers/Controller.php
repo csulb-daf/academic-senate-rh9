@@ -36,6 +36,7 @@ class Controller extends BaseController
     	->select('c.id', 'c.committeename as comm', DB::raw('count(cm.committee) as assignments'))
     	->leftJoin('charge_membership as cm', 'c.id', '=', 'cm.committee')
     	->whereNull('cm.deleted_at')
+    	->whereNull('c.deleted_at')
     	->groupBy('c.id')
     	->get();
 //     	->toSql();
