@@ -20,14 +20,23 @@ $(document).ready(function() {
 		responsive: true,
 		autoWidth: false,
 		createdRow: function(row, data, dataIndex) {
-			$('button.deleteButton', row).click(function() {
+			$('button.editButton', row).click(function() {
 				$(this).closest('div.editButtons').hide();
-				$(this).closest('div.editButtons').siblings('div.delButtons').show();
+				$(this).closest('div.editButtons').siblings('div.confirmButtons').show();
+				editRow(row);
 			});
-			$('button.cancelDelete', row).click(function() {
-				$(this).closest('div.delButtons').hide();
-				$(this).closest('div.delButtons').siblings('div.editButtons').show();
+			$('button.cancelEdit', row).click(function() {
+				$(this).closest('div.confirmButtons').hide();
+				$(this).closest('div.confirmButtons').siblings('div.editButtons').show();
+				cancelEdit(row);
 			});
+
+			$('button.cancelEdit', row).click(function() {
+				$(this).closest('div.confirmButtons').hide();
+				$(this).closest('div.confirmButtons').siblings('div.editButtons').show();
+				cancelEdit(row);
+			});
+			
 		},
     ajax: {
 			url: "{{ route('committee.admin', [], false) }}",
@@ -44,26 +53,27 @@ $(document).ready(function() {
 			}
     },
 		columns: [
-			{ title: 'Committee Name', data: 'comm', width: '750px', responsivePriority: 1},
+			{ title: 'Committee Name', data: 'comm', width: '750px', className: 'editable', responsivePriority: 1},
 			{ title: 'Charge Memberships', data: 'assignments' },
 			{ title: 'Actions', data: null, defaultContent: '', width: '120px', responsivePriority: 2,
 				render: function ( data, type, row ) {
 					//console.log(data);
-					if(data.assignments == 0) {
-						var html = '\
-							<div class="editButtons">\
-								<button type="button" class="btn btn-light btn-sm border editButton">Edit</button>\
-								<button type="button" class="btn btn-light btn-sm border" onclick="javascrtipt:void(0);" disabled>Assign</button>\
-							</div>\
-							<div class="delButtons" style="display: none;">\
-								<button type="button" class="btn btn-light btn-sm border confirmUpdate"  onclick="updateComm('+ data.id +')">Confirm</button>\
-								<button type="button" class="btn btn-light btn-sm border cancelDelete">Cancel</button>\
-							</div>\
-						';
-						return html;
-					}
-						
-    			return '<button type="button" class="btn btn-light btn-sm border" onclick="javascrtipt:assignComm('+ data.id +')">Assign</button>';
+					var html = '\
+						<div class="editButtons">\
+							<button type="button" class="btn btn-light btn-sm border editButton">Edit</button>\n';
+							if(data.assignments == 0) {
+								html +='<button type="button" class="btn btn-light btn-sm border" onclick="javascrtipt:void(0);" disabled>Assign</button>';
+							}
+							else {
+								html += '<button type="button" class="btn btn-light btn-sm border" onclick="assignComm('+ data.id +')">Assign</button>';
+							}
+						html += '</div>\
+						<div class="confirmButtons" style="display: none;">\
+							<button type="button" class="btn btn-light btn-sm border confirmUpdate"  onclick="updateComm('+ data.id +')">Confirm</button>\
+							<button type="button" class="btn btn-light btn-sm border cancelEdit">Cancel</button>\
+						</div>\
+					';
+					return html;
 				}			
 			}
 		],
@@ -82,6 +92,24 @@ function assignComm(id) {
 	url = url.replace(':id', id);
 	window.location = url;
 }
+function editRow(row) {
+	$('td.editable', row).each(function() {
+		$(this).html('<input type="text" name="'+ $(this).data('name') +'" value="' + $(this).html() + '" style="width: 100%;" />');
+	});
+}
+function cancelEdit(row) {
+	$('td.editable', row).each(function() {
+		if($(this).find('input').hasClass('error')) {
+			$(this).html($(this).find('input').attr('value'));
+		}
+		else {
+			$(this).html($(this).find('input').val());
+		}
+	});
+
+	$('#validation-errors').html('').removeClass();
+}
+
 function updateComm(id) {
 	var url = 	"{{ route('committee.update', [], false) }}";
 	$.ajax({
