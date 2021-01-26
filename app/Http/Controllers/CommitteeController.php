@@ -73,10 +73,19 @@ class CommitteeController extends Controller {
 			return back()->withInput($request->all)->with('error');
 		}
 	}
-	
-	public function destroy(Request $request) {
-		Committees::where('id', $request->id)->update(['user_id' => Auth::id()]);
-		Committees::where('id', $request->id)->delete();
+	public function update(Request $request) {
+		return $request;
+		request()->validate(
+			['commName' => 'required'],
+			['commName.required' => 'Committee Name is required']
+		);
+		
+		Committees::where('id', $request->id)
+		->update([
+			'user_id' => Auth::id(),
+			'committeename' => $request->commName,
+		]);
 		return $request;
 	}
+	
 }

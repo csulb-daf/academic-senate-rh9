@@ -52,18 +52,18 @@ $(document).ready(function() {
 					if(data.assignments == 0) {
 						var html = '\
 							<div class="editButtons">\
-								<button type="button" class="btn btn-light btn-sm border" onclick="javascrtipt:void(0);" disabled>Edit</button>\
-								<button type="button" class="btn btn-danger btn-sm deleteButton">Delete</button>\
+								<button type="button" class="btn btn-light btn-sm border editButton">Edit</button>\
+								<button type="button" class="btn btn-light btn-sm border" onclick="javascrtipt:void(0);" disabled>Assign</button>\
 							</div>\
 							<div class="delButtons" style="display: none;">\
-								<button type="button" class="btn btn-danger btn-sm confirmDelete"  onclick="deleteComm('+ data.id +')">Confirm</button>\
+								<button type="button" class="btn btn-light btn-sm border confirmUpdate"  onclick="updateComm('+ data.id +')">Confirm</button>\
 								<button type="button" class="btn btn-light btn-sm border cancelDelete">Cancel</button>\
 							</div>\
 						';
 						return html;
 					}
 						
-    			return '<button type="button" class="btn btn-light btn-sm border" onclick="javascrtipt:assignComm('+ data.id +')">Edit</button>';
+    			return '<button type="button" class="btn btn-light btn-sm border" onclick="javascrtipt:assignComm('+ data.id +')">Assign</button>';
 				}			
 			}
 		],
@@ -75,15 +75,15 @@ $(document).ready(function() {
 });
 
 function addComm() {
-	window.location = "{{ url('/committee/add') }}";
+	window.location = "{{ route('committee.add', [], false) }}";
 }
 function assignComm(id) {
 	var url = 	"{{ route('comm.assign', ['id'=>':id']) }}";
 	url = url.replace(':id', id);
 	window.location = url;
 }
-function deleteComm(id) {
-	var url = 	"{{ route('committee.destroy', [], false) }}";
+function updateComm(id) {
+	var url = 	"{{ route('committee.update', [], false) }}";
 	$.ajax({
 		headers: {
 			'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')

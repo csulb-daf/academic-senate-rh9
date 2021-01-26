@@ -338,7 +338,7 @@ function destroy(id, delURL, row) {
 			id: id,
 		},
 		success: function() {
-			$(row).remove();
+			$(row).remove().draw();
 		}
 	});
 }
