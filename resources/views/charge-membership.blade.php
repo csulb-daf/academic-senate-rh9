@@ -68,7 +68,7 @@ $(document).ready(function() {
 						var button = $('#charges_wrapper').find('button.addedButton[data-id=' + chargeID + ']');
 						button.hide();
 						button.siblings('button.addButton').show();
-						table.ajax.reload();
+						$(row).remove().draw();
 					}
 		 		});		//ajax
 			});		//$('button.addButton').click
@@ -141,7 +141,7 @@ $(document).ready(function() {
 							'charge': chargeID,
 							'assigned_to': '',
 							'chargeName': chargeName,
-						}).draw(false).node();
+						}).draw().node();
 
 						$(row).addClass('added');
 						that.closest('div.confirmButtons').hide().siblings('button.addedButton').show();
