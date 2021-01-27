@@ -152,6 +152,19 @@ table.dataTable thead .sorting_desc {
 		width: 47%;
 	}
 	
+	/* Committee Page */
+	#commAdmin_filter {
+    clear: both;
+    padding-top: 20px;
+	}
+	#commAdmin button {
+		width: 100%;
+	}
+	#commAdmin button.editButton,
+	#commAdmin button.submit {
+		margin-bottom: 5px;
+	}
+	
 	/* Committee Members Page */
 	#memberAdmin button,
 	#memberAdmin a.assignLink {
@@ -178,19 +191,6 @@ table.dataTable thead .sorting_desc {
 	}
 	form#memberSearch .row {
 		margin: 0;
-	}
-	
-	/* Committee Page */
-	#commAdmin_filter {
-    clear: both;
-    padding-top: 20px;
-	}
-	#commAdmin button {
-		width: 100%;
-	}
-	#commAdmin button.editButton,
-	#commAdmin button.submit {
-		margin-bottom: 5px;
 	}
 	
 	/* Charge Membership Page */
