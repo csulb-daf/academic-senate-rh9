@@ -75,8 +75,10 @@ form#memberSearch {
 	 width: 150px;
 }
 #chargeMembership_wrapper .popover {
-	left: -4% !important;
-	top: 4% !important;
+	 left: -10% !important;
+}
+#chargeMembership td.assignedTo > div.name {
+	position: relative;
 }
 
 /*** List Management Pages ***/
@@ -150,10 +152,19 @@ table.dataTable thead .sorting_desc {
 		width: 47%;
 	}
 	
-	/* Charge Membership Page */
-	#chargeMembership_wrapper .popover {
-		left: -9% !important;
-		top: 7% !important;
+	/* Committee Members Page */
+	#memberAdmin button,
+	#memberAdmin a.assignLink {
+		width: 100%;
+	}
+	#memberAdmin button.editButton,
+	#memberAdmin button.confirmDelete {
+		margin-bottom: 5px;
+	}
+	
+	/* Charge Page */
+	#chargeAdmin button {
+		width: 100%;
 	}
 }
 
@@ -183,9 +194,11 @@ table.dataTable thead .sorting_desc {
 	}
 	
 	/* Charge Membership Page */
-	#chargeMembership_wrapper .popover {
-		left: -4% !important;
-		top: 8% !important;
+	#chargeMembership button {
+		width: 100%;
+	}
+	#chargeMembership button.confirmRemove {
+		margin-bottom: 5px;
 	}
 	
 	/* List Management Page */

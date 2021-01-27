@@ -74,7 +74,7 @@ $(document).ready(function() {
 						var cid = {{ $cid }};
 						var url = 	"{{ route('members.add', ['id'=>':id'], false) }}";
 						url = url.replace(':id', cid);
-						return '<a href="'+ url +'" class="btn btn-light btn-sm border">Assign</button>';
+						return '<a href="'+ url +'" class="btn btn-light btn-sm border assignLink">Assign</button>';
 					}
 					var html='\
 						<div class="editButtons">\

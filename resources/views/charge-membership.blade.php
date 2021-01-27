@@ -20,7 +20,7 @@ $(document).ready(function() {
 		createdRow: function(row, data, dataIndex) {
 			$('button.removeButton', row).click(function() {
 				var that = $(this);
-				var assigned = that.closest('tr').find('td.assignedTo');
+				var assigned = that.closest('tr').find('td.assignedTo > div.name');
 				$('button.cancelRemove').not(this).trigger('click');
 
 				if(assigned.text().trim() !== '') {
@@ -42,7 +42,7 @@ $(document).ready(function() {
 			$('button.cancelRemove', row).click(function() {
 				$(this).closest('div.confirmButtons').hide();
 				$(this).closest('div.confirmButtons').siblings('button.removeButton').show();
-				$('td.assignedTo').popover('dispose');
+				$('td.assignedTo > div.name').popover('dispose');
 			});
 			$('button.confirmRemove', row).click(function() {
 				var that = $(this);
