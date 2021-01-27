@@ -9,6 +9,7 @@
 	</div>
 @endif			
 
+<div id="validation-errors"></div>
 <table id="commAdmin" class="display"></table>
 <button type="button" class="btn btn-primary" id="addComm" style="display: none; float: left;"  onclick="javascript:addComm();">Add New Committee</button>
 @endsection 
@@ -22,21 +23,17 @@ $(document).ready(function() {
 		createdRow: function(row, data, dataIndex) {
 			$('button.editButton', row).click(function() {
 				$(this).closest('div.editButtons').hide();
-				$(this).closest('div.editButtons').siblings('div.confirmButtons').show();
+				$(this).closest('div.editButtons').siblings('div.submitButtons').show();
 				editRow(row);
 			});
 			$('button.cancelEdit', row).click(function() {
-				$(this).closest('div.confirmButtons').hide();
-				$(this).closest('div.confirmButtons').siblings('div.editButtons').show();
+				$(this).closest('div.submitButtons').hide();
+				$(this).closest('div.submitButtons').siblings('div.editButtons').show();
 				cancelEdit(row);
 			});
-
-			$('button.cancelEdit', row).click(function() {
-				$(this).closest('div.confirmButtons').hide();
-				$(this).closest('div.confirmButtons').siblings('div.editButtons').show();
-				cancelEdit(row);
+			$('button.submit', row).click(function() {
+				submit(data.id, row, "{{ route('committee.update', [], false) }}");
 			});
-			
 		},
     ajax: {
 			url: "{{ route('committee.admin', [], false) }}",
@@ -53,7 +50,11 @@ $(document).ready(function() {
 			}
     },
 		columns: [
-			{ title: 'Committee Name', data: 'comm', width: '750px', className: 'editable', responsivePriority: 1},
+			{ title: 'Committee Name', data: 'comm', width: '750px', className: 'editable', responsivePriority: 1,
+				createdCell: function(td, cellData, rowData, row, col) {
+					$(td).attr('data-name', 'commName');
+				}
+			},
 			{ title: 'Charge Memberships', data: 'assignments' },
 			{ title: 'Actions', data: null, defaultContent: '', width: '120px', responsivePriority: 2,
 				render: function ( data, type, row ) {
@@ -67,11 +68,12 @@ $(document).ready(function() {
 							else {
 								html += '<button type="button" class="btn btn-light btn-sm border" onclick="assignComm('+ data.id +')">Assign</button>';
 							}
-						html += '</div>\
-						<div class="confirmButtons" style="display: none;">\
-							<button type="button" class="btn btn-light btn-sm border confirmUpdate"  onclick="updateComm('+ data.id +')">Confirm</button>\
+					html += '</div>\
+						<div class="submitButtons" style="display: none;">\
+							<button type="button" class="btn btn-success btn-sm submit">Submit</button>\
 							<button type="button" class="btn btn-light btn-sm border cancelEdit">Cancel</button>\
 						</div>\
+						<span class="badge badge-success saved" style="font-size: 14px; padding: 5px 10px; display: none;">Saved</span>\
 					';
 					return html;
 				}			
@@ -91,40 +93,6 @@ function assignComm(id) {
 	var url = 	"{{ route('comm.assign', ['id'=>':id']) }}";
 	url = url.replace(':id', id);
 	window.location = url;
-}
-function editRow(row) {
-	$('td.editable', row).each(function() {
-		$(this).html('<input type="text" name="'+ $(this).data('name') +'" value="' + $(this).html() + '" style="width: 100%;" />');
-	});
-}
-function cancelEdit(row) {
-	$('td.editable', row).each(function() {
-		if($(this).find('input').hasClass('error')) {
-			$(this).html($(this).find('input').attr('value'));
-		}
-		else {
-			$(this).html($(this).find('input').val());
-		}
-	});
-
-	$('#validation-errors').html('').removeClass();
-}
-
-function updateComm(id) {
-	var url = 	"{{ route('committee.update', [], false) }}";
-	$.ajax({
-		headers: {
-			'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-		},
-		type: 'post',
-		url: url,
-		data: {
-			id: id,
-		},
-		success: function(data) {
-			$('#commAdmin').DataTable().ajax.reload();
-		}
-	});
 }
 </script>
 @endsection

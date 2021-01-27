@@ -74,7 +74,7 @@ class CommitteeController extends Controller {
 		}
 	}
 	public function update(Request $request) {
-		return $request;
+// 		return $request;
 		request()->validate(
 			['commName' => 'required'],
 			['commName.required' => 'Committee Name is required']
