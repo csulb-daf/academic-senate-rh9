@@ -12,6 +12,7 @@
 $(document).ready(function() {
 	$('.userSearch').select2({
 		matcher: matchCustom,
+		minimumInputLength: 3,
 	});
 });
 </script>

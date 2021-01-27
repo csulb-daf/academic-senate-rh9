@@ -32,6 +32,7 @@ $(document).ready(function() {
 	$('.userSearch').select2({
 		width: '100%',
 		matcher: matchCustom,
+		minimumInputLength: 3,
 	});
 	
 	$('select#userSelect').change(function() {
@@ -45,14 +46,14 @@ $(document).ready(function() {
 		var url = "{{ route('member.search', [], false) }}?"+ params;
 		table.ajax.url(url).load();
 		$('#commSelect option:eq(0)').prop('selected', true); //set option of index 0 to selected
-		$("#commSelect").select2();		//reload select box
+		$("#commSelect").select2({minimumInputLength: 3});		//reload select box
 	});
 		
 	$('#commSelect').on('change', function() {
 		$('.tableTitle').text('Committee: '+ $(this).find('option:selected').text());	
 		table.ajax.url('comm-search').load();
 		$('#userSelect option:eq(0)').prop('selected', true); //set option of index 0 to selected
-		$("#userSelect").select2({matcher: matchCustom});		//reload select box
+		$("#userSelect").select2({matcher: matchCustom, minimumInputLength: 3});		//reload select box
 	});
 
 	var table = $('#commSearch').DataTable({
