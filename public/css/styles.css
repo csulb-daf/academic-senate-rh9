@@ -26,9 +26,6 @@ tr.added td {
 main.py-4 {
 	padding-top: 0 !important;
 }
-div.container.wide {
-	max-width: 100%;
-}
 
 /*** Nav ***/
 .navbar {
@@ -81,8 +78,6 @@ form#memberSearch {
 	left: -4% !important;
 	top: 4% !important;
 }
-
-/*** Committee Membership Pages ***/
 
 /*** List Management Pages ***/
 form#rankForm,
@@ -144,6 +139,12 @@ table.dataTable thead .sorting_desc {
 
 /****** RWD ******/
 @media (max-width: 740px) {
+	/* Common */
+  .container-sm,
+  .container {
+    max-width: 100%;
+  }
+  
 	/* Home Page */
 	form#memberSearch {
 		width: 47%;
@@ -154,7 +155,6 @@ table.dataTable thead .sorting_desc {
 		left: -9% !important;
 		top: 7% !important;
 	}
-	
 }
 
 @media (max-width: 520px) {
@@ -173,6 +173,13 @@ table.dataTable thead .sorting_desc {
 	#commAdmin_filter {
     clear: both;
     padding-top: 20px;
+	}
+	#commAdmin button {
+		width: 100%;
+	}
+	#commAdmin button.editButton,
+	#commAdmin button.submit {
+		margin-bottom: 5px;
 	}
 	
 	/* Charge Membership Page */

@@ -56,7 +56,7 @@ $(document).ready(function() {
 				}
 			},
 			{ title: 'Charge Memberships', data: 'assignments' },
-			{ title: 'Actions', data: null, defaultContent: '', width: '120px', responsivePriority: 2,
+			{ title: 'Actions', data: null, defaultContent: '', width: '180px', responsivePriority: 2,
 				render: function ( data, type, row ) {
 					//console.log(data);
 					var html = '\
