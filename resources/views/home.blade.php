@@ -27,6 +27,8 @@
 @section('scripts')
 <script>
 $(document).ready(function() {
+	$('div.container').addClass('wide');
+	
 	$('.userSearch').select2({
 		width: '100%',
 		matcher: matchCustom,

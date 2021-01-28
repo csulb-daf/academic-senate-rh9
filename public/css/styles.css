@@ -26,6 +26,9 @@ tr.added td {
 main.py-4 {
 	padding-top: 0 !important;
 }
+.container.wide {
+	max-width: 100%;
+}
 
 /*** Nav ***/
 .navbar {

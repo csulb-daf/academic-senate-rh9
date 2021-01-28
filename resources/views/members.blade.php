@@ -16,6 +16,7 @@
 @section('scripts')
 <script>
 $(document).ready(function() {
+	$('div.container').addClass('wide');
 	var url = 	"{{ route('members.table', ['id'=>':id'], false) }}";
 	url = url.replace(':id', {{ $cid }});
 	
