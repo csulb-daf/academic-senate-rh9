@@ -164,7 +164,8 @@ table.dataTable thead .sorting_desc {
 		width: 100%;
 	}
 	#commAdmin button.editButton,
-	#commAdmin button.submit {
+	#commAdmin button.submit,
+	#commAdmin button.confirmDelete {
 		margin-bottom: 5px;
 	}
 	
