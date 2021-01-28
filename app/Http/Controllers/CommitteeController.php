@@ -74,7 +74,6 @@ class CommitteeController extends Controller {
 		}
 	}
 	public function update(Request $request) {
-// 		return $request;
 		request()->validate(
 			['commName' => 'required'],
 			['commName.required' => 'Committee Name is required']
@@ -87,5 +86,9 @@ class CommitteeController extends Controller {
 		]);
 		return $request;
 	}
-	
+	public function destroy(Request $request) {
+		Committees::where('id', $request->id)->update(['user_id' => Auth::id()]);
+		Committees::where('id', $request->id)->delete();
+		return $request;
+	}
 }

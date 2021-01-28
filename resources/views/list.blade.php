@@ -276,7 +276,7 @@ function setButtonActions(row, updateURL, delURL) {
 	});
 	$('button.confirmDelete', row).click(function() {
 		var id = $(this).data('id');
-		destroy(id, delURL, row);
+		destroy(id, row, delURL);
 	});
 }
 </script>

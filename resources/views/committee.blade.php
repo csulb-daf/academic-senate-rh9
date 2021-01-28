@@ -34,6 +34,17 @@ $(document).ready(function() {
 			$('button.submit', row).click(function() {
 				submit(data.id, row, "{{ route('committee.update', [], false) }}");
 			});
+			$('button.deleteButton', row).click(function() {
+				$(this).closest('div.editButtons').hide();
+				$(this).closest('div.editButtons').siblings('div.deleteButtons').show();
+			});
+			$('button.cancelDelete', row).click(function() {
+				$(this).closest('div.deleteButtons').hide();
+				$(this).closest('div.deleteButtons').siblings('div.editButtons').show();
+			});
+			$('button.confirmDelete', row).click(function() {
+				destroy(data.id, row, "{{ route('committee.destroy', [], false) }}");
+			});
 		},
     ajax: {
 			url: "{{ route('committee.admin', [], false) }}",
@@ -63,12 +74,16 @@ $(document).ready(function() {
 						<div class="editButtons">\
 							<button type="button" class="btn btn-light btn-sm border editButton">Edit</button>\n';
 							if(data.assignments == 0) {
-								html +='<button type="button" class="btn btn-light btn-sm border" onclick="javascrtipt:void(0);" disabled>Assign</button>';
+								html +='<button type="button" class="btn btn-danger btn-sm deleteButton">Delete</button>';
 							}
 							else {
 								html += '<button type="button" class="btn btn-light btn-sm border" onclick="assignComm('+ data.id +')">Assign</button>';
 							}
 					html += '</div>\
+						<div class="deleteButtons" style="display: none;">\
+							<button type="button" class="btn btn-danger btn-sm confirmDelete">Confirm</button>\
+							<button type="button" class="btn btn-light btn-sm border cancelDelete">Cancel</button>\
+						</div>\
 						<div class="submitButtons" style="display: none;">\
 							<button type="button" class="btn btn-success btn-sm submit">Submit</button>\
 							<button type="button" class="btn btn-light btn-sm border cancelEdit">Cancel</button>\

@@ -120,7 +120,7 @@ function submit(id, row, updateURL) {
 		},
 	});
 }
-function destroy(id, delURL, row) {
+function destroy(id, row, delURL) {
 	$.ajax({
 		headers: {
 			'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
