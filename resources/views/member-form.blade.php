@@ -46,7 +46,6 @@
 				</div>
 			</div>
 		
-			
 			<div class="form-group row">
 				<label for="lName" class="col-sm-2 col-form-label">Last Name:</label>
 				<div class="col-sm-10">
@@ -58,6 +57,34 @@
 				<label for="campusID" class="col-sm-2 col-form-label">Campus ID:</label>
 				<div class="col-sm-10">
 					<input class="form-control" type="text" name="campusID" id="campusID" value="{{ old('campusID', isset($campusID)? $campusID:'') }}" readonly>
+				</div>
+			</div>
+			
+			<div class="form-group row">
+				<label for="department" class="col-sm-2 col-form-label">Department:</label>
+				<div class="col-sm-10">
+					<input class="form-control" type="text" name="department" id="department" value="{{ old('department', isset($department)? $department:'') }}" readonly>
+				</div>
+			</div>
+			
+			<div class="form-group row">
+				<label for="collegeDepartment" class="col-sm-2 col-form-label">College Department:</label>
+				<div class="col-sm-10">
+					<input class="form-control" type="text" name="college_department" id="collegeDepartment" value="{{ old('college_department', isset($college_department)? $college_department:'') }}" readonly>
+				</div>
+			</div>
+			
+			<div class="form-group row">
+				<label for="extension" class="col-sm-2 col-form-label">Extension:</label>
+				<div class="col-sm-10">
+					<input class="form-control" type="text" name="extension" id="extension" value="{{ old('extension', isset($extension)? $extension:'') }}" readonly>
+				</div>
+			</div>
+			
+			<div class="form-group row">
+				<label for="email" class="col-sm-2 col-form-label">Email:</label>
+				<div class="col-sm-10">
+					<input class="form-control" type="text" name="email" id="email" value="{{ old('email', isset($email)? $email:'') }}" readonly>
 				</div>
 			</div>
 			
@@ -125,15 +152,21 @@
 <script>
 $(document).ready(function() {
 	$('select#userSelect').change(function() {
-		var nameArr = $('select#userSelect option:selected').attr('data-name').split(',');
-		var campusID = $('select#userSelect option:selected').val();
-		var lastName = nameArr[0].trim();
-		var firstName = nameArr[1].trim();
+		var 
+			select = $('select#userSelect option:selected'),
+			nameArr = select.data('name').split(','),
+			campusID = select.val(),
+			lastName = nameArr[0].trim(),
+			firstName = nameArr[1].trim(),
+			form = $('#memberForm');
 		
-		var form = $('#memberForm');
 		form.find('#fName').val(firstName);
 		form.find('#lName').val(lastName);
 		form.find('#campusID').val(campusID);
+		form.find('#department').val(select.data('department'));
+		form.find('#collegeDepartment').val(select.data('college_department'));
+		form.find('#extension').val(select.data('extension'));
+		form.find('#email').val(select.data('email'));
 
 		$('button#submitButton').prop('disabled', false);
 	});

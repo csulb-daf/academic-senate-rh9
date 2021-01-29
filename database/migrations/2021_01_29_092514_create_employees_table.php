@@ -20,7 +20,7 @@ class CreateEmployeesTable extends Migration
             $table->string('first_name', 255);
             $table->string('department', 255)->nullable();
             $table->string('college_department', 255)->nullable();
-            $table->string('extension', 255)->nullable();
+            $table->string('extension', 20)->nullable();
             $table->string('email', 255)->nullable();
             //$table->timestamps();
         });

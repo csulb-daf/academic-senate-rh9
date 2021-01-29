@@ -61,7 +61,7 @@ class MembersController extends Controller {
 		
 		$ranks = DB::table('rank')->select('id', 'rank')->get();
 		$community = Community::all('firstname as first_name', 'lastname as last_name', DB::raw('0 as campus_id'));
-		$employees = Employees::all('first_name', 'last_name', 'campus_id');
+		$employees = Employees::all();
 		$users = $employees->mergeRecursive($community)->sortBy('last_name');
 
 		$formData = Array(
