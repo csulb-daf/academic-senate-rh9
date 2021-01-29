@@ -8,6 +8,8 @@ use Illuminate\Support\Facades\Auth;
 use App\Members;
 use App\Charges;
 use App\Committees;
+use App\Community;
+use App\Employees;
 
 class MembersController extends Controller {
 	/**
@@ -58,12 +60,9 @@ class MembersController extends Controller {
 		->get();
 		
 		$ranks = DB::table('rank')->select('id', 'rank')->get();
-		$community =  DB::table('community_members')->select('firstname', 'lastname', DB::raw('0 as campus_id'));
-		$users = DB::table('sample_directory')
-		->select('first_name', 'last_name', 'campus_id')
-		->unionAll($community)
-		->orderBy('last_name', 'asc')
-		->get();
+		$community = Community::all('firstname as first_name', 'lastname as last_name', DB::raw('0 as campus_id'));
+		$employees = Employees::all('first_name', 'last_name', 'campus_id');
+		$users = $employees->mergeRecursive($community)->sortBy('last_name');
 
 		$formData = Array(
 				'charges' => $charges,
