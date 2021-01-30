@@ -133,6 +133,14 @@ table.dataTable thead .sorting_asc {
 table.dataTable thead .sorting_desc {
 	background-image: url("/images/sort_desc.png")
 }
+table.dataTable tbody th, 
+table.dataTable tbody td {
+	padding: 8px 5px;
+}
+table.dataTable thead th,
+table.dataTable thead td {
+	padding: 10px 18px 10px 10px;
+}
 
 /*** Popover ***/
 .bs-popover-top > .arrow::after {

@@ -80,6 +80,10 @@ class MembersController extends Controller {
 				'fname' => $row->firstname,
 				'lname' => $row->lastname,
 				'campusID' => $row->campus_id,
+				'department' => $row->department,
+				'college_department' => $row->college,
+				'extension' => $row->ext,
+				'email' => $row->email,
 				'notes' => $row->notes,
 				'termID' => $row->term,
 				'chargeID' => $row->charge,
@@ -98,8 +102,6 @@ class MembersController extends Controller {
 	 * @return \Illuminate\Http\Response
 	 */
 	public function store(Request $request) {
-// 		return $request;
-		
 		$validatedData = request()->validate(
 			[
 				'fName' => 'required',
@@ -127,6 +129,10 @@ class MembersController extends Controller {
 			$members->campus_id = $request->campusID;
 			$members->lastname = $request->lName;
 			$members->firstname = $request->fName;
+			$members->department = $request->department;
+			$members->college = $request->college_department;
+			$members->ext = $request->extension;
+			$members->email = $request->email;
 			$members->rank = $request->rankSelect;
 			$members->term = $request->termSelect;
 			$members->charge = $request->chargeSelect;
