@@ -19,6 +19,7 @@
 	<script src="{{ asset('js/app.js') }}"></script>
 	<script src="{{ asset('js/datatables.min.js') }}"></script>
 	<script src="{{ asset('js/dataTables.responsive.min.js') }}"></script>
+	<script src="{{ asset('js/dataTables.rowGroup.min.js') }}"></script>
 	
 	<script src="{{ asset('js/datatables-buttons/dataTables.buttons.min.js') }}"></script>
 	<script src="{{ asset('js/datatables-buttons/jszip.min.js') }}"></script>
@@ -37,6 +38,7 @@
 	<!-- Styles -->
 	<link href="{{asset('css/datatables.min.css')}}" rel="stylesheet">
 	<link href="{{asset('css/responsive.dataTables.min.css')}}" rel="stylesheet">
+	<link href="{{asset('css/rowGroup.dataTables.min.css')}}" rel="stylesheet">
 	<link href="{{asset('css/select2.min.css')}}" rel="stylesheet">
 	<link href="{{ asset('css/app.css') }}" rel="stylesheet">
 	<link href="{{ asset('css/styles.css') }}" rel="stylesheet">

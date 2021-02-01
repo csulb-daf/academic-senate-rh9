@@ -44,6 +44,7 @@ $(document).ready(function() {
 		$('form#memberSearch input[name=lastname]').val(lastName);
 		params = $('form#memberSearch').serialize();
 		var url = "{{ route('member.search', [], false) }}?"+ params;
+		table.rowGroup().dataSrc('committeename');
 		table.ajax.url(url).load();
 		$('#commSelect option:eq(0)').prop('selected', true); //set option of index 0 to selected
 		$("#commSelect").select2({minimumInputLength: 3});		//reload select box
@@ -59,6 +60,9 @@ $(document).ready(function() {
 	var table = $('#commSearch').DataTable({
 		responsive: true,
 		autoWidth: false,
+		rowGroup: {
+			emptyDataGroup: null
+		},
 		dom: 'Blrtip',
 		buttons: {
 			buttons: [{
@@ -70,7 +74,7 @@ $(document).ready(function() {
 				},
 				orientation: 'landscape',
 				exportOptions: {
-					columns: 'th:not(.campusID, .actions)'  
+					columns: 'th:not(.campusID, .actions)'
 				}	,
 			}],
 			dom: {

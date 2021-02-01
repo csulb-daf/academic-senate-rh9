@@ -52,7 +52,7 @@ class HomeController extends Controller {
 		->join('committees as c', 'cm.committee', '=', 'c.id')
 		->join('charges as ch', 'cm.charge', '=', 'ch.id')
 		->join('rank as r', 'cm.rank', '=', 'r.id')
-		->select('cm.*', 'c.id as committee',  'r.rank', 'ch.charge')
+		->select('cm.*', 'c.id as committee', 'c.committeename',  'r.rank', 'ch.charge')
 		->whereNull('cm.deleted_at');
 		
 		if($request->campus_id === 0) {
