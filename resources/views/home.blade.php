@@ -74,7 +74,7 @@ $(document).ready(function() {
 				},
 				orientation: 'landscape',
 				exportOptions: {
-					columns: 'th:not(.campusID, .actions)'
+					columns: ['th:not(.campusID, .actions)', 'th.committee']
 				}	,
 			}],
 			dom: {
@@ -97,6 +97,7 @@ $(document).ready(function() {
 			}	
     },
 		columns: [
+			{ title: 'Committee', data: 'committeename', className: 'committee', defaultContent: '', visible: false },
 			{ 
 				title: 'Campus ID', className: 'campusID', defaultContent: '', responsivePriority: 1,
 				render: function(data, type, row, meta) {
