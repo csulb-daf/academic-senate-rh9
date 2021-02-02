@@ -74,7 +74,7 @@ $(document).ready(function() {
 				},
 				orientation: 'landscape',
 				exportOptions: {
-					columns: ['th:not(.campusID, .actions)', 'th.committee']
+					columns: ['th:not(.campusID, .actions, .hide)', 'th.committee']
 				}	,
 			}],
 			dom: {
@@ -97,7 +97,19 @@ $(document).ready(function() {
 			}	
     },
 		columns: [
-			{ title: 'Committee', data: 'committeename', className: 'committee', defaultContent: '', visible: false },
+			{ title: 'Committee', data: 'committeename', defaultContent: '', visible: false, 
+				createdCell: function(td, cellData, rowData, row, col) {
+					var header = table.column(col).header();
+					if (typeof rowData.committeename !== 'undefined') {
+						$(td).removeClass('hide').addClass('committee');
+						$(header).removeClass('hide').addClass('committee');
+					}
+					else {
+						$(td).removeClass('committee').addClass('hide');
+						$(header).removeClass('committee').addClass('hide');
+					}
+				}
+			},
 			{ 
 				title: 'Campus ID', className: 'campusID', defaultContent: '', responsivePriority: 1,
 				render: function(data, type, row, meta) {
