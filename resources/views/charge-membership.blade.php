@@ -56,7 +56,7 @@ $(document).ready(function() {
 		 				'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
 		 			},
 		 			type: 'post',
-		 			url: '{{ route('charge.assignments.destroy') }}',
+		 			url: '{{ route('charge.assignments.destroy', [], false) }}',
 		 			data: {
 		 				id: id,
 		 				charge: chargeID,
@@ -108,6 +108,8 @@ $(document).ready(function() {
 		}],
 	});	
 
+	var url = 	"{{ route('charges.list.ajax', ['id'=>':id'], false) }}";
+	url = url.replace(':id', {{ $commID }});
 	var chargesTable = $('#charges').DataTable({
 		autoWidth: false,
 		createdRow: function(row, data, dataIndex) {
@@ -129,7 +131,7 @@ $(document).ready(function() {
 		 				'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
 		 			},
 		 			type: 'post',
-		 			url: '{{ route('charge.assignments.add') }}',
+		 			url: '{{ route('charge.assignments.add', [], false) }}',
 		 			data: {
 		 				charge: chargeID,
 		 				committee: {{ $commID }}
@@ -148,7 +150,7 @@ $(document).ready(function() {
 			});		//$('button.addButton').click
 		},
     ajax: {
-			url: "/charge/assignments/{{ $commID }}/charges/ajax",
+			url: url,
 			data: function(d) {
 				d.commID = {{ $commID }};
 			},

@@ -70,6 +70,7 @@ class ChargeController extends Controller {
 				->on('chm.committee', '=', DB::raw($commID))
 				->whereNull('chm.deleted_at');
 		})
+		->whereNull('c.deleted_at')
 		->groupBy('c.id')
 		->orderBy('c.charge', 'asc')
 		->get();
