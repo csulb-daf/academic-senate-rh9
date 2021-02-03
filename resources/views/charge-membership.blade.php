@@ -68,12 +68,10 @@ $(document).ready(function() {
 						var button = $('#charges_wrapper').find('button.addedButton[data-id=' + chargeID + ']');
 						button.hide();
 						button.siblings('button.addButton').show();
-						$(row).remove().draw();
+						table.row($(row)).remove().draw();
 					}
 		 		});		//ajax
 			});		//$('button.addButton').click
-	
-			
 		},
     ajax: {
 			url: "/charge/assignments/{{ $commID }}/ajax",
@@ -87,20 +85,20 @@ $(document).ready(function() {
 		columns: [
 			{ title: 'Charge Name', data: 'chargeName', responsivePriority: 1},
 			{ title: 'Assigned To', data: null, defaultContent: '', className: 'assignedTo', width: '150px',
-				render: function ( data, type, row ) {
+				render: function(data, type, row) {
 					return '<div class="name">'+ data.assigned_to +'</div>';
 				}
 			},
 			{ title: 'Actions', data: null, defaultContent: '', width: '120px', responsivePriority: 2,
-				render: function ( data, type, row ) {
+				render: function(data, type, row) {
 					var html='\
 						<button type="button" class="btn btn-danger btn-sm removeButton" data-id="'+ data.id +'">Remove</button>\
 						<div class="confirmButtons" style="display: none;">\
 							<button type="button" class="btn btn-danger btn-sm confirmRemove" data-id="'+ data.id +'" data-charge="'+ data.charge +'">Confirm</button>\
 							<button type="button" class="btn btn-light btn-sm border cancelRemove">Cancel</button>\
 						</div>\
-						';
-						return html;
+					';
+					return html;
 				}	
 			}
 		],
@@ -163,7 +161,7 @@ $(document).ready(function() {
 		columns: [
 			{ title: 'Charge Name', data: 'charge', className: 'chargeName'},
 			{ title: 'Actions', data: null, defaultContent: '', width: '120px',
-				render: function ( data, type, row ) {
+				render: function(data, type, row) {
 					var html;
 					
 					if(data.assigned === 'no') {
@@ -178,7 +176,7 @@ $(document).ready(function() {
 					}
 					else {
 						html='\
-							<button type="button" class="btn btn-light btn-sm addButton" data-id="'+ data.id +'" style="display: none;">Add</button>\
+							<button type="button" class="btn btn-light btn-sm border addButton" data-id="'+ data.id +'" style="display: none;">Add</button>\
 							<button type="button" class="btn btn-success btn-sm addedButton" style="opacity: 1;" data-id="'+ data.id +'" disabled>Added</button>\
 							<div class="confirmButtons" style="display: none">\
 								<button type="button" class="btn btn-success btn-sm confirmButton" data-id="'+ data.id +'">Confirm</button>\
