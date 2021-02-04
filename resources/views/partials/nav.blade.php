@@ -14,10 +14,10 @@
             <a href="{{ route('home') }}" class="nav-link {{ request()->is('/') ? 'active' : '' }}">Home</a>
         </li>
         <li class="nav-item">
-            <a href="{{ route('committee') }}" class="nav-link {{ request()->is('committee*') ? 'active' : '' }}">Committee Management</a>
+            <a href="{{ route('charge') }}" class="nav-link {{ request()->is('charge*') ? 'active' : '' }}">Charge Membership</a>
         </li>
         <li class="nav-item">
-            <a href="{{ route('charge') }}" class="nav-link {{ request()->is('charge*') ? 'active' : '' }}">Charge Membership</a>
+            <a href="{{ route('committee') }}" class="nav-link {{ request()->is('committee*') ? 'active' : '' }}">Committee Management</a>
         </li>
         <li class="nav-item">
             <a href="{{ route('list') }}" class="nav-link {{ request()->is('list*') ? 'active' : '' }}">List Management</a>

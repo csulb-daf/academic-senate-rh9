@@ -1,10 +1,11 @@
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="shortcut icon" href="/images/favicon.ico" type="image/x-icon" />	
 
-<!-- CSRF Token -->
+	<!-- CSRF Token -->
 	<meta name="csrf-token" content="{{ csrf_token() }}">
 	
 	<title>
@@ -42,7 +43,6 @@
 	<link href="{{asset('css/select2.min.css')}}" rel="stylesheet">
 	<link href="{{ asset('css/app.css') }}" rel="stylesheet">
 	<link href="{{ asset('css/styles.css') }}" rel="stylesheet">
-	
 </head>
 
 <body>
