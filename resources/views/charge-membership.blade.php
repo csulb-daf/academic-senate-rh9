@@ -12,6 +12,8 @@
 @section('scripts')
 <script>
 $(document).ready(function() {
+	var url = 	"{{ route('charge.assignments.ajax', ['id'=>':id'], false) }}";
+	url = url.replace(':id', {{ $commID }});
 	var table = $('#chargeMembership').DataTable({
 		responsive: true,
 		autoWidth: false,
@@ -56,7 +58,7 @@ $(document).ready(function() {
 		 				'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
 		 			},
 		 			type: 'post',
-		 			url: '{{ route('charge.assignments.destroy', [], false) }}',
+		 			url: "{{ route('charge.assignments.destroy', [], false) }}",
 		 			data: {
 		 				id: id,
 		 				charge: chargeID,
@@ -74,7 +76,7 @@ $(document).ready(function() {
 			});		//$('button.addButton').click
 		},
     ajax: {
-			url: "/charge/assignments/{{ $commID }}/ajax",
+			url: url,
 			dataSrc: '',
 			error: function (xhr, error, thrown) {
 				table.clear().draw();
@@ -141,6 +143,7 @@ $(document).ready(function() {
 							'charge': chargeID,
 							'assigned_to': '',
 							'chargeName': chargeName,
+							'id': response.id,
 						}).draw().node();
 
 						$(row).addClass('added');

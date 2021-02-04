@@ -83,6 +83,7 @@ class ChargeController extends Controller {
 		$charge->committee = $request->committee;
 		$charge->charge = $request->charge;
 		$charge->save();
+		$request['id'] = $charge->id;
 		return $request;
 	}
 	
