@@ -44,17 +44,18 @@ class MembersController extends Controller {
 	}
 
 	public function getEmployees(Request $request) {
-// 		return $request;
-// 		$community = Community::all('firstname as first_name', 'lastname as last_name', DB::raw('0 as campus_id'));
-		$employees = Employees::where(   DB::raw("CONCAT_WS(' ', first_name, last_name)"), 'like',  DB::raw("REPLACE(REPLACE('%$request->q%', ' ', '%'), ',', '%')" )   )
-		->orWhere(     DB::raw("CONCAT_WS(' ',last_name, first_name)"), 'like',  DB::raw("REPLACE(REPLACE('%$request->q%', ' ', '%'), ',', '%')" )  )
+		$community = Community::where(DB::raw("CONCAT_WS(' ', firstname, lastname)"), 'like',  DB::raw("REPLACE(REPLACE('%$request->q%', ' ', '%'), ',', '%')" ))
+		->orWhere(DB::raw("CONCAT_WS(' ',lastname, firstname)"), 'like',  DB::raw("REPLACE(REPLACE('%$request->q%', ' ', '%'), ',', '%')" ))
+		->select(DB::raw('0 as id'), DB::raw("CONCAT_WS(', ', lastname, firstname) AS text"))
+		->get();
+
+		$employees = Employees::where(DB::raw("CONCAT_WS(' ', first_name, last_name)"), 'like',  DB::raw("REPLACE(REPLACE('%$request->q%', ' ', '%'), ',', '%')" ))
+		->orWhere(DB::raw("CONCAT_WS(' ',last_name, first_name)"), 'like',  DB::raw("REPLACE(REPLACE('%$request->q%', ' ', '%'), ',', '%')" ))
 		->select('campus_id as id', DB::raw("CONCAT_WS(', ', last_name, first_name) AS text"))
 		->get();
-// ->toSql();
-// ->dd();
 
-// 		$users = $employees->mergeRecursive($community)->sortBy('last_name');
-		return $employees;
+		$users = $employees->mergeRecursive($community);
+		return $users;
 	}
 	
 	/**
@@ -74,15 +75,11 @@ class MembersController extends Controller {
 		->get();
 		
 		$ranks = DB::table('rank')->select('id', 'rank')->get();
-// 		$community = Community::all('firstname as first_name', 'lastname as last_name', DB::raw('0 as campus_id'));
-// 		$employees = Employees::all();
-// 		$users = $employees->mergeRecursive($community)->sortBy('last_name');
 
 		$formData = Array(
 				'charges' => $charges,
 				'ranks' => $ranks,
 				'cid' => $cid,
-// 				'users' =>$users,
 				'cname' => $cname,
 				'mid' => $mid,
 		);

@@ -16,6 +16,7 @@ $(document).ready(function() {
 	$('.userSearch').select2({
 		//matcher: matchCustom,
 		minimumInputLength: 3,
+		sorter: data => data.sort((a, b) => a.text.localeCompare(b.text)),
 
 		ajax: {
  			headers: {
@@ -36,7 +37,9 @@ $(document).ready(function() {
 						return {	id: obj.id, text: obj.text};
 					})
 				}
-			}
+			},
+
+			
 		}
 	});
 	
