@@ -12,34 +12,34 @@
 
 <script>
 $(document).ready(function() {
-	$.ajax({
-		url: "{{ route('employees.search', [], false) }}",
-		success:  function(response) {
-// 			$('.userSearch').select2({
-// 				matcher: matchCustom,
-// 				minimumInputLength: 3,
-// 				data: response,
-// 			});
-		}
-	});		//ajax
 
-	
 	$('.userSearch').select2({
 		//matcher: matchCustom,
 		minimumInputLength: 3,
 
 		ajax: {
+ 			headers: {
+ 				'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+ 			},
+ 			type: 'post',
+ 			delay: 250,
 			url: "{{ route('employees.search', [], false) }}",
-			//dataType: 'json'
-			// Additional AJAX parameters go here; see the end of this chapter for the full code of this example
-
-processResults: function (data) {
-      return {
-        results: data
-      }
-    }	,
-	}
-	
+			dataType: 'json',
+      //delay: 250,
+			data: function (params) {
+				return {
+					q: params.term // search term
+				};
+			},
+			processResults: function(data) {
+				return {
+					results: $.map(data, function(obj) {
+						return {	id: obj.id, text: obj.text};
+					})
+				}
+			}
+		}
 	});
+	
 });
 </script>

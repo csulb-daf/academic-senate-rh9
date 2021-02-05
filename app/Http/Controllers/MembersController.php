@@ -43,9 +43,16 @@ class MembersController extends Controller {
 		return $this->getCommitteeMemberships($cid);
 	}
 
-	public function getEmployees() {
+	public function getEmployees(Request $request) {
+// 		return $request;
 // 		$community = Community::all('firstname as first_name', 'lastname as last_name', DB::raw('0 as campus_id'));
-		$employees = Employees::all('campus_id as id', DB::raw("CONCAT_WS(', ', last_name, first_name) AS text"));
+// 		$employees = Employees::all('campus_id as id', DB::raw("CONCAT_WS(', ', last_name, first_name) AS text"));
+		$employees = DB::table('employees')
+			->select('campus_id as id', DB::raw("CONCAT_WS(', ', last_name, first_name) AS text"))
+			->where('last_name', 'like', "$request->q")
+			->orWhere('first_name', 'like', "$request->q")
+			->get();
+// ->toSql();
 // 		$users = $employees->mergeRecursive($community)->sortBy('last_name');
 		return $employees;
 	}
