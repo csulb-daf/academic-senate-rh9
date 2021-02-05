@@ -29,13 +29,7 @@
 $(document).ready(function() {
 	$('div.container').addClass('wide');
 	
-	$('.userSearch').select2({
-		width: '100%',
-		matcher: matchCustom,
-		minimumInputLength: 3,
-	});
-	
-	$('select#userSelect').change(function() {
+	$('select#userSelect').on('change', function() {
 		var firstName = $('select#userSelect option:selected').data('firstname');
 		var lastName = $('select#userSelect option:selected').data('lastname');
 		
@@ -46,15 +40,13 @@ $(document).ready(function() {
 		var url = "{{ route('member.search', [], false) }}?"+ params;
 		table.rowGroup().dataSrc('committeename');
 		table.ajax.url(url).load();
-		$('#commSelect option:eq(0)').prop('selected', true); //set option of index 0 to selected
-		$("#commSelect").select2({minimumInputLength: 3});		//reload select box
+// 		$('#commSelect').val(null).trigger('change');		//reset select box
 	});
 		
 	$('#commSelect').on('change', function() {
 		$('.tableTitle').text('Committee: '+ $(this).find('option:selected').text());	
 		table.ajax.url('comm-search').load();
-		$('#userSelect option:eq(0)').prop('selected', true); //set option of index 0 to selected
-		$("#userSelect").select2({matcher: matchCustom, minimumInputLength: 3});		//reload select box
+// 		$('#userSelect').val(null).trigger('change');		//reset select box
 	});
 
 	var table = $('#commSearch').DataTable({

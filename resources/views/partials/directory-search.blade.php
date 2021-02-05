@@ -1,5 +1,6 @@
 <select class="form-control  userSearch" name="userSelect"  id="userSelect" >
-	<option value="" disabled selected>Select User</option>
+	<option></option>
+<!-- 	<option value="" disabled selected>Select User</option> -->
 	{{-- @foreach($users as $user)
 		<option value="{{ $user->campus_id }}" class="{{ $user->campus_id == 0? 'community':'' }}" 
 			data-name="{{ $user->last_name }}, {{ $user->first_name }}" data-firstname="{{ $user->first_name }}" data-lastname="{{ $user->last_name }}"
@@ -15,7 +16,9 @@ $(document).ready(function() {
 
 	$('.userSearch').select2({
 		//matcher: matchCustom,
+		width: '100%',
 		minimumInputLength: 3,
+		placeholder: 'Select User',
 		sorter: data => data.sort((a, b) => a.text.localeCompare(b.text)),
 
 		ajax: {
