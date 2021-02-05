@@ -1,20 +1,45 @@
 <select class="form-control  userSearch" name="userSelect"  id="userSelect" >
 	<option value="" disabled selected>Select User</option>
-	@foreach($users as $user)
+	{{-- @foreach($users as $user)
 		<option value="{{ $user->campus_id }}" class="{{ $user->campus_id == 0? 'community':'' }}" 
 			data-name="{{ $user->last_name }}, {{ $user->first_name }}" data-firstname="{{ $user->first_name }}" data-lastname="{{ $user->last_name }}"
 			data-department="{{ $user->department }}" data-college_department="{{ $user->college_department }}"  data-extension="{{ $user->extension }}"
 			data-email="{{ $user->email }}">
 			{{ $user->last_name }}, {{ $user->first_name }} {{ $user->campus_id == 0? '(CM)':'' }}
 		</option>
-	@endforeach
+	@endforeach --}}
 </select>
 
 <script>
 $(document).ready(function() {
+	$.ajax({
+		url: "{{ route('employees.search', [], false) }}",
+		success:  function(response) {
+// 			$('.userSearch').select2({
+// 				matcher: matchCustom,
+// 				minimumInputLength: 3,
+// 				data: response,
+// 			});
+		}
+	});		//ajax
+
+	
 	$('.userSearch').select2({
-		matcher: matchCustom,
+		//matcher: matchCustom,
 		minimumInputLength: 3,
+
+		ajax: {
+			url: "{{ route('employees.search', [], false) }}",
+			//dataType: 'json'
+			// Additional AJAX parameters go here; see the end of this chapter for the full code of this example
+
+processResults: function (data) {
+      return {
+        results: data
+      }
+    }	,
+	}
+	
 	});
 });
 </script>

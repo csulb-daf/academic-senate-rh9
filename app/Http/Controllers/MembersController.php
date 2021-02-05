@@ -42,6 +42,13 @@ class MembersController extends Controller {
 	public function getMemberships($cid) {
 		return $this->getCommitteeMemberships($cid);
 	}
+
+	public function getEmployees() {
+// 		$community = Community::all('firstname as first_name', 'lastname as last_name', DB::raw('0 as campus_id'));
+		$employees = Employees::all('campus_id as id', DB::raw("CONCAT_WS(', ', last_name, first_name) AS text"));
+// 		$users = $employees->mergeRecursive($community)->sortBy('last_name');
+		return $employees;
+	}
 	
 	/**
 	 * Show the form for creating a new resource.
@@ -60,15 +67,15 @@ class MembersController extends Controller {
 		->get();
 		
 		$ranks = DB::table('rank')->select('id', 'rank')->get();
-		$community = Community::all('firstname as first_name', 'lastname as last_name', DB::raw('0 as campus_id'));
-		$employees = Employees::all();
-		$users = $employees->mergeRecursive($community)->sortBy('last_name');
+// 		$community = Community::all('firstname as first_name', 'lastname as last_name', DB::raw('0 as campus_id'));
+// 		$employees = Employees::all();
+// 		$users = $employees->mergeRecursive($community)->sortBy('last_name');
 
 		$formData = Array(
 				'charges' => $charges,
 				'ranks' => $ranks,
 				'cid' => $cid,
-				'users' =>$users,
+// 				'users' =>$users,
 				'cname' => $cname,
 				'mid' => $mid,
 		);

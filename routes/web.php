@@ -39,6 +39,8 @@ Route::get('/committee/members/{cid}/edit/{mid}', 'MembersController@create')->n
 Route::post('/committee/members/update/{mid}', 'MembersController@update')->name('members.update');
 Route::post('/committee/members/destroy/{mid}', 'MembersController@destroy')->name('members.destroy');
 
+Route::get('/employees/search', 'MembersController@getEmployees')->name('employees.search');
+
 /*** Charge Membership Pages ***/
 Route::get('/charge', 'ChargeController@index')->name('charge');
 Route::get('/charge/admin', 'ChargeController@getCommitteeChargeCount')->name('charge.admin');
