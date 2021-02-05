@@ -22,10 +22,9 @@ $(document).ready(function() {
  				'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
  			},
  			type: 'post',
- 			delay: 250,
 			url: "{{ route('employees.search', [], false) }}",
 			dataType: 'json',
-      //delay: 250,
+      delay: 450,		//wait 450 milliseconds before triggering the request
 			data: function (params) {
 				return {
 					q: params.term // search term

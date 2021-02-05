@@ -46,13 +46,13 @@ class MembersController extends Controller {
 	public function getEmployees(Request $request) {
 // 		return $request;
 // 		$community = Community::all('firstname as first_name', 'lastname as last_name', DB::raw('0 as campus_id'));
-// 		$employees = Employees::all('campus_id as id', DB::raw("CONCAT_WS(', ', last_name, first_name) AS text"));
-		$employees = DB::table('employees')
-			->select('campus_id as id', DB::raw("CONCAT_WS(', ', last_name, first_name) AS text"))
-			->where('last_name', 'like', "$request->q")
-			->orWhere('first_name', 'like', "$request->q")
-			->get();
+		$employees = Employees::where(   DB::raw("CONCAT_WS(' ', first_name, last_name)"), 'like',  DB::raw("REPLACE(REPLACE('%$request->q%', ' ', '%'), ',', '%')" )   )
+		->orWhere(     DB::raw("CONCAT_WS(' ',last_name, first_name)"), 'like',  DB::raw("REPLACE(REPLACE('%$request->q%', ' ', '%'), ',', '%')" )  )
+		->select('campus_id as id', DB::raw("CONCAT_WS(', ', last_name, first_name) AS text"))
+		->get();
 // ->toSql();
+// ->dd();
+
 // 		$users = $employees->mergeRecursive($community)->sortBy('last_name');
 		return $employees;
 	}
