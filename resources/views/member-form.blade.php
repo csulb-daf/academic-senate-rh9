@@ -151,22 +151,25 @@
 @section('scripts')
 <script>
 $(document).ready(function() {
-	$('select#userSelect').change(function() {
-		var 
-			select = $('select#userSelect option:selected'),
-			nameArr = select.data('name').split(','),
-			campusID = select.val(),
-			lastName = nameArr[0].trim(),
-			firstName = nameArr[1].trim(),
-			form = $('#memberForm');
+	$('select#userSelect').on('select2:select', function(e) {
+		//console.log(e.params.data);
+		var nameArr = e.params.data.text.split(','),
+		lastName = nameArr[0].trim(),
+		firstName = nameArr[1].trim(),
+		campusID = e.params.data.id,
+		department = e.params.data.department,
+		college_department = e.params.data.college_department,
+		extension = e.params.data.extension,
+		email = e.params.data.email,
+		form = $('#memberForm');
 		
 		form.find('#fName').val(firstName);
 		form.find('#lName').val(lastName);
 		form.find('#campusID').val(campusID);
-		form.find('#department').val(select.data('department'));
-		form.find('#collegeDepartment').val(select.data('college_department'));
-		form.find('#extension').val(select.data('extension'));
-		form.find('#email').val(select.data('email'));
+		form.find('#department').val(department);
+		form.find('#collegeDepartment').val(college_department);
+		form.find('#extension').val(extension);
+		form.find('#email').val(email);
 
 		$('button#submitButton').prop('disabled', false);
 	});

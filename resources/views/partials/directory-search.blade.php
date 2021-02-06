@@ -37,7 +37,14 @@ $(document).ready(function() {
 			processResults: function(data) {
 				return {
 					results: $.map(data, function(obj) {
-						return {id: obj.campus_id, text: obj.name};
+						return {
+							id: obj.campus_id,
+							text: obj.name,
+							department: obj.department,
+							college_department: obj.college_department,
+							extension: obj.extension,
+							email: obj.email,
+						}
 					})
 				}
 			},

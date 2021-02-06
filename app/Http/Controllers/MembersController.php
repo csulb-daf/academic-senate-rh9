@@ -51,9 +51,9 @@ class MembersController extends Controller {
 
 		$employees = Employees::where(DB::raw("CONCAT_WS(' ', first_name, last_name)"), 'like',  DB::raw("REPLACE(REPLACE('%$request->q%', ' ', '%'), ',', '%')" ))
 		->orWhere(DB::raw("CONCAT_WS(' ',last_name, first_name)"), 'like',  DB::raw("REPLACE(REPLACE('%$request->q%', ' ', '%'), ',', '%')" ))
-		->select('campus_id', DB::raw("CONCAT_WS(', ', last_name, first_name) AS name"))
+		->select('campus_id', DB::raw("CONCAT_WS(', ', last_name, first_name) AS name"), 'department', 'college_department', 'extension', 'email')
 		->get();
-
+		
 		$users = $employees->mergeRecursive($community);
 		return $users;
 	}
