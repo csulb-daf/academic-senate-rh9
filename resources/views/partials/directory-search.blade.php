@@ -37,6 +37,7 @@ $(document).ready(function() {
 			processResults: function(data) {
 				return {
 					results: $.map(data, function(obj) {
+						obj.name = (obj.campus_id == 0)? obj.name +' (CM)' : obj.name;
 						return {
 							id: obj.campus_id,
 							text: obj.name,

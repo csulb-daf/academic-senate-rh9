@@ -155,7 +155,7 @@ $(document).ready(function() {
 		//console.log(e.params.data);
 		var nameArr = e.params.data.text.split(','),
 		lastName = nameArr[0].trim(),
-		firstName = nameArr[1].trim(),
+		firstName = nameArr[1].replace('(CM)', '').trim(),
 		campusID = e.params.data.id,
 		department = e.params.data.department,
 		college_department = e.params.data.college_department,
