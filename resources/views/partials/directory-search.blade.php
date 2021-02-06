@@ -37,7 +37,7 @@ $(document).ready(function() {
 			processResults: function(data) {
 				return {
 					results: $.map(data, function(obj) {
-						return {	id: obj.id, text: obj.text};
+						return {id: obj.campus_id, text: obj.name};
 					})
 				}
 			},

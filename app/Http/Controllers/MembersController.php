@@ -46,12 +46,12 @@ class MembersController extends Controller {
 	public function getEmployees(Request $request) {
 		$community = Community::where(DB::raw("CONCAT_WS(' ', firstname, lastname)"), 'like',  DB::raw("REPLACE(REPLACE('%$request->q%', ' ', '%'), ',', '%')" ))
 		->orWhere(DB::raw("CONCAT_WS(' ',lastname, firstname)"), 'like',  DB::raw("REPLACE(REPLACE('%$request->q%', ' ', '%'), ',', '%')" ))
-		->select(DB::raw('0 as id'), DB::raw("CONCAT_WS(', ', lastname, firstname) AS text"))
+		->select(DB::raw('0 as campus_id'), DB::raw("CONCAT_WS(', ', lastname, firstname) AS name"))
 		->get();
 
 		$employees = Employees::where(DB::raw("CONCAT_WS(' ', first_name, last_name)"), 'like',  DB::raw("REPLACE(REPLACE('%$request->q%', ' ', '%'), ',', '%')" ))
 		->orWhere(DB::raw("CONCAT_WS(' ',last_name, first_name)"), 'like',  DB::raw("REPLACE(REPLACE('%$request->q%', ' ', '%'), ',', '%')" ))
-		->select('campus_id as id', DB::raw("CONCAT_WS(', ', last_name, first_name) AS text"))
+		->select('campus_id', DB::raw("CONCAT_WS(', ', last_name, first_name) AS name"))
 		->get();
 
 		$users = $employees->mergeRecursive($community);

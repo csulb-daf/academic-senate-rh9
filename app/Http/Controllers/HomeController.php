@@ -56,15 +56,14 @@ class HomeController extends Controller {
 		->whereNull('cm.deleted_at');
 		
 		if($request->campus_id === 0) {
-			$sql->where('firstname', "$request->first_name");
-			$sql->where('lastname', "$request->last_name");
+			$sql->where('firstname', "$request->firstname");
+			$sql->where('lastname', "$request->lastname");
 		}
 		else {
 			$sql->where('campus_id', "$request->userSelect");
 		}
 		
 		return $sql->get();
-// 		return $sql->toSql();
 	}
 	
 }
