@@ -28,14 +28,19 @@ class HomeController extends Controller {
 		->orderBy('c.committeename', 'asc')
 		->groupBy('chm.committee')
 		->get();
-		
+
 		$users = Members::distinct()
 		->select('firstname as first_name', 'lastname as last_name', 'campus_id')
 		->orderBy('last_name')
 		->get();
 // 		return $users;
-		
-		return view ( 'home', [ 
+		if (!$comms){
+		    $comms = [];
+        }
+        if (!$users){
+            $users = [];
+        }
+		return view ( 'home', [
 				'comms' => $comms,
 				'users' => $users,
 		] );
@@ -45,7 +50,7 @@ class HomeController extends Controller {
 		$cid = $request->cid;
 		return $this->getCommitteeMemberships($cid);
 	}
-	
+
 	public function memberSearch(Request $request) {
 // 		return $request;
 		$sql =  DB::Table('committee_membership as cm')
@@ -54,7 +59,7 @@ class HomeController extends Controller {
 		->join('rank as r', 'cm.rank', '=', 'r.id')
 		->select('cm.*', 'c.id as committee', 'c.committeename',  'r.rank', 'ch.charge')
 		->whereNull('cm.deleted_at');
-		
+
 		if($request->campus_id === 0) {
 			$sql->where('firstname', "$request->firstname");
 			$sql->where('lastname', "$request->lastname");
@@ -62,8 +67,8 @@ class HomeController extends Controller {
 		else {
 			$sql->where('campus_id', "$request->userSelect");
 		}
-		
+
 		return $sql->get();
 	}
-	
+
 }
