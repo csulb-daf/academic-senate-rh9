@@ -22,19 +22,19 @@ class HomeController extends Controller {
 	 * @return \Illuminate\Contracts\Support\Renderable
 	 */
 	public function index() {
-		$comms = DB::table('charge_membership as chm')
+		return view('home');
+	}
+
+	public function getCommittees() {
+		return DB::table('charge_membership as chm')
 		->join('committees as c', 'chm.committee', '=', 'c.id')
-		->select('chm.committee as id', 'c.committeename', 'c.meetingtimes_locations', 'c.notes')
+		->select('chm.committee', 'c.committeename')
 		->orderBy('c.committeename', 'asc')
 		->groupBy('chm.committee')
 		->get();
-
-		return view ( 'home', [
-				'comms' => $comms,
-		] );
 	}
-
-	public function getCommittees(Request $request) {
+	
+	public function committeeSearch(Request $request) {
 		$cid = $request->cid;
 		return $this->getCommitteeMemberships($cid);
 	}

@@ -44,8 +44,8 @@ $(document).ready(function() {
 		$('#commSelect').val(null).trigger('change');		//reset select box
 	});
 		
-	$('select#commSelect').on('select2:select', function() {
-		$('.tableTitle').text('Committee: '+ $(this).find('option:selected').text());	
+	$('select#commSelect').on('select2:select', function(e) {
+		$('.tableTitle').text('Committee: '+ e.params.data.text);	
 		table.ajax.url("{{ route('committee.search') }}").load();
 		$('#memberSelect').val(null).trigger('change');		//reset select box
 	});

@@ -20,7 +20,8 @@ Auth::routes([
 /*** Home Page ***/
 Route::redirect('home', '/');
 Route::get('/', 'HomeController@index')->name('home');
-Route::post('/committee/search', 'HomeController@getCommittees')->name('committee.search');
+Route::post('/committee/list', 'HomeController@getCommittees')->name('committee.list');
+Route::post('/committee/search', 'HomeController@committeeSearch')->name('committee.search');
 
 /*** Committee Member Name Search ***/
 Route::post('/member/list', 'HomeController@getMembers')->name('member.list');
