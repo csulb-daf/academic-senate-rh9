@@ -16,9 +16,9 @@
 	<input type="hidden" name="lastname" value="">
 	
 	<div class="form-group row">
-		<label for="userSelect" class="col-form-label">Name Search</label>
+		<label for="memberSelect" class="col-form-label">Name Search</label>
 		<div class="col">
-			@include('partials.directory-search')
+			@include('partials.member-search')
 		</div>
 	</div>
 </form>
@@ -29,8 +29,8 @@
 $(document).ready(function() {
 	$('div.container').addClass('wide');
 	
-	$('select#userSelect').on('select2:select', function(e) {
-		var nameArr = e.params.data.text.split(','),
+	$('select#memberSelect').on('select2:select', function(e) {
+		var nameArr = e.params.data.text.replace('(CM)', '').split(','),
 			lastName = nameArr[0].trim(),
 			firstName = nameArr[1].trim();
 		
@@ -47,7 +47,7 @@ $(document).ready(function() {
 	$('select#commSelect').on('select2:select', function() {
 		$('.tableTitle').text('Committee: '+ $(this).find('option:selected').text());	
 		table.ajax.url('comm-search').load();
-		$('#userSelect').val(null).trigger('change');		//reset select box
+		$('#memberSelect').val(null).trigger('change');		//reset select box
 	});
 
 	var table = $('#commSearch').DataTable({

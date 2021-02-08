@@ -131,7 +131,7 @@ function destroy(id, row, delURL) {
 			id: id,
 		},
 		success: function() {
-			$(row).remove().draw();
+			$(row).remove();
 		}
 	});
 }

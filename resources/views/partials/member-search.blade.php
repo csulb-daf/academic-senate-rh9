@@ -1,13 +1,13 @@
-<select class="form-control  userSelect" name="userSelect"  id="userSelect" >
+<select class="memberSelect form-control" name="memberSelect" id="memberSelect" aria-label="Select Member">
 	<option></option>
 </select>
 
 <script>
 $(document).ready(function() {
-	$('.userSelect').select2({
+	$('.memberSelect').select2({
 		width: '100%',
 		minimumInputLength: 3,
-		placeholder: 'Select User',
+		placeholder: 'Select Member',
 		sorter: data => data.sort((a, b) => a.text.localeCompare(b.text)),
 
 		ajax: {
@@ -15,7 +15,7 @@ $(document).ready(function() {
  				'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
  			},
  			type: 'post',
-			url: "{{ route('employees.search') }}",
+			url: "{{ route('member.list') }}",
 			dataType: 'json',
       delay: 450,		//wait 450 milliseconds before triggering the request
 			data: function (params) {
@@ -30,10 +30,6 @@ $(document).ready(function() {
 						return {
 							id: obj.campus_id,
 							text: obj.name,
-							department: obj.department,
-							college_department: obj.college_department,
-							extension: obj.extension,
-							email: obj.email,
 						}
 					})
 				}

@@ -23,6 +23,8 @@ Route::get('/', 'HomeController@index')->name('home');
 Route::get('/comm-search', 'HomeController@ajax');
 
 /*** Committee Member Name Search ***/
+Route::post('/member/list', 'HomeController@getMembers')->name('member.list');
+Route::get('/member/list', 'HomeController@getMembers')->name('member.list');
 Route::get('/member/search', 'HomeController@memberSearch')->name('member.search');
 
 /*** Committee Pages ***/

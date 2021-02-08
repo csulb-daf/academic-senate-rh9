@@ -29,20 +29,8 @@ class HomeController extends Controller {
 		->groupBy('chm.committee')
 		->get();
 
-		$users = Members::distinct()
-		->select('firstname as first_name', 'lastname as last_name', 'campus_id')
-		->orderBy('last_name')
-		->get();
-// 		return $users;
-		if (!$comms){
-		    $comms = [];
-        }
-        if (!$users){
-            $users = [];
-        }
 		return view ( 'home', [
 				'comms' => $comms,
-				'users' => $users,
 		] );
 	}
 
@@ -51,8 +39,16 @@ class HomeController extends Controller {
 		return $this->getCommitteeMemberships($cid);
 	}
 
+	public function getMembers(Request $request) {
+		$members = Members::distinct()
+		->where(DB::raw("CONCAT_WS(' ', firstname, lastname)"), 'like',  DB::raw("REPLACE(REPLACE('%$request->q%', ' ', '%'), ',', '%')" ))
+		->orWhere(DB::raw("CONCAT_WS(' ',lastname, firstname)"), 'like',  DB::raw("REPLACE(REPLACE('%$request->q%', ' ', '%'), ',', '%')" ))
+		->select('campus_id', DB::raw("CONCAT_WS(', ', lastname, firstname) AS name"))
+		->get();
+		return $members;
+	}
+	
 	public function memberSearch(Request $request) {
-// 		return $request;
 		$sql =  DB::Table('committee_membership as cm')
 		->join('committees as c', 'cm.committee', '=', 'c.id')
 		->join('charges as ch', 'cm.charge', '=', 'ch.id')
@@ -65,7 +61,7 @@ class HomeController extends Controller {
 			$sql->where('lastname', "$request->lastname");
 		}
 		else {
-			$sql->where('campus_id', "$request->userSelect");
+			$sql->where('campus_id', "$request->memberSelect");
 		}
 
 		return $sql->get();
