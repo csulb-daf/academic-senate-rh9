@@ -26,7 +26,7 @@ $(document).ready(function() {
  				'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
  			},
  			type: 'post',
-			url: "{{ route('employees.search', [], false) }}",
+			url: "{{ route('employees.search') }}",
 			dataType: 'json',
       delay: 450,		//wait 450 milliseconds before triggering the request
 			data: function (params) {

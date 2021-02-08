@@ -38,7 +38,7 @@ $(document).ready(function() {
 		$('form#memberSearch input[name=firstname]').val(firstName);
 		$('form#memberSearch input[name=lastname]').val(lastName);
 		params = $('form#memberSearch').serialize();
-		var url = "{{ route('member.search', [], false) }}?"+ params;
+		var url = "{{ route('member.search') }}?"+ params;
 		table.rowGroup().dataSrc('committeename');
 		table.ajax.url(url).load();
 		$('#commSelect').val(null).trigger('change');		//reset select box

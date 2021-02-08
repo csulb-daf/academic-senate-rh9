@@ -32,7 +32,7 @@ $(document).ready(function() {
 				cancelEdit(row);
 			});
 			$('button.submit', row).click(function() {
-				submit(data.id, row, "{{ route('committee.update', [], false) }}");
+				submit(data.id, row, "{{ route('committee.update') }}");
 			});
 			$('button.deleteButton', row).click(function() {
 				$(this).closest('div.editButtons').hide();
@@ -43,11 +43,11 @@ $(document).ready(function() {
 				$(this).closest('div.deleteButtons').siblings('div.editButtons').show();
 			});
 			$('button.confirmDelete', row).click(function() {
-				destroy(data.id, row, "{{ route('committee.destroy', [], false) }}");
+				destroy(data.id, row, "{{ route('committee.destroy') }}");
 			});
 		},
     ajax: {
-			url: "{{ route('committee.admin', [], false) }}",
+			url: "{{ route('committee.admin') }}",
 			dataSrc: '',
 			error: function (xhr, error, thrown) {
 				table.clear().draw();
@@ -102,7 +102,7 @@ $(document).ready(function() {
 });
 
 function addComm() {
-	window.location = "{{ route('committee.add', [], false) }}";
+	window.location = "{{ route('committee.add') }}";
 }
 function assignComm(id) {
 	var url = 	"{{ route('comm.assign', ['id'=>':id']) }}";

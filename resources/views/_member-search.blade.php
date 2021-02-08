@@ -22,7 +22,7 @@ $(document).ready(function() {
 		searching: false,
 		paging: false,		
 		ajax: {
-			url: "{{ route('member.search.result', [], false) }}",
+			url: "{{ route('member.search.result') }}",
 			data: function(d) {
 				d.campus_id = '{{ $campusID }}';
 				d.first_name = '{{ $firstName }}';

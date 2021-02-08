@@ -58,7 +58,7 @@ $(document).ready(function() {
 		 				'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
 		 			},
 		 			type: 'post',
-		 			url: "{{ route('charge.assignments.destroy', [], false) }}",
+		 			url: "{{ route('charge.assignments.destroy') }}",
 		 			data: {
 		 				id: id,
 		 				charge: chargeID,
@@ -133,7 +133,7 @@ $(document).ready(function() {
 		 				'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
 		 			},
 		 			type: 'post',
-		 			url: '{{ route('charge.assignments.add', [], false) }}',
+		 			url: '{{ route('charge.assignments.add') }}',
 		 			data: {
 		 				charge: chargeID,
 		 				committee: {{ $commID }}

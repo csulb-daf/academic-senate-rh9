@@ -49,7 +49,7 @@
 		
 		<h2 class="tableTitle">List Management : Charge Membership</h2>
 		<table id="chargeTable" class="display" style="width: 100%"></table>
-		<form method="POST" id="chargeForm" action="{{ route('list.charge.add', [], false) }}">
+		<form method="POST" id="chargeForm" action="{{ route('list.charge.add') }}">
 			@csrf
 			<input type="hidden" name="tabName" value="charge">	
 		
@@ -103,10 +103,10 @@ $(document).ready(function() {
 		responsive: true,
 		autoWidth: false,
 		createdRow: function(row, data, dataIndex) {
-			setButtonActions(row, "{{ route('community.update', [], false) }}", "{{ route('community.destroy', [], false) }}");
+			setButtonActions(row, "{{ route('community.update') }}", "{{ route('community.destroy') }}");
 		},
     ajax: {
-    	url: "{{ route('list.community.admin', [], false) }}",
+    	url: "{{ route('list.community.admin') }}",
 			dataSrc: '',
 			error: function (xhr, error, thrown) {
 				communityTable.clear().draw();
@@ -153,10 +153,10 @@ $(document).ready(function() {
 		responsive: true,
 		autoWidth: false,
 		createdRow: function(row, data, dataIndex) {
-			setButtonActions(row, "{{ route('charge.update', [], false) }}", "{{ route('charge.destroy', [], false) }}");
+			setButtonActions(row, "{{ route('charge.update') }}", "{{ route('charge.destroy') }}");
 		},
     ajax: {
-			url: "{{ route('list.charge.admin', [], false) }}",
+			url: "{{ route('list.charge.admin') }}",
 			dataSrc: '',
 			error: function (xhr, error, thrown) {
 				chargeTable.clear().draw();
@@ -189,10 +189,10 @@ $(document).ready(function() {
 		responsive: true,
 		autoWidth: false,
 		createdRow: function(row, data, dataIndex) {
-			setButtonActions(row, "{{ route('rank.update', [], false) }}", "{{ route('rank.destroy', [], false) }}");
+			setButtonActions(row, "{{ route('rank.update') }}", "{{ route('rank.destroy') }}");
 		},
     ajax: {
-    	url: "{{ route('list.rank.admin', [], false) }}",
+    	url: "{{ route('list.rank.admin') }}",
 			dataSrc: '',
 			error: function (xhr, error, thrown) {
 				rankTable.clear().draw();
@@ -231,7 +231,7 @@ function createIndexColumn(table) {
 }
 
 function addCommunity() {
-	window.location = "{{ route('community.add', [], false) }}";
+	window.location = "{{ route('community.add') }}";
 }
 function getEditButtons(id) {
 	var html='\

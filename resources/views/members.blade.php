@@ -24,7 +24,7 @@ $(document).ready(function() {
 		responsive: true,
 		autoWidth: false,
 		createdRow: function(row, data, dataIndex) {
-			//setEdit(row, communityTable, "{{ route('community.update', [], false) }}", "{{ route('community.destroy', [], false) }}");
+			//setEdit(row, communityTable, "{{ route('community.update') }}", "{{ route('community.destroy') }}");
 			$('button.deleteButton', row).click(function() {
 				$(this).closest('div.editButtons').hide();
 				$(this).closest('div.editButtons').siblings('div.delButtons').show();
