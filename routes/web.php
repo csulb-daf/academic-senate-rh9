@@ -20,12 +20,11 @@ Auth::routes([
 /*** Home Page ***/
 Route::redirect('home', '/');
 Route::get('/', 'HomeController@index')->name('home');
-Route::get('/comm-search', 'HomeController@ajax');
+Route::post('/committee/search', 'HomeController@getCommittees')->name('committee.search');
 
 /*** Committee Member Name Search ***/
 Route::post('/member/list', 'HomeController@getMembers')->name('member.list');
-Route::get('/member/list', 'HomeController@getMembers')->name('member.list');
-Route::get('/member/search', 'HomeController@memberSearch')->name('member.search');
+Route::post('/member/search', 'HomeController@memberSearch')->name('member.search');
 
 /*** Committee Pages ***/
 Route::get('/committee', 'CommitteeController@index')->name('committee');

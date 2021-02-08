@@ -5,7 +5,7 @@
 @section('content')
 
 <div id="selectContainer">
-	@include('partials.committee-select')
+	@include('partials.committee-search')
 </div>
 
 <h2 class="tableTitle">Please select a committee from the 'select committee' drop down or a name from the name search.</h2>
@@ -46,7 +46,7 @@ $(document).ready(function() {
 		
 	$('select#commSelect').on('select2:select', function() {
 		$('.tableTitle').text('Committee: '+ $(this).find('option:selected').text());	
-		table.ajax.url('comm-search').load();
+		table.ajax.url("{{ route('committee.search') }}").load();
 		$('#memberSelect').val(null).trigger('change');		//reset select box
 	});
 
@@ -77,7 +77,11 @@ $(document).ready(function() {
 			}
 		},
 		ajax: {
-			url: 'comm-search',
+ 			headers: {
+ 				'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+ 			},
+			type: 'post',
+			url: "{{ route('committee.search') }}",
 			data: function(d) {
 				d.cid = $('#commSelect').val();
 			},

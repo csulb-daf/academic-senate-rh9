@@ -34,7 +34,7 @@ class HomeController extends Controller {
 		] );
 	}
 
-	public function ajax(Request $request) {
+	public function getCommittees(Request $request) {
 		$cid = $request->cid;
 		return $this->getCommitteeMemberships($cid);
 	}
