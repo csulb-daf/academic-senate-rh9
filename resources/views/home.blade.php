@@ -138,11 +138,11 @@ $(document).ready(function() {
 				render: function(data, type, row) {
 					if(row.id == null) {
 						var cid = $('#commSelect').val();
-						var url = 	"{{ route('members.add', ['id'=>':id'], false) }}";
+						var url = 	"{{ route('members.add', ['id'=>':id']) }}";
 						url = url.replace(':id', cid);
 						return '<a href="'+ url +'" class="btn btn-light btn-sm border">Assign</button>';
 					}
-					var url = 	"{{ route('comm.assign', ['id'=>':id'], false) }}";
+					var url = 	"{{ route('comm.assign', ['id'=>':id']) }}";
 					url = url.replace(':id', data.committee);
 					return '<a href="'+ url +'" data-id="" class="btn btn-light btn-sm border">Change</a>';
 				}			

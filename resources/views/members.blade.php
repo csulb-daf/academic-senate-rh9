@@ -17,7 +17,7 @@
 <script>
 $(document).ready(function() {
 	$('div.container').addClass('wide');
-	var url = 	"{{ route('members.table', ['id'=>':id'], false) }}";
+	var url = 	"{{ route('members.table', ['id'=>':id']) }}";
 	url = url.replace(':id', {{ $cid }});
 	
 	var table = $('#memberAdmin').DataTable({
@@ -73,7 +73,7 @@ $(document).ready(function() {
 				render: function(data, type, row, meta) {
 					if(data.id == null) {
 						var cid = {{ $cid }};
-						var url = 	"{{ route('members.add', ['id'=>':id'], false) }}";
+						var url = 	"{{ route('members.add', ['id'=>':id']) }}";
 						url = url.replace(':id', cid);
 						return '<a href="'+ url +'" class="btn btn-light btn-sm border assignLink">Assign</button>';
 					}

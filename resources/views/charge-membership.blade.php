@@ -12,7 +12,7 @@
 @section('scripts')
 <script>
 $(document).ready(function() {
-	var url = 	"{{ route('charge.assignments.ajax', ['id'=>':id'], false) }}";
+	var url = 	"{{ route('charge.assignments.ajax', ['id'=>':id']) }}";
 	url = url.replace(':id', {{ $commID }});
 	var table = $('#chargeMembership').DataTable({
 		responsive: true,
@@ -110,7 +110,7 @@ $(document).ready(function() {
 		}],
 	});	
 
-	var url = 	"{{ route('charges.list.ajax', ['id'=>':id'], false) }}";
+	var url = 	"{{ route('charges.list.ajax', ['id'=>':id']) }}";
 	url = url.replace(':id', {{ $commID }});
 	var chargesTable = $('#charges').DataTable({
 		autoWidth: false,
