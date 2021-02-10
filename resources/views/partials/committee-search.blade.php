@@ -4,9 +4,11 @@
 
 <script>
 $(document).ready(function() {
+	var min = 3;
+	
 	$('.commSelect').select2({
 		width: '100%',
-		minimumInputLength: 3,
+		minimumInputLength: min,
 		placeholder: 'Select Committee',
 
 		ajax: {
@@ -19,7 +21,8 @@ $(document).ready(function() {
       delay: 450,		//wait 450 milliseconds before triggering the request
 			data: function (params) {
 				return {
-					q: params.term // search term
+					q: params.term.replace(/[\W_]+/g, ' '), // search term(ignore non-alpha-numeric)
+					min: min,
 				};
 			},
 			processResults: function(data) {

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Members;
+use App\Committees;
 
 class HomeController extends Controller {
 	/**
@@ -25,10 +26,16 @@ class HomeController extends Controller {
 		return view('home');
 	}
 
-	public function getCommittees() {
+	public function getCommittees(Request $request) {
+		/* Ignore whitespaces */
+		if(empty($request->q) || (strlen($request->q) < $request->min)) {
+			return null;	
+		}
+		
 		return DB::table('charge_membership as chm')
 		->join('committees as c', 'chm.committee', '=', 'c.id')
 		->select('chm.committee', 'c.committeename')
+		->where('c.committeename', 'like', "%$request->q%")
 		->orderBy('c.committeename', 'asc')
 		->groupBy('chm.committee')
 		->get();
@@ -40,12 +47,16 @@ class HomeController extends Controller {
 	}
 
 	public function getMembers(Request $request) {
-		$members = Members::distinct()
-		->where(DB::raw("CONCAT_WS(' ', firstname, lastname)"), 'like',  DB::raw("REPLACE(REPLACE('%$request->q%', ' ', '%'), ',', '%')" ))
-		->orWhere(DB::raw("CONCAT_WS(' ',lastname, firstname)"), 'like',  DB::raw("REPLACE(REPLACE('%$request->q%', ' ', '%'), ',', '%')" ))
+		/* Ignore whitespaces */
+		if(empty($request->q) || (strlen($request->q) < $request->min)) {
+			return null;
+		}
+		
+		return Members::distinct()
+			->where(DB::raw("CONCAT_WS(' ', firstname, lastname)"), 'like',  DB::raw("REPLACE('%$request->q%', ' ', '%')" ))
+			->orWhere(DB::raw("CONCAT_WS(' ',lastname, firstname)"), 'like',  DB::raw("REPLACE('%$request->q%', ' ', '%')" ))
 		->select('campus_id', DB::raw("CONCAT_WS(', ', lastname, firstname) AS name"))
 		->get();
-		return $members;
 	}
 	
 	public function memberSearch(Request $request) {
