@@ -46,6 +46,7 @@ Route::post('/committee/members/destroy/{mid}', 'MembersController@destroy')->na
 
 /*** Employee Name Search ***/
 Route::post('/employees/search', 'MembersController@getEmployees')->name('employees.search');
+// Route::post('/employees/search', 'Controller@getEmployees')->name('employees.search');
 
 /*** Charge Membership Pages ***/
 Route::get('/charge', 'ChargeController@index')->name('charge');

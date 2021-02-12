@@ -27,6 +27,8 @@ $(document).ready(function() {
 				};
 			},
 			processResults: function(data) {
+				console.log('data', data);
+				
 				return {
 					results: $.map(data, function(obj) {
 						obj.name = (obj.campus_id == 0)? obj.name +' (CM)' : obj.name;
