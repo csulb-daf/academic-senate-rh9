@@ -31,14 +31,18 @@ $(document).ready(function() {
 				
 				return {
 					results: $.map(data, function(obj) {
-						obj.name = (obj.campus_id == 0)? obj.name +' (CM)' : obj.name;
+						//obj.name = (obj.campus_id == 0)? obj.name +' (CM)' : obj.name;
 						return {
 							id: obj.campus_id,
+// 							id: obj.employeeid[0],
 							text: obj.name,
-							department: obj.department,
-							college_department: obj.college_department,
-							extension: obj.extension,
-							email: obj.email,
+// 							department: obj.department[0],
+							//college_department: obj.college_department,
+// 							college_department: obj.division[0],
+							//extension: obj.extension,
+// 							extension: obj.telephonenumber[0],
+							//email: obj.email,
+// 							email: obj.mail[0],
 						}
 					})
 				}

@@ -152,7 +152,7 @@
 <script>
 $(document).ready(function() {
 	$('select#userSelect').on('select2:select', function(e) {
-		//console.log(e.params.data);
+// 		console.log(e.params.data);
 		var nameArr = e.params.data.text.split(','),
 		lastName = nameArr[0].trim(),
 		firstName = nameArr[1].replace('(CM)', '').trim(),
