@@ -39,20 +39,16 @@ class Controller extends BaseController {
 		->get ();
 	}
 	
-	public function getEmployees(Request $request) {
+	public function directorySearch(Request $request) {
 // 		return $request;
-		/* Ignore whitespaces */
-		if(empty($request->q) || (strlen($request->q) < $request->min)) {
-			return null;
-		}
-		
 		$host = env('ADLDS_HOST');
 		$ldapport = env('ADLDS_PORT');
 		$connection = ldap_connect($host, $ldapport);
 		$usrbind = 'CN=ITS WDC Service Account,OU=ITS,OU=Service,OU=Users,OU=DAF,OU=Delegated-OUs,DC=campus,DC=ad,DC=csulb,DC=edu';
 		$usrpw = env('ADLDS_PW');
 		$search_basedn = "DC=campus,DC=ad,DC=csulb,DC=edu";
-		$filter = "(&(objectClass=user)(|(sn=*$request->q*)(givenname=*$request->q*)))";
+// 		$filter = "(&(objectClass=user)(sn=$request->q*))";
+		$filter = "(&(objectClass=user)(|(sn=$request->q*)(givenname=$request->q*)))";
 		@ldap_bind($connection, $usrbind, $usrpw);
 
 		// configure ldap params
@@ -66,11 +62,16 @@ class Controller extends BaseController {
 		}
 		
 		$info = @ldap_get_entries($connection, $entry);
+		
 		$employees = array();
 		foreach($info as $key => $val) {
 			if(!empty($val['employeeid'][0])) {
 				$employees[$key]['campus_id'] = $val['employeeid'][0];
 				$employees[$key]['name'] = $val['sn'][0] .', '. $val['givenname'][0];
+				$employees[$key]['department'] = !empty($val['department'][0])? $val['department'][0]:'';
+				$employees[$key]['college_department'] = !empty($val['division'][0])? $val['division'][0]:'';
+				$employees[$key]['extension'] = !empty($val['telephonenumber'][0])? $val['telephonenumber'][0]:'';
+				$employees[$key]['email'] =  !empty($val['mail'][0])? $val['mail'][0]:'';
 			}
 		}
 		return array_values($employees);

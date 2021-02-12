@@ -51,14 +51,15 @@ class MembersController extends Controller {
 		
 		$community = Community::where(DB::raw("CONCAT_WS(' ', firstname, lastname)"), 'like',  DB::raw("REPLACE('%$request->q%', ' ', '%')" ))
 		->orWhere(DB::raw("CONCAT_WS(' ',lastname, firstname)"), 'like',  DB::raw("REPLACE('%$request->q%', ' ', '%')" ))
-		->select(DB::raw('0 as campus_id'), DB::raw("CONCAT_WS(', ', lastname, firstname) AS name"))
-		->get();
-
-		$employees = Employees::where(DB::raw("CONCAT_WS(' ', first_name, last_name)"), 'like',  DB::raw("REPLACE('%$request->q%', ' ', '%')" ))
-		->orWhere(DB::raw("CONCAT_WS(' ',last_name, first_name)"), 'like',  DB::raw("REPLACE('%$request->q%', ' ', '%')" ))
-		->select('campus_id', DB::raw("CONCAT_WS(', ', last_name, first_name) AS name"), 'department', 'college_department', 'extension', 'email')
+		->select(DB::raw('0 as campus_id'), DB::raw("CONCAT_WS(', ', lastname, firstname) AS name"), DB::raw('null as department'), 
+			DB::raw('null as college_department'), DB::raw('null as extension'), DB::raw('null as email'))
 		->get();
 		
+// 		$employees = Employees::where(DB::raw("CONCAT_WS(' ', first_name, last_name)"), 'like',  DB::raw("REPLACE('%$request->q%', ' ', '%')" ))
+// 		->orWhere(DB::raw("CONCAT_WS(' ',last_name, first_name)"), 'like',  DB::raw("REPLACE('%$request->q%', ' ', '%')" ))
+// 		->select('campus_id', DB::raw("CONCAT_WS(', ', last_name, first_name) AS name"), 'department', 'college_department', 'extension', 'email')
+// 		->get();
+		$employees = collect($this->directorySearch($request));
 		$users = $employees->mergeRecursive($community);
 		return $users;
 	}
