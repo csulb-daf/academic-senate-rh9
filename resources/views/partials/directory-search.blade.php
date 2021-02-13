@@ -10,7 +10,7 @@ $(document).ready(function() {
 		width: '100%',
 		minimumInputLength: min,
 		placeholder: 'Select User',
-		sorter: data => data.sort((a, b) => a.text.localeCompare(b.text)),
+		//sorter: data => data.sort((a, b) => a.text.localeCompare(b.text)),
 
 		ajax: {
  			headers: {

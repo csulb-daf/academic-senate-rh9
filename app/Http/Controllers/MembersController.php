@@ -60,7 +60,7 @@ class MembersController extends Controller {
 // 		->select('campus_id', DB::raw("CONCAT_WS(', ', last_name, first_name) AS name"), 'department', 'college_department', 'extension', 'email')
 // 		->get();
 		$employees = collect($this->directorySearch($request));
-		$users = $employees->mergeRecursive($community);
+		$users = $employees->mergeRecursive($community)->sortBy('name')->values()->all();
 		return $users;
 	}
 	
