@@ -48,7 +48,7 @@ class Controller extends BaseController {
 		$usrpw = env('ADLDS_PW');
 		$search_basedn = "DC=campus,DC=ad,DC=csulb,DC=edu";
 // 		$filter = "(&(objectClass=user)(sn=$request->q*))";
-		$filter = "(&(objectClass=user)(|(sn=$request->q*)(givenname=$request->q*)))";
+		$filter = "(&(objectClass=user)(&(extensionattribute11=active))(|(sn=$request->q*)(givenname=$request->q*)))";
 		@ldap_bind($connection, $usrbind, $usrpw);
 
 		// configure ldap params
@@ -62,6 +62,8 @@ class Controller extends BaseController {
 		}
 		
 		$info = @ldap_get_entries($connection, $entry);
+// 		print_r( $info);
+// 		return;
 		
 		$employees = array();
 		foreach($info as $key => $val) {
