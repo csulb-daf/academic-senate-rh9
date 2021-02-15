@@ -29,10 +29,11 @@ $(document).ready(function() {
 			processResults: function(data) {
 				return {
 					results: $.map(data, function(obj) {
-						obj.name = (obj.campus_id == 0)? obj.name +' (CM)' : obj.name +' ('+ obj.college_department +')';
+						var displayName = (obj.campus_id == 0)? obj.name +' (CM)' : (obj.college_department !== '')? obj.name +' ('+ obj.college_department +')' : obj.name;
 						return {
 							id: obj.campus_id,
-							text: obj.name,
+							text: displayName,
+							originalName: obj.name,
 							department: obj.department,
 							college_department: obj.college_department,
 							extension: obj.extension,

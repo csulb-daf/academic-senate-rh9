@@ -62,9 +62,6 @@ class Controller extends BaseController {
 		}
 		
 		$info = @ldap_get_entries($connection, $entry);
-// 		print_r( $info);
-// 		return;
-		
 		$employees = array();
 		foreach($info as $key => $val) {
 			if(!empty($val['employeeid'][0])) {
