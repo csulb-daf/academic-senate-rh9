@@ -10,7 +10,6 @@ $(document).ready(function() {
 		width: '100%',
 		minimumInputLength: min,
 		placeholder: 'Select Member',
-		sorter: data => data.sort((a, b) => a.text.localeCompare(b.text)),
 
 		ajax: {
  			headers: {
@@ -29,10 +28,11 @@ $(document).ready(function() {
 			processResults: function(data) {
 				return {
 					results: $.map(data, function(obj) {
-						obj.name = (obj.campus_id == 0)? obj.name +' (CM)' : obj.name;
+						var displayName = (obj.campus_id == 0)? obj.name +' (CM)' : (obj.college !== '')? obj.name +' ('+ obj.college +')' : obj.name;
 						return {
 							id: obj.campus_id,
-							text: obj.name,
+							text: displayName,
+							originalName: obj.name,
 						}
 					})
 				}

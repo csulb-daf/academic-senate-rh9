@@ -53,9 +53,10 @@ class HomeController extends Controller {
 		}
 		
 		return Members::distinct()
-			->where(DB::raw("CONCAT_WS(' ', firstname, lastname)"), 'like',  DB::raw("REPLACE('%$request->q%', ' ', '%')" ))
-			->orWhere(DB::raw("CONCAT_WS(' ',lastname, firstname)"), 'like',  DB::raw("REPLACE('%$request->q%', ' ', '%')" ))
-		->select('campus_id', DB::raw("CONCAT_WS(', ', lastname, firstname) AS name"))
+		->where(DB::raw("CONCAT_WS(' ', firstname, lastname)"), 'like',  DB::raw("REPLACE('%$request->q%', ' ', '%')" ))
+		->orWhere(DB::raw("CONCAT_WS(' ',lastname, firstname)"), 'like',  DB::raw("REPLACE('%$request->q%', ' ', '%')" ))
+		->select('campus_id', 'college', DB::raw("CONCAT_WS(', ', lastname, firstname) AS name"))
+		->orderBy('name')
 		->get();
 	}
 	

@@ -30,7 +30,7 @@ $(document).ready(function() {
 	$('div.container').addClass('wide');
 	
 	$('select#memberSelect').on('select2:select', function(e) {
-		var nameArr = e.params.data.text.replace('(CM)', '').split(','),
+		var nameArr = e.params.data.originalName.split(','),
 			lastName = nameArr[0].trim(),
 			firstName = nameArr[1].trim();
 		
@@ -39,7 +39,7 @@ $(document).ready(function() {
 		$('form#memberSearch input[name=lastname]').val(lastName);
 		params = $('form#memberSearch').serialize();
 		var url = "{{ route('member.search') }}?"+ params;
-		table.rowGroup().dataSrc('committeename');
+		table.rowGroup().dataSrc('committeename');	//For grouping under committee name
 		table.ajax.url(url).load();
 		$('#commSelect').val(null).trigger('change');		//reset select box
 	});
