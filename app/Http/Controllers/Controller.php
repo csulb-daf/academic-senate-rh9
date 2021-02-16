@@ -47,8 +47,7 @@ class Controller extends BaseController {
 		$usrbind = 'CN=ITS WDC Service Account,OU=ITS,OU=Service,OU=Users,OU=DAF,OU=Delegated-OUs,DC=campus,DC=ad,DC=csulb,DC=edu';
 		$usrpw = env('ADLDS_PW');
 		$search_basedn = "DC=campus,DC=ad,DC=csulb,DC=edu";
-// 		$filter = "(&(objectClass=user)(sn=$request->q*))";
-		$filter = "(&(objectClass=user)(&(extensionattribute11=active))(|(sn=$request->q*)(givenname=$request->q*)))";
+		$filter = "(&(objectClass=user)(&(extensionattribute11=active))(|(sn=$request->q*)(givenname=$request->q*)(displayname=$request->q*)))";
 		@ldap_bind($connection, $usrbind, $usrpw);
 
 		// configure ldap params
