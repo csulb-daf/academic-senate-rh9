@@ -40,7 +40,6 @@ class Controller extends BaseController {
 	}
 	
 	public function directorySearch(Request $request) {
-// 		return $request;
 		$host = env('ADLDS_HOST');
 		$ldapport = env('ADLDS_PORT');
 		$connection = ldap_connect($host, $ldapport);

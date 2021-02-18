@@ -5,12 +5,12 @@
 <script>
 $(document).ready(function() {
 	var min = 3;
+	var limit = 50;
 	
 	$('.userSelect').select2({
 		width: '100%',
 		minimumInputLength: min,
 		placeholder: 'Select User',
-		//sorter: data => data.sort((a, b) => a.text.localeCompare(b.text)),
 
 		ajax: {
  			headers: {
@@ -24,11 +24,14 @@ $(document).ready(function() {
 				return {
 					q: params.term.replace(/[\W_]+/g, ' '), // search term(ignore non-alpha-numeric)
 					min: min,
+					page: params.page || 1,
+					limit: limit,
 				};
 			},
-			processResults: function(data) {
+			processResults: function(data, params) {
+				params.page = params.page || 1;
 				return {
-					results: $.map(data, function(obj) {
+					results: $.map(data.users, function(obj) {
 						var displayName = (obj.campus_id == 0)? obj.name +' (CM)' : (obj.college_department !== '')? obj.name +' ('+ obj.college_department +')' : obj.name;
 						return {
 							id: obj.campus_id,
@@ -39,9 +42,12 @@ $(document).ready(function() {
 							extension: obj.extension,
 							email: obj.email,
 						}
-					})
+					}),
+					pagination: {
+						more: (params.page * limit) < data.count
+					}
 				}
-			}
+			}	//processResults
 		}		//ajax
 	});		//select2
 });

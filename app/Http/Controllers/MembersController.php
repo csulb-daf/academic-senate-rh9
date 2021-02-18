@@ -59,9 +59,12 @@ class MembersController extends Controller {
 // 		->orWhere(DB::raw("CONCAT_WS(' ',last_name, first_name)"), 'like',  DB::raw("REPLACE('%$request->q%', ' ', '%')" ))
 // 		->select('campus_id', DB::raw("CONCAT_WS(', ', last_name, first_name) AS name"), 'department', 'college_department', 'extension', 'email')
 // 		->get();
-		$employees = collect($this->directorySearch($request));
-		$users = $employees->mergeRecursive($community)->sortBy('name')->values()->all();
-		return $users;
+		$employees = collect($this->directorySearch($request));	//ldap search, convert to collection
+		$users = $employees->mergeRecursive($community)->sortBy('name')->values()->all();	//merge with community and sort
+		$users = collect($users);		//convert to collection
+		$count = $users->count();
+		$users = $users->forPage($request->page, $request->limit);	//pagination
+		return ['count'=>$count, 'users' => $users];
 	}
 	
 	/**
