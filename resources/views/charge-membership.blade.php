@@ -115,14 +115,6 @@ $(document).ready(function() {
 	var chargesTable = $('#charges').DataTable({
 		autoWidth: false,
 		createdRow: function(row, data, dataIndex) {
-// 			$('button.addButton', row).click(function() {
-// 				$(this).hide();
-// 				$(this).siblings('div.confirmButtons').show();
-// 			});
-// 			$('button.cancelButton', row).click(function() {
-// 				$(this).closest('div.confirmButtons').hide();
-// 				$(this).closest('div.confirmButtons').siblings('button.addButton').show();
-// 			});
 			$('button.addButton', row).click(function() {
 				var that = $(this);
 				var chargeID = that.attr('data-id');
