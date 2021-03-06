@@ -18,7 +18,7 @@ h2.tableTitle.form {
 	margin-bottom: 20px;	
 }
 tr.added td {
-	background: #38c172 !important;
+	background: rgb(56 193 114 / 37%) !important;
 }
 #selectContainer {
 	margin-bottom: 20px;
