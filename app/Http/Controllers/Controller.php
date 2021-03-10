@@ -46,12 +46,12 @@ class Controller extends BaseController {
 		$usrbind = 'CN=ITS WDC Service Account,OU=ITS,OU=Service,OU=Users,OU=DAF,OU=Delegated-OUs,DC=campus,DC=ad,DC=csulb,DC=edu';
 		$usrpw = env('ADLDS_PW');
 		$search_basedn = "DC=campus,DC=ad,DC=csulb,DC=edu";
-		$filter = "(&(objectClass=user)(&(extensionattribute11=active))(|(sn=$request->q*)(givenname=$request->q*)(displayname=$request->q*)))";
 		@ldap_bind($connection, $usrbind, $usrpw);
 
 		// configure ldap params
 		ldap_set_option($connection, LDAP_OPT_PROTOCOL_VERSION, 3);
 		ldap_set_option($connection, LDAP_OPT_REFERRALS, 0);
+		$filter = "(&(objectClass=user)(|(extensionattribute11=Active)(extensionattribute11=Unassigned)(extensionattribute11=Leave)(extensionattribute11=Leave with Pay)(extensionattribute11=Short Work Break))(|(sn=$request->q*)(givenname=$request->q*)(displayname=$request->q*)))";
 		$attributes = array('employeeid', 'givenname', 'sn', 'department', 'division', 'mail', 'telephonenumber');
 		$entry = ldap_search($connection, $search_basedn, $filter,  $attributes);
 		
@@ -60,6 +60,7 @@ class Controller extends BaseController {
 		}
 		
 		$info = @ldap_get_entries($connection, $entry);
+		
 		$employees = array();
 		foreach($info as $key => $val) {
 			if(!empty($val['employeeid'][0])) {
