@@ -142,8 +142,9 @@ $(document).ready(function() {
 						url = url.replace(':id', cid);
 						return '<a href="'+ url +'" class="btn btn-light btn-sm border">Assign</button>';
 					}
-					var url = 	"{{ route('comm.assign', ['id'=>':id']) }}";
-					url = url.replace(':id', data.committee);
+					var url = 	"{{ route('members.edit', ['cid'=>':cid', 'user'=>':uid']) }}";
+					url = url.replace(':cid', data.committee);
+					url = url.replace(':uid', data.id);
 					return '<a href="'+ url +'" data-id="" class="btn btn-light btn-sm border">Change</a>';
 				}			
 			},
