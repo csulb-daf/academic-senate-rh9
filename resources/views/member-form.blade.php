@@ -89,6 +89,21 @@
 			</div>
 			
 			<div class="form-group row">
+				<label for="chargeSelect" class="col-sm-2 col-form-label">Charge Membership:</label>
+				<div class="col-sm-10">
+					<select class="form-control" name="chargeSelect" id="chargeSelect" required>
+						@if(isset($chargeID))
+							<option value="{{ $chargeID }}" selected>{{ $chargeName }}</option>
+						@endif
+						
+						@foreach ($charges as $charge)
+							<option value="{{ $charge->id }}">{{ $charge->charge }}</option>
+						@endForeach
+					</select>
+				</div>
+			</div>
+			
+			<div class="form-group row">
 				<label for="termSelect" class="col-sm-2 col-form-label">Term:</label>
 				<div class="col-sm-10">
 					<select class="form-control" name="termSelect" id="termSelect" required>
@@ -103,23 +118,6 @@
 					</div>
 			</div>
 			
-			<div class="form-group row">
-				<label for="chargeSelect" class="col-sm-2 col-form-label">Charge Membership:</label>
-				<div class="col-sm-10">
-					<select class="form-control" name="chargeSelect" id="chargeSelect" required>
-						<option value="">Select</option>
-						
-						@if(isset($chargeID))
-							<option value="{{ $chargeID }}" selected>{{ $chargeName }}</option>
-						@endif
-						
-						@foreach ($charges as $charge)
-							<option value="{{ $charge->id }}" {{ old('chargeSelect') == $charge->id ? 'selected' : '' }} >{{ $charge->charge }}</option>
-						@endForeach
-					</select>
-				</div>
-			</div>
-		
 			<div class="form-group row">
 				<label for="rankSelect" class="col-sm-2 col-form-label">Rank:</label>
 				<div class="col-sm-10">

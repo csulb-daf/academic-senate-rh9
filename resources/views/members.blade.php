@@ -73,8 +73,10 @@ $(document).ready(function() {
 				render: function(data, type, row, meta) {
 					if(data.id == null) {
 						var cid = {{ $cid }};
-						var url = 	"{{ route('members.add', ['id'=>':id']) }}";
+						var url = 	"{{ route('members.add.view', ['id'=>':id', 'mid'=>':mid', 'chid'=>':chid']) }}";
 						url = url.replace(':id', cid);
+						url = url.replace(':mid', 0);
+						url = url.replace(':chid', data.chargeID);
 						return '<a href="'+ url +'" class="btn btn-light btn-sm border assignLink">Assign</button>';
 					}
 					var html='\
@@ -95,7 +97,8 @@ $(document).ready(function() {
 			targets: [6, 10, 11, 12],
 			sortable: false,
 		}],
-	});		
+		order: [0, 'asc'],
+	});		//DataTable
 });
 
 function editMember(id) {

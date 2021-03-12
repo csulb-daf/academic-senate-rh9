@@ -136,10 +136,13 @@ $(document).ready(function() {
 			{ title: 'Notes', data: 'notes' },
 			{ title: 'Actions', data: null, defaultContent: '', className: 'actions', responsivePriority: 2,
 				render: function(data, type, row) {
-					if(row.id == null) {
+					if(data.id == null) {
 						var cid = $('#commSelect').val();
-						var url = 	"{{ route('members.add', ['id'=>':id']) }}";
+						var url = 	"{{ route('members.add.view', ['id'=>':id', 'mid'=>':mid', 'chid'=>':chid']) }}";
 						url = url.replace(':id', cid);
+						url = url.replace(':mid', 0);
+						url = url.replace(':chid', data.chargeID);
+
 						return '<a href="'+ url +'" class="btn btn-light btn-sm border">Assign</button>';
 					}
 					var url = 	"{{ route('members.edit', ['cid'=>':cid', 'user'=>':uid']) }}";
@@ -153,7 +156,8 @@ $(document).ready(function() {
 			targets:  [11, 12],
 			sortable: false,
 		}],
-	});
+		order: [1, 'asc'],
+	});		//DataTable
 });
 
 </script>

@@ -9,7 +9,6 @@ use App\Members;
 use App\Charges;
 use App\Committees;
 use App\Community;
-use App\Employees;
 
 class MembersController extends Controller {
 	/**
@@ -72,16 +71,21 @@ class MembersController extends Controller {
 	 *
 	 * @return \Illuminate\Http\Response
 	 */
-	public function create($cid, $mid=0) {
+	public function create($cid, $mid=null, $chargeID=null) {
 		//TODO: rewrite query in Eloquent to automatically filter out soft deletes
 		$cname = Committees::where('id', $cid)->pluck('committeename')->first();
-		$charges = DB::table('charge_membership as chm')
-		->join('charges as c', 'chm.charge', '=', 'c.id')
-		->select('c.id', 'c.charge')
-		->where('chm.committee', '=', $cid)
-		->whereNotIn('chm.charge', Members::where('committee', $cid)->pluck('charge'))
-		->whereNull('chm.deleted_at')
-		->get();
+		if(!empty($mid)) {
+			$charges = DB::table('charge_membership as chm')
+			->join('charges as c', 'chm.charge', '=', 'c.id')
+			->select('c.id', 'c.charge')
+			->where('chm.committee', '=', $cid)
+			->whereNotIn('chm.charge', Members::where('committee', $cid)->pluck('charge'))
+			->whereNull('chm.deleted_at')
+			->get();
+		}
+		else {
+			$charges = Charges::where('id', $chargeID)->get();
+		}
 		
 		$ranks = DB::table('rank')->select('id', 'rank')->get();
 

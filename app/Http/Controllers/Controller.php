@@ -22,10 +22,10 @@ class Controller extends BaseController {
 			->whereNull ( 'cm.deleted_at' );
 		})
 		->join ( 'charges', 'charges.id', '=', 'chm.charge' )
-		->select ( 'cm.*', 'c.id as committee', 'r.rank', 'charges.charge' )
+		->select ( 'cm.*', 'c.id as committee', 'r.rank', 'charges.id as chargeID', 'charges.charge' )
 		->where ( 'chm.committee', '=', $cid )
 		->whereNull ( 'chm.deleted_at' )
-		->get ();
+		->get();
 	}
 	
 	public function getCommitteeChargeCount() {
