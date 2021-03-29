@@ -69,6 +69,20 @@ $(document).ready(function() {
 				exportOptions: {
 					columns: ['th:not(.campusID, .actions, .hide)', 'th.committee']
 				}	,
+
+				customize: function(doc) {
+					//Create a date string that we use in the footer.
+					var now = new Date();
+					var jsDate = (now.getMonth()+1) +'-'+ now.getDate() +'-'+ now.getFullYear();
+					
+					doc['footer'] = function() {
+						return {
+							text: ['Revision Date: ', { text: jsDate.toString() }],
+							margin: [20, 0, 20, 0],
+							alignment: 'center',
+						}
+					}
+				},
 			}],
 			dom: {
 				button: {
