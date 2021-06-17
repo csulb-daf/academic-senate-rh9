@@ -18,19 +18,19 @@
 	
 	<!-- Scripts -->
 	<script src="{{ asset('js/app.js') }}"></script>
-	<script src="{{ asset('js/datatables.min.js') }}"></script>
-	<script src="{{ asset('js/dataTables.responsive.min.js') }}"></script>
-	<script src="{{ asset('js/dataTables.rowGroup.min.js') }}"></script>
+	<script src="{{ asset('js/datatables.min.js') }}" defer></script>
+	<script src="{{ asset('js/dataTables.responsive.min.js') }}" defer></script>
+	<script src="{{ asset('js/dataTables.rowGroup.min.js') }}" defer></script>
 	
-	<script src="{{ asset('js/datatables-buttons/dataTables.buttons.min.js') }}"></script>
-	<script src="{{ asset('js/datatables-buttons/jszip.min.js') }}"></script>
-	<script src="{{ asset('js/datatables-buttons/pdfmake.min.js') }}"></script>
-	<script src="{{ asset('js/datatables-buttons/buttons.print.min.js') }}"></script>
-	<script src="{{ asset('js/datatables-buttons/vfs_fonts.js') }}"></script>
-	<script src="{{ asset('js/datatables-buttons/buttons.html5.min.js') }}"></script>
+	<script src="{{ asset('js/datatables-buttons/dataTables.buttons.min.js') }}" defer></script>
+	<script src="{{ asset('js/datatables-buttons/jszip.min.js') }}" defer></script>
+	<script src="{{ asset('js/datatables-buttons/pdfmake.min.js') }}" defer></script>
+	<script src="{{ asset('js/datatables-buttons/buttons.print.min.js') }}" defer></script>
+	<script src="{{ asset('js/datatables-buttons/vfs_fonts.js') }}" defer></script>
+	<script src="{{ asset('js/datatables-buttons/buttons.html5.min.js') }}" defer></script>
 	
-	<script src="{{ asset('js/select2.min.js') }}"></script>
-	<script src="{{ asset('js/actions.js') }}"></script>
+	<script src="{{ asset('js/select2.min.js') }}" defer></script>
+	<script src="{{ asset('js/actions.js') }}" defer></script>
 	
 	<!-- Fonts -->
 	<link rel="dns-prefetch" href="//fonts.gstatic.com">
