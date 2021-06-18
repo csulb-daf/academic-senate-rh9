@@ -33,6 +33,7 @@
 			@csrf
 			<input type="hidden" name="cid" value="{{ $cid }}">
 			<input type="hidden" name="mid" value="{{ !empty($mid)? $mid:'' }}">
+			<input type="hidden" name="sort_order" id="sortOrder" value="">
 			
 			<div class="form-group row">
 				<label for="fName" class="col-sm-2 col-form-label">First Name:</label>
@@ -87,6 +88,14 @@
 					<input class="form-control" type="text" name="email" id="email" value="{{ old('email', isset($email)? $email:'') }}" readonly>
 				</div>
 			</div>
+			
+			<div class="form-group row">
+				<label for="empType" class="col-sm-2 col-form-label">Employee Type:</label>
+				<div class="col-sm-10">
+					<input class="form-control" type="text" name="emp_type" id="empType" value="{{ old('emp_type', isset($emp_type)? $emp_type:'') }}" readonly>
+				</div>
+			</div>
+			
 			
 			<div class="form-group row">
 				<label for="chargeSelect" class="col-sm-2 col-form-label">Charge Membership:</label>
@@ -150,7 +159,7 @@
 <script>
 $(document).ready(function() {
 	$('select#userSelect').on('select2:select', function(e) {
-// 		console.log(e.params.data);
+		console.log('e.params.data', e.params.data);
 		var nameArr = e.params.data.originalName.split(','),
 		lastName = nameArr[0].trim(),
 		firstName = nameArr[1].trim(),
@@ -159,6 +168,8 @@ $(document).ready(function() {
 		college_department = e.params.data.college_department,
 		extension = e.params.data.extension,
 		email = e.params.data.email,
+		empType = e.params.data.employeetype['name'],
+		empSort = e.params.data.employeetype['sortOrder'],
 		form = $('#memberForm');
 		
 		form.find('#fName').val(firstName);
@@ -168,6 +179,8 @@ $(document).ready(function() {
 		form.find('#collegeDepartment').val(college_department);
 		form.find('#extension').val(extension);
 		form.find('#email').val(email);
+		form.find('#empType').val(empType);
+		form.find('#sortOrder').val(empSort);
 
 		$('button#submitButton').prop('disabled', false);
 	});

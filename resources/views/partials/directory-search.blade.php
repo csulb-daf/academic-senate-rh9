@@ -33,6 +33,7 @@ $(document).ready(function() {
 				return {
 					results: $.map(data.users, function(obj) {
 						var displayName = (obj.campus_id == 0)? obj.name +' (CM)' : (obj.college_department !== '')? obj.name +' ('+ obj.college_department +')' : obj.name;
+						var empType = (typeof obj.employeetype !== 'undefined')? obj.employeetype:'';
 						return {
 							id: obj.campus_id,
 							text: displayName,
@@ -41,6 +42,7 @@ $(document).ready(function() {
 							college_department: obj.college_department,
 							extension: obj.extension,
 							email: obj.email,
+							employeetype: empType,
 						}
 					}),
 					pagination: {
