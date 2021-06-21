@@ -121,7 +121,7 @@ $(document).ready(function() {
 					}
 				}
 			},
-			{ 
+			{
 				title: 'Campus ID', className: 'campusID', defaultContent: '', responsivePriority: 1,
 				render: function(data, type, row, meta) {
 					if(row.campus_id == null) {
@@ -133,6 +133,8 @@ $(document).ready(function() {
 					return row.campus_id;
 				}	
 			},
+			{ title: 'Employee Type', data: 'emp_type' },
+			{ title: 'Employee Sort', data: 'emp_sort', defaultContent: '200', visible: false },
 			{ title: 'Last Name', data: 'lastname' },
 			{ title: 'First Name', data: 'firstname' },
 			{ title: 'Rank', data: 'rank' },
@@ -167,10 +169,10 @@ $(document).ready(function() {
 			},
 		],
 		columnDefs: [{
-			targets:  [11, 12],
+			targets:  [3, 14, 15],
 			sortable: false,
 		}],
-		order: [1, 'asc'],
+		order: [[3, 'asc'], [1, 'asc']],
 	});		//DataTable
 });
 
