@@ -50,8 +50,8 @@ class MembersController extends Controller {
 		
 		$community = Community::where(DB::raw("CONCAT_WS(' ', firstname, lastname)"), 'like',  DB::raw("REPLACE('%$request->q%', ' ', '%')" ))
 		->orWhere(DB::raw("CONCAT_WS(' ',lastname, firstname)"), 'like',  DB::raw("REPLACE('%$request->q%', ' ', '%')" ))
-		->select(DB::raw('0 as campus_id'), DB::raw("CONCAT_WS(', ', lastname, firstname) AS name"), DB::raw('null as department'), 
-			DB::raw('null as college_department'), DB::raw('null as extension'), DB::raw('null as email'))
+		->select(DB::raw('0 as campus_id'), DB::raw("CONCAT_WS(', ', lastname, firstname) AS name"), 'email', DB::raw('null as department'), 
+			DB::raw('null as college_department'), DB::raw('null as extension'))
 		->get();
 		
 		$employees = collect($this->directorySearch($request));	//ldap search, convert to collection

@@ -72,8 +72,6 @@ class Controller extends BaseController {
 				$employees[$key]['extension'] = !empty($val['telephonenumber'][0])? $val['telephonenumber'][0]:'';
 				$employees[$key]['email'] =  !empty($val['mail'][0])? $val['mail'][0]:'';
 				$employees[$key]['employeetype'] =  !empty($val['employeetype'][0])? $this->mapEmployeeType($val['employeetype'][0]):'';
-// 				$employees[$key]['employeetype'] =  $this->mapEmployeeType($val['employeetype'][0]);
-				
 			}
 		}
 		return array_values($employees);

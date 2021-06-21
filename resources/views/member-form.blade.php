@@ -159,7 +159,7 @@
 <script>
 $(document).ready(function() {
 	$('select#userSelect').on('select2:select', function(e) {
-		console.log('e.params.data', e.params.data);
+// 		console.log('e.params.data', e.params.data);
 		var nameArr = e.params.data.originalName.split(','),
 		lastName = nameArr[0].trim(),
 		firstName = nameArr[1].trim(),
@@ -168,8 +168,8 @@ $(document).ready(function() {
 		college_department = e.params.data.college_department,
 		extension = e.params.data.extension,
 		email = e.params.data.email,
-		empType = e.params.data.employeetype['name'],
-		empSort = e.params.data.employeetype['sortOrder'],
+		empType = (campusID === 0)? 'Community' : e.params.data.employeetype['name'],
+		empSort = (campusID === 0)? 100 : e.params.data.employeetype['sortOrder'],
 		form = $('#memberForm');
 		
 		form.find('#fName').val(firstName);

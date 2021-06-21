@@ -55,7 +55,7 @@ $(document).ready(function() {
 				}	
 			},
 			{ title: 'Employee Type', data: 'emp_type' },
-			{ title: 'Employee Sort', data: 'emp_sort' },
+			{ title: 'Employee Sort', data: 'emp_sort', defaultContent: '200', visible: false },
 			{ title: 'Last Name', data: 'lastname' },
 			{ title: 'First Name', data: 'firstname' },
 			{ title: 'Rank', data: 'rank' },
@@ -96,10 +96,10 @@ $(document).ready(function() {
 			}
 		],
 		columnDefs: [{
-			targets: [6, 10, 11, 12],
+			targets: [1, 8, 12, 13, 14],
 			sortable: false,
 		}],
-		order: [0, 'asc'],
+		order: [[2, 'asc'], [0, 'asc']],
 	});		//DataTable
 });
 
