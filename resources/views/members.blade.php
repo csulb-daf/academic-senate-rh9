@@ -54,6 +54,8 @@ $(document).ready(function() {
 					return row.campus_id;
 				}	
 			},
+			{ title: 'Employee Type', data: 'emp_type' },
+			{ title: 'Employee Sort', data: 'emp_sort' },
 			{ title: 'Last Name', data: 'lastname' },
 			{ title: 'First Name', data: 'firstname' },
 			{ title: 'Rank', data: 'rank' },

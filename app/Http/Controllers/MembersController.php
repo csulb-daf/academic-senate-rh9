@@ -126,6 +126,8 @@ class MembersController extends Controller {
 	 * @return \Illuminate\Http\Response
 	 */
 	public function store(Request $request) {
+// 		return $request;
+		
 		$validatedData = request()->validate(
 			[
 				'fName' => 'required',
@@ -162,6 +164,9 @@ class MembersController extends Controller {
 			$members->charge = $request->chargeSelect;
 			if(isset($request->alternate)) { $members->alternate =$request->alternate; }
 			$members->notes = $request->notes;
+			$members->emp_type = $request->emp_type;
+			$members->emp_sort = $request->emp_sort;
+			
 			$members->save();
 			
 			return redirect()->route('comm.assign', ['cid'=>$request->cid])->withInput($request->all)->with('member', 'New Committee Member Added');

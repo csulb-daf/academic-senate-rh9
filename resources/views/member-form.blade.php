@@ -33,7 +33,7 @@
 			@csrf
 			<input type="hidden" name="cid" value="{{ $cid }}">
 			<input type="hidden" name="mid" value="{{ !empty($mid)? $mid:'' }}">
-			<input type="hidden" name="sort_order" id="sortOrder" value="">
+			<input type="hidden" name="emp_sort" id="empSort" value="">
 			
 			<div class="form-group row">
 				<label for="fName" class="col-sm-2 col-form-label">First Name:</label>
@@ -180,7 +180,7 @@ $(document).ready(function() {
 		form.find('#extension').val(extension);
 		form.find('#email').val(email);
 		form.find('#empType').val(empType);
-		form.find('#sortOrder').val(empSort);
+		form.find('#empSort').val(empSort);
 
 		$('button#submitButton').prop('disabled', false);
 	});
