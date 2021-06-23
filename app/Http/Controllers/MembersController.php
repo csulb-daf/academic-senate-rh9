@@ -162,9 +162,8 @@ class MembersController extends Controller {
 			$members->charge = $request->chargeSelect;
 			if(isset($request->alternate)) { $members->alternate =$request->alternate; }
 			$members->notes = $request->notes;
-			$members->emp_type = $request->emp_type;
-			$members->emp_sort = $request->emp_sort;
-			
+			$members->emp_type = isset($request->emp_type)? $request->emp_type:'';
+			$members->emp_sort = isset($request->emp_sort)? $request->emp_sort:200;
 			$members->save();
 			
 			return redirect()->route('comm.assign', ['cid'=>$request->cid])->withInput($request->all)->with('member', 'New Committee Member Added');
@@ -209,8 +208,8 @@ class MembersController extends Controller {
 				'rank' => $request->rankSelect,
 				'notes' => $request->notes,
 				'alternate' => isset($request->alternate)? $request->alternate:0,
-				'emp_type' => $request->emp_type,
-				'emp_sort' => $request->emp_sort,
+				'emp_type' => isset($request->emp_type)? $request->emp_type:'',
+				'emp_sort' => isset($request->emp_sort)? $request->emp_sort:200,
 		]);
 		return redirect()->route('comm.assign', ['cid'=>$request->cid])->withInput($request->all)->with('member', 'Committee Member Updated Successfully');
 		}
