@@ -33,7 +33,7 @@
 			@csrf
 			<input type="hidden" name="cid" value="{{ $cid }}">
 			<input type="hidden" name="mid" value="{{ !empty($mid)? $mid:'' }}">
-			<input type="hidden" name="emp_sort" id="empSort" value="">
+			<input type="hidden" name="emp_sort" id="empSort" value="{{ old('emp_sort', isset($emp_sort)? $emp_sort:'') }}">
 			
 			<div class="form-group row">
 				<label for="fName" class="col-sm-2 col-form-label">First Name:</label>

@@ -110,6 +110,8 @@ class MembersController extends Controller {
 				'chargeName' => $chargeName,
 				'rankID' => $row->rank,
 				'alternate' => $row->alternate,
+				'emp_type' => $row->emp_type,
+				'emp_sort' => $row->emp_sort,
 			]);
 		}
 		return view('member-form', $formData);
@@ -173,6 +175,8 @@ class MembersController extends Controller {
 	}
 	
 	public function update(Request $request) {
+		//return $request;
+		
 		$validatedData = request()->validate(
 			[
 					'fName' => 'required',
@@ -205,6 +209,8 @@ class MembersController extends Controller {
 				'rank' => $request->rankSelect,
 				'notes' => $request->notes,
 				'alternate' => isset($request->alternate)? $request->alternate:0,
+				'emp_type' => $request->emp_type,
+				'emp_sort' => $request->emp_sort,
 		]);
 		return redirect()->route('comm.assign', ['cid'=>$request->cid])->withInput($request->all)->with('member', 'Committee Member Updated Successfully');
 		}
