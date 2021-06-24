@@ -18,7 +18,7 @@ class CreateCommitteeMembership extends Migration
             $table->unsignedBigInteger('user_id');
             $table->string('campus_id', 50);
             $table->string('emp_type', 45);
-            $table->unsignedTinyInteger('emp_sort');
+            $table->unsignedSmallInteger('emp_sort', 5)->default(200);
             $table->string('lastname');
             $table->string('firstname');
             $table->unsignedBigInteger('committee');
