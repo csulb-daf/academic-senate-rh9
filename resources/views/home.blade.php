@@ -169,11 +169,11 @@ $(document).ready(function() {
 					assignUrl = assignUrl.replace(':cid', data.committee);
 
 					var html = '\
-						<a href="'+ changeUrl +'" class="btn btn-light btn-sm border change" title="Change" target="_blank"><img src="{{ asset('images/pencil-square.svg') }}"></a>\
-						<a href="'+ assignUrl +'" class="btn btn-light btn-sm border assign" title="Assign" target="_blank"><img src="{{ asset('images/external-link.svg') }}"></a>\
+						<a href="'+ changeUrl +'" class="btn btn-light btn-sm border change" title="Change" data-toggle="tooltip"><img src="{{ asset('images/pencil-square.svg') }}"></a>\
+						<a href="'+ assignUrl +'" class="btn btn-light btn-sm border assign" title="Assign" data-toggle="tooltip"><img src="{{ asset('images/external-link.svg') }}"></a>\
 					';
-					//return '<a href="'+ url +'" data-id="" class="btn btn-light btn-sm border">Change</a>';
-						return html;
+
+					return html;
 				}			
 			},
 		],
@@ -183,6 +183,11 @@ $(document).ready(function() {
 		}],
 		order: [[3, 'asc'], [1, 'asc']],
 	});		//DataTable
+
+	table.on('draw', function () {
+		$('[data-toggle="tooltip"]').tooltip();
+	});
+	
 });
 
 </script>
