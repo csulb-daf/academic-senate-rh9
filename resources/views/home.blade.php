@@ -150,7 +150,7 @@ $(document).ready(function() {
 				}			
 			},
 			{ title: 'Notes', data: 'notes' },
-			{ title: 'Actions', data: null, defaultContent: '', className: 'actions', responsivePriority: 2,
+			{ title: 'Actions', data: null, defaultContent: '', className: 'actions', responsivePriority: 2, width: '60px',
 				render: function(data, type, row) {
 					if(data.id == null) {
 						var cid = $('#commSelect').val();
@@ -161,10 +161,19 @@ $(document).ready(function() {
 
 						return '<a href="'+ url +'" class="btn btn-light btn-sm border">Assign</button>';
 					}
-					var url = 	"{{ route('members.edit', ['cid'=>':cid', 'user'=>':uid']) }}";
-					url = url.replace(':cid', data.committee);
-					url = url.replace(':uid', data.id);
-					return '<a href="'+ url +'" data-id="" class="btn btn-light btn-sm border">Change</a>';
+					var changeUrl = 	"{{ route('members.edit', ['cid'=>':cid', 'user'=>':uid']) }}";
+					changeUrl = changeUrl.replace(':cid', data.committee);
+					changeUrl = changeUrl.replace(':uid', data.id);
+
+					var assignUrl = 	"{{ route('comm.assign', ['cid'=>':cid']) }}";
+					assignUrl = assignUrl.replace(':cid', data.committee);
+
+					var html = '\
+						<a href="'+ changeUrl +'" class="btn btn-light btn-sm border change" title="Change" target="_blank"><img src="{{ asset('images/pencil-square.svg') }}"></a>\
+						<a href="'+ assignUrl +'" class="btn btn-light btn-sm border assign" title="Assign" target="_blank"><img src="{{ asset('images/external-link.svg') }}"></a>\
+					';
+					//return '<a href="'+ url +'" data-id="" class="btn btn-light btn-sm border">Change</a>';
+						return html;
 				}			
 			},
 		],
