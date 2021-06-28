@@ -42,7 +42,18 @@ class HomeController extends Controller {
 	}
 	
 	public function committeeSearch(Request $request) {
-		$cid = $request->cid;
+		if(empty($request->cid) && !session('committeeID')) {
+			return null;
+		}
+		
+		if(empty($request->cid) && session('committeeID')) {
+			$cid =  session('committeeID');
+		}
+		else {
+			$cid = $request->cid;
+			session(['committeeID' => $cid]);
+		}
+		
 		return $this->getCommitteeMemberships($cid);
 	}
 
