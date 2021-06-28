@@ -13,7 +13,7 @@
 	</div>
 @endif
 
-<form method="POST" id="commForm" action="/committee/add">
+<form method="POST" id="commForm" action="{{ route('committee.add') }}">
 	@csrf
 
 	<div class="form-group row">
