@@ -28,6 +28,12 @@
 <script>
 $(document).ready(function() {
 	$('div.container').addClass('wide');
+
+	@if(session('committeeID') && session('committeeName'))
+		$('.tableTitle').text('Committee: {{ session('committeeName') }}');
+		var newOption = new Option('{{ session('committeeName') }}', {{ session('committeeID') }}, true, true);	
+		$('select#commSelect').append(newOption).trigger('change');
+	@endif
 	
 	$('select#memberSelect').on('select2:select', function(e) {
 		var nameArr = e.params.data.originalName.split(','),
@@ -159,7 +165,7 @@ $(document).ready(function() {
 						url = url.replace(':mid', 0);
 						url = url.replace(':chid', data.chargeID);
 
-						return '<a href="'+ url +'" class="btn btn-light btn-sm border">Assign</button>';
+						return '<a href="'+ url +'" class="btn btn-light btn-sm border assign" title="Assign" data-toggle="tooltip"><img src="{{ asset('images/external-link.svg') }}"></a>';
 					}
 					var changeUrl = 	"{{ route('members.edit', ['cid'=>':cid', 'user'=>':uid']) }}";
 					changeUrl = changeUrl.replace(':cid', data.committee);
