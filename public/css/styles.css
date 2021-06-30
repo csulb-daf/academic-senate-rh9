@@ -62,6 +62,13 @@ form#memberSearch {
 #commSearch_wrapper button.buttons-pdf {
 	margin-right: 10px;
 }
+#commSearch_wrapper a.change,
+#commSearch_wrapper a.assign {
+	padding: .2rem;
+}
+#commSearch_wrapper a.change {
+	margin-right: 3px;
+}
 
 /*** Charge Membership Pages ***/
 #chargeMembership_wrapper {

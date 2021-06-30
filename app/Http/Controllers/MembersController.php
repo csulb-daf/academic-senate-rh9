@@ -50,14 +50,10 @@ class MembersController extends Controller {
 		
 		$community = Community::where(DB::raw("CONCAT_WS(' ', firstname, lastname)"), 'like',  DB::raw("REPLACE('%$request->q%', ' ', '%')" ))
 		->orWhere(DB::raw("CONCAT_WS(' ',lastname, firstname)"), 'like',  DB::raw("REPLACE('%$request->q%', ' ', '%')" ))
-		->select(DB::raw('0 as campus_id'), DB::raw("CONCAT_WS(', ', lastname, firstname) AS name"), DB::raw('null as department'), 
-			DB::raw('null as college_department'), DB::raw('null as extension'), DB::raw('null as email'))
+		->select(DB::raw('0 as campus_id'), DB::raw("CONCAT_WS(', ', lastname, firstname) AS name"), 'email', DB::raw('null as department'), 
+			DB::raw('null as college_department'), DB::raw('null as extension'))
 		->get();
 		
-// 		$employees = Employees::where(DB::raw("CONCAT_WS(' ', first_name, last_name)"), 'like',  DB::raw("REPLACE('%$request->q%', ' ', '%')" ))
-// 		->orWhere(DB::raw("CONCAT_WS(' ',last_name, first_name)"), 'like',  DB::raw("REPLACE('%$request->q%', ' ', '%')" ))
-// 		->select('campus_id', DB::raw("CONCAT_WS(', ', last_name, first_name) AS name"), 'department', 'college_department', 'extension', 'email')
-// 		->get();
 		$employees = collect($this->directorySearch($request));	//ldap search, convert to collection
 		$users = $employees->mergeRecursive($community)->sortBy('name')->values()->all();	//merge with community and sort
 		$users = collect($users);		//convert to collection
@@ -114,6 +110,8 @@ class MembersController extends Controller {
 				'chargeName' => $chargeName,
 				'rankID' => $row->rank,
 				'alternate' => $row->alternate,
+				'emp_type' => $row->emp_type,
+				'emp_sort' => $row->emp_sort,
 			]);
 		}
 		return view('member-form', $formData);
@@ -126,6 +124,8 @@ class MembersController extends Controller {
 	 * @return \Illuminate\Http\Response
 	 */
 	public function store(Request $request) {
+// 		return $request;
+		
 		$validatedData = request()->validate(
 			[
 				'fName' => 'required',
@@ -162,6 +162,8 @@ class MembersController extends Controller {
 			$members->charge = $request->chargeSelect;
 			if(isset($request->alternate)) { $members->alternate =$request->alternate; }
 			$members->notes = $request->notes;
+			$members->emp_type = isset($request->emp_type)? $request->emp_type:'';
+			$members->emp_sort = isset($request->emp_sort)? $request->emp_sort:200;
 			$members->save();
 			
 			return redirect()->route('comm.assign', ['cid'=>$request->cid])->withInput($request->all)->with('member', 'New Committee Member Added');
@@ -172,6 +174,8 @@ class MembersController extends Controller {
 	}
 	
 	public function update(Request $request) {
+		//return $request;
+		
 		$validatedData = request()->validate(
 			[
 					'fName' => 'required',
@@ -204,6 +208,8 @@ class MembersController extends Controller {
 				'rank' => $request->rankSelect,
 				'notes' => $request->notes,
 				'alternate' => isset($request->alternate)? $request->alternate:0,
+				'emp_type' => isset($request->emp_type)? $request->emp_type:'',
+				'emp_sort' => isset($request->emp_sort)? $request->emp_sort:200,
 		]);
 		return redirect()->route('comm.assign', ['cid'=>$request->cid])->withInput($request->all)->with('member', 'Committee Member Updated Successfully');
 		}

@@ -52,7 +52,7 @@ class Controller extends BaseController {
 		ldap_set_option($connection, LDAP_OPT_PROTOCOL_VERSION, 3);
 		ldap_set_option($connection, LDAP_OPT_REFERRALS, 0);
 		$filter = "(&(objectClass=user)(|(extensionattribute11=Active)(extensionattribute11=Unassigned)(extensionattribute11=Leave)(extensionattribute11=Leave with Pay)(extensionattribute11=Short Work Break))(|(sn=$request->q*)(givenname=$request->q*)(displayname=$request->q*)))";
-		$attributes = array('employeeid', 'givenname', 'sn', 'department', 'division', 'mail', 'telephonenumber');
+		$attributes = array('employeeid', 'givenname', 'sn', 'department', 'division', 'mail', 'telephonenumber', 'employeetype');
 		$entry = ldap_search($connection, $search_basedn, $filter,  $attributes);
 		
 		if(empty($entry)) {
@@ -60,6 +60,7 @@ class Controller extends BaseController {
 		}
 		
 		$info = @ldap_get_entries($connection, $entry);
+// 		print_r($info);
 		
 		$employees = array();
 		foreach($info as $key => $val) {
@@ -70,8 +71,49 @@ class Controller extends BaseController {
 				$employees[$key]['college_department'] = !empty($val['division'][0])? $val['division'][0]:'';
 				$employees[$key]['extension'] = !empty($val['telephonenumber'][0])? $val['telephonenumber'][0]:'';
 				$employees[$key]['email'] =  !empty($val['mail'][0])? $val['mail'][0]:'';
+				$employees[$key]['employeetype'] =  !empty($val['employeetype'][0])? $this->mapEmployeeType($val['employeetype'][0]):'';
 			}
 		}
 		return array_values($employees);
+	}
+
+	/**
+	 * 
+	 * @param String $str
+	 * maps employee type and sort order
+	 * returns array
+	 */
+	function mapEmployeeType($str) {
+		$empType = [];
+		
+		switch($str) {
+			case 'Auxiliary-SA':
+			case 'SA':
+			case 'TA':
+			case 'Former Student':
+			case 'Student':
+				$empType['sortOrder'] = 10;
+				$empType['name'] = 'Student';
+				break;
+
+			case 'FAC-Lecturer\Temporary':
+			case 'FAC-Tenure\Tenure Track':
+				$empType['sortOrder'] = 20;
+				$empType['name'] = 'Faculty';
+				break;
+				
+			case 'STF':
+			case 'Auxiliary-STF':
+			case 'MPP':
+				$empType['sortOrder'] = 30;
+				$empType['name'] = 'Staff';
+				break;
+				
+			default:
+				$empType['sortOrder'] = 100;
+				$empType['name'] = $str;
+		}
+		
+		return $empType;
 	}
 }

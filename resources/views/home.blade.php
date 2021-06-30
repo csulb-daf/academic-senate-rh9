@@ -28,6 +28,12 @@
 <script>
 $(document).ready(function() {
 	$('div.container').addClass('wide');
+
+	@if(session('committeeID') && session('committeeName'))
+		$('.tableTitle').text('Committee: {{ session('committeeName') }}');
+		var newOption = new Option('{{ session('committeeName') }}', {{ session('committeeID') }}, true, true);	
+		$('select#commSelect').append(newOption).trigger('change');
+	@endif
 	
 	$('select#memberSelect').on('select2:select', function(e) {
 		var nameArr = e.params.data.originalName.split(','),
@@ -121,7 +127,7 @@ $(document).ready(function() {
 					}
 				}
 			},
-			{ 
+			{
 				title: 'Campus ID', className: 'campusID', defaultContent: '', responsivePriority: 1,
 				render: function(data, type, row, meta) {
 					if(row.campus_id == null) {
@@ -133,6 +139,8 @@ $(document).ready(function() {
 					return row.campus_id;
 				}	
 			},
+			{ title: 'Employee Type', data: 'emp_type' },
+			{ title: 'Employee Sort', data: 'emp_sort', defaultContent: '200', visible: false },
 			{ title: 'Last Name', data: 'lastname' },
 			{ title: 'First Name', data: 'firstname' },
 			{ title: 'Rank', data: 'rank' },
@@ -148,7 +156,7 @@ $(document).ready(function() {
 				}			
 			},
 			{ title: 'Notes', data: 'notes' },
-			{ title: 'Actions', data: null, defaultContent: '', className: 'actions', responsivePriority: 2,
+			{ title: 'Actions', data: null, defaultContent: '', className: 'actions', responsivePriority: 2, width: '60px',
 				render: function(data, type, row) {
 					if(data.id == null) {
 						var cid = $('#commSelect').val();
@@ -157,21 +165,35 @@ $(document).ready(function() {
 						url = url.replace(':mid', 0);
 						url = url.replace(':chid', data.chargeID);
 
-						return '<a href="'+ url +'" class="btn btn-light btn-sm border">Assign</button>';
+						return '<a href="'+ url +'" class="btn btn-light btn-sm border assign" title="Assign" data-toggle="tooltip"><img src="{{ asset('images/external-link.svg') }}"></a>';
 					}
-					var url = 	"{{ route('members.edit', ['cid'=>':cid', 'user'=>':uid']) }}";
-					url = url.replace(':cid', data.committee);
-					url = url.replace(':uid', data.id);
-					return '<a href="'+ url +'" data-id="" class="btn btn-light btn-sm border">Change</a>';
+					var changeUrl = 	"{{ route('members.edit', ['cid'=>':cid', 'user'=>':uid']) }}";
+					changeUrl = changeUrl.replace(':cid', data.committee);
+					changeUrl = changeUrl.replace(':uid', data.id);
+
+					var assignUrl = 	"{{ route('comm.assign', ['cid'=>':cid']) }}";
+					assignUrl = assignUrl.replace(':cid', data.committee);
+
+					var html = '\
+						<a href="'+ changeUrl +'" class="btn btn-light btn-sm border change" title="Change" data-toggle="tooltip"><img src="{{ asset('images/pencil-square.svg') }}"></a>\
+						<a href="'+ assignUrl +'" class="btn btn-light btn-sm border assign" title="Assign" data-toggle="tooltip"><img src="{{ asset('images/external-link.svg') }}"></a>\
+					';
+
+					return html;
 				}			
 			},
 		],
 		columnDefs: [{
-			targets:  [11, 12],
+			targets:  [3, 14, 15],
 			sortable: false,
 		}],
-		order: [1, 'asc'],
+		order: [[3, 'asc'], [1, 'asc']],
 	});		//DataTable
+
+	table.on('draw', function () {
+		$('[data-toggle="tooltip"]').tooltip();
+	});
+	
 });
 
 </script>
