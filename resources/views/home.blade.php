@@ -54,7 +54,9 @@ $(document).ready(function() {
 		
 	$('select#commSelect').on('select2:select', function(e) {
 		$('.tableTitle').text('Committee: '+ e.params.data.text);	
-		table.ajax.url("{{ route('committee.search') }}").load();
+		table.ajax.url("{{ route('committee.search') }}").load(function(response) {
+			$('#commSearch .empType').show().removeClass('hide');
+		});
 		$('#memberSelect').val(null).trigger('change');		//reset select box
 	});
 
