@@ -40,13 +40,15 @@ $(document).ready(function() {
 			lastName = nameArr[0].trim(),
 			firstName = nameArr[1].trim();
 		
-		$('.tableTitle').text('Search Results: '+ firstName +' '+ lastName);
 		$('form#memberSearch input[name=firstname]').val(firstName);
 		$('form#memberSearch input[name=lastname]').val(lastName);
 		params = $('form#memberSearch').serialize();
 		var url = "{{ route('member.search') }}?"+ params;
 		table.rowGroup().dataSrc('committeename');	//For grouping under committee name
-		table.ajax.url(url).load();
+		table.ajax.url(url).load(function(response) {
+			$('.tableTitle').text('Search Results: '+ firstName +' '+ lastName +' ('+ response[0]['emp_type'] +')');
+			$('#commSearch .empType').hide().addClass('hide');
+		});
 		$('#commSelect').val(null).trigger('change');		//reset select box
 	});
 		
@@ -75,7 +77,6 @@ $(document).ready(function() {
 				exportOptions: {
 					columns: ['th:not(.campusID, .actions, .hide)', 'th.committee']
 				}	,
-
 				customize: function(doc) {
 					//Create a date string that we use in the footer.
 					var now = new Date();
@@ -139,8 +140,8 @@ $(document).ready(function() {
 					return row.campus_id;
 				}	
 			},
-			{ title: 'Employee Type', data: 'emp_type' },
-			{ title: 'Employee Sort', data: 'emp_sort', defaultContent: '200', visible: false },
+			{ title: 'Employee Type', data: 'emp_type', className: 'empType' },
+			{ title: 'Employee Sort', data: 'emp_sort', defaultContent: '200', visible: false, className: 'hide' },
 			{ title: 'Last Name', data: 'lastname' },
 			{ title: 'First Name', data: 'firstname' },
 			{ title: 'Rank', data: 'rank' },
