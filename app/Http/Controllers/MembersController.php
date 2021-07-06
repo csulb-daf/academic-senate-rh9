@@ -174,7 +174,7 @@ class MembersController extends Controller {
 	}
 	
 	public function update(Request $request) {
-		//return $request;
+// 		return $request;
 		
 		$validatedData = request()->validate(
 			[
@@ -211,7 +211,9 @@ class MembersController extends Controller {
 				'emp_type' => isset($request->emp_type)? $request->emp_type:'',
 				'emp_sort' => $this->updateEmployeeSort($request),
 			]);
-		return redirect()->route('comm.assign', ['cid'=>$request->cid])->withInput($request->all)->with('member', 'Committee Member Updated Successfully');
+			
+		$redirect = isset($request->referer)? $request->referer:'comm.assign';
+		return redirect()->route($redirect, ['cid'=>$request->cid])->withInput($request->all)->with('member', 'Committee Member Updated Successfully');
 		}
 		else {
 			return back()->withInput($request->all)->with('error');

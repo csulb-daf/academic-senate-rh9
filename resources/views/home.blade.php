@@ -4,6 +4,12 @@
 
 @section('content')
 
+@if(session()->has('member'))
+    <div class="alert alert-success">
+        {{ session()->get('member') }}
+    </div>
+@endif			
+
 <div id="selectContainer">
 	@include('partials.committee-search')
 </div>
