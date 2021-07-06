@@ -122,7 +122,7 @@
 							<option value="{{$year}}" {{ old('termSelect', isset($termID)? $termID:'') == $year ? 'selected' : '' }}>{{$year}}</option>
 						@endfor
 						
-						<option value="Ex-Officio" {{ old('termSelect', isset($term)? $term:'') === 'Ex-Officio' ? 'selected' : '' }}>Ex-Officio</option>
+						<option value="Ex-Officio" {{ old('termSelect', isset($termID)? $termID:'') === 'Ex-Officio' ? 'selected' : '' }}>Ex-Officio</option>
 					</select>
 					</div>
 			</div>

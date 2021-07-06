@@ -160,10 +160,10 @@ class MembersController extends Controller {
 			$members->rank = $request->rankSelect;
 			$members->term = $request->termSelect;
 			$members->charge = $request->chargeSelect;
-			if(isset($request->alternate)) { $members->alternate =$request->alternate; }
+			if(isset($request->alternate)) { $members->alternate = $request->alternate; }
 			$members->notes = $request->notes;
 			$members->emp_type = isset($request->emp_type)? $request->emp_type:'';
-			$members->emp_sort = isset($request->emp_sort)? $request->emp_sort:200;
+			$members->emp_sort = $this->updateEmployeeSort($request);
 			$members->save();
 			
 			return redirect()->route('comm.assign', ['cid'=>$request->cid])->withInput($request->all)->with('member', 'New Committee Member Added');
@@ -209,8 +209,8 @@ class MembersController extends Controller {
 				'notes' => $request->notes,
 				'alternate' => isset($request->alternate)? $request->alternate:0,
 				'emp_type' => isset($request->emp_type)? $request->emp_type:'',
-				'emp_sort' => isset($request->emp_sort)? $request->emp_sort:200,
-		]);
+				'emp_sort' => $this->updateEmployeeSort($request),
+			]);
 		return redirect()->route('comm.assign', ['cid'=>$request->cid])->withInput($request->all)->with('member', 'Committee Member Updated Successfully');
 		}
 		else {
@@ -223,5 +223,23 @@ class MembersController extends Controller {
 		Members::where('id', $request->id)->update(['user_id' => Auth::id()]);
 		Members::where('id', $request->id)->delete();
 		return $request;
+	}
+	
+	public function updateEmployeeSort(Request $request) {
+		if(!isset($request->emp_sort)) {
+			return 200;
+		}
+		
+		if($request->termSelect !== 'Ex-Officio' && !isset($request->alternate)) {
+			return $this->mapEmployeeSort($request->emp_type);
+		}
+		
+		if($request->termSelect === 'Ex-Officio') {
+			return $this->mapEmployeeSort($request->emp_type) + 100;
+		};
+		
+		if(isset($request->alternate)) {
+			return $this->mapEmployeeSort($request->emp_type) + 5;
+		}
 	}
 }
