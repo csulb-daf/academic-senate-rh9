@@ -128,8 +128,6 @@ class MembersController extends Controller {
 	 * @return \Illuminate\Http\Response
 	 */
 	public function store(Request $request) {
-// 		return $request;
-		
 		$validatedData = request()->validate(
 			[
 				'fName' => 'required',
@@ -178,8 +176,6 @@ class MembersController extends Controller {
 	}
 	
 	public function update(Request $request) {
-// 		return $request;
-		
 		$validatedData = request()->validate(
 			[
 					'fName' => 'required',
@@ -216,7 +212,7 @@ class MembersController extends Controller {
 				'emp_sort' => $this->updateEmployeeSort($request),
 			]);
 			
-		return redirect()->route($request->referer, ['cid'=>$request->cid])->withInput($request->all)->with('member', 'Committee Member Updated Successfully');
+			return redirect()->route($request->referer, ['cid'=>$request->cid])->withInput($request->all)->with('member', 'Committee Member Updated Successfully');
 		}
 		else {
 			return back()->withInput($request->all)->with('error');
