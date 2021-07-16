@@ -113,11 +113,12 @@ class MembersController extends Controller {
 				'emp_type' => $row->emp_type,
 				'emp_sort' => $row->emp_sort,
 			]);
-			
-			$url = url()->previous();
-			$formData['referer'] = stristr($url, 'committee')? 'comm.assign':'home';
-			
 		}
+		
+		/*** Set redirect route after form submission ***/
+		$url = url()->previous();
+		$formData['referer'] = stristr($url, 'committee')? 'comm.assign':'home';
+		
 		return view('member-form', $formData);
 	}
 	
@@ -168,7 +169,7 @@ class MembersController extends Controller {
 			$members->emp_sort = $this->updateEmployeeSort($request);
 			$members->save();
 			
-			return redirect()->route('comm.assign', ['cid'=>$request->cid])->withInput($request->all)->with('member', 'New Committee Member Added');
+			return redirect()->route($request->referer, ['cid'=>$request->cid])->withInput($request->all)->with('member', 'New Committee Member Added');
 		}
 		else {
 			return redirect()->route('committee')->withInput($request->all)->with('error');
