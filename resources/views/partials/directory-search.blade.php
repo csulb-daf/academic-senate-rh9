@@ -22,7 +22,7 @@ $(document).ready(function() {
       delay: 450,		//wait 450 milliseconds before triggering the request
 			data: function (params) {
 				return {
-					q: params.term.replace(/[\W_]+/g, ' '), // search term(ignore non-alpha-numeric)
+					q: params.term.replace(/[^a-zA-Z0-9-]+/g, ' '), // search term(ignore non-alpha-numeric, don't ignore hyphen)
 					min: min,
 					page: params.page || 1,
 					limit: limit,
