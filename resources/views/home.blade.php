@@ -54,6 +54,7 @@ $(document).ready(function() {
 		table.ajax.url(url).load(function(response) {
 			$('.tableTitle').text('Search Results: '+ firstName +' '+ lastName +' ('+ response[0]['emp_type'] +')');
 			$('#commSearch .empType').hide().addClass('hide');
+			$('#commSearch tr#altHeading').hide();
 		});
 		$('#commSelect').val(null).trigger('change');		//reset select box
 	});
@@ -62,6 +63,7 @@ $(document).ready(function() {
 		$('.tableTitle').text('Committee: '+ e.params.data.text);	
 		table.ajax.url("{{ route('committee.search') }}").load(function(response) {
 			$('#commSearch .empType').show().removeClass('hide');
+			$('#commSearch tr#altHeading').show();
 		});
 		$('#memberSelect').val(null).trigger('change');		//reset select box
 	});
@@ -73,10 +75,6 @@ $(document).ready(function() {
 			emptyDataGroup: null
 		},
 		createdRow: function(row, data, dataIndex) {
-// 			console.log('row', row);
-// 			console.log('data', data);
-// 			console.log('dataIndex', dataIndex);
-
 			if(data.alternate) {
 				$(row).addClass('added');
 			}
@@ -95,10 +93,30 @@ $(document).ready(function() {
 					columns: ['th:not(.campusID, .actions, .hide)', 'th.committee']
 				}	,
 				customize: function(doc) {
+// 					console.log('doc', doc);
 					//Create a date string that we use in the footer.
 					var now = new Date();
 					var jsDate = (now.getMonth()+1) +'-'+ now.getDate() +'-'+ now.getFullYear();
+
+					var data = table.column(13).data().toArray();		//alternate column bg color
+					//doc.append('<tr id="altHeading" class="dtrg-group dtrg-start dtrg-level-0"><td colspan="14">Alternates</td></tr>');
+// 					doc.content[1].table.body[6][0] = 'test';
 					
+					$.each(data, function(key, val) {
+					  if(val.alternate == 1) {
+							row = doc.content[1].table.body[key+1];
+							for (col=0; col < row.length; col++) {
+								row[col].fillColor =  '#b2e4c7';
+							}
+					  }
+					});	
+
+          // Get the row data in in table order and search applied
+//           var table = $('#commSearch').DataTable();
+//           var rowData = table.rows( {order: 'applied', search:'applied'} ).data();
+//           console.log('rowData', rowData);
+					
+
 					doc['footer'] = function() {
 						return {
 							text: ['Revision Date: ', { text: jsDate.toString() }],
@@ -210,7 +228,7 @@ $(document).ready(function() {
 
 	table.on('draw', function () {
 		$('[data-toggle="tooltip"]').tooltip();
-		$(this).find('tr.added:first').before('<tr class="dtrg-group dtrg-start dtrg-level-0"><td colspan="14">Alternates</td></tr>');
+		$(this).find('tr.added:first').before('<tr id="altHeading" class="dtrg-group dtrg-start dtrg-level-0"><td colspan="14">Alternates</td></tr>');
 	});
 	
 });
