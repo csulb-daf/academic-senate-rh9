@@ -241,7 +241,7 @@ class MembersController extends Controller {
 		};
 		
 		if(isset($request->alternate)) {
-			return $this->mapEmployeeSort($request->emp_type) + 5;
+			return $this->mapEmployeeSort($request->emp_type) + 300;
 		}
 	}
 }

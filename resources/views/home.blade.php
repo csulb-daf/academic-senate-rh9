@@ -72,6 +72,15 @@ $(document).ready(function() {
 		rowGroup: {
 			emptyDataGroup: null
 		},
+		createdRow: function(row, data, dataIndex) {
+// 			console.log('row', row);
+// 			console.log('data', data);
+// 			console.log('dataIndex', dataIndex);
+
+			if(data.alternate) {
+				$(row).addClass('added');
+			}
+		},
 		dom: 'Blrtip',
 		buttons: {
 			buttons: [{
@@ -201,6 +210,7 @@ $(document).ready(function() {
 
 	table.on('draw', function () {
 		$('[data-toggle="tooltip"]').tooltip();
+		$(this).find('tr.added:first').before('<tr class="dtrg-group dtrg-start dtrg-level-0"><td colspan="14">Alternates</td></tr>');
 	});
 	
 });
