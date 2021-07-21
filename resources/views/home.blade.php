@@ -93,15 +93,11 @@ $(document).ready(function() {
 					columns: ['th:not(.campusID, .actions, .hide)', 'th.committee']
 				}	,
 				customize: function(doc) {
-// 					console.log('doc', doc);
 					//Create a date string that we use in the footer.
 					var now = new Date();
 					var jsDate = (now.getMonth()+1) +'-'+ now.getDate() +'-'+ now.getFullYear();
 
 					var data = table.column(13).data().toArray();		//alternate column bg color
-					//doc.append('<tr id="altHeading" class="dtrg-group dtrg-start dtrg-level-0"><td colspan="14">Alternates</td></tr>');
-// 					doc.content[1].table.body[6][0] = 'test';
-					
 					$.each(data, function(key, val) {
 					  if(val.alternate == 1) {
 							row = doc.content[1].table.body[key+1];
@@ -110,12 +106,6 @@ $(document).ready(function() {
 							}
 					  }
 					});	
-
-          // Get the row data in in table order and search applied
-//           var table = $('#commSearch').DataTable();
-//           var rowData = table.rows( {order: 'applied', search:'applied'} ).data();
-//           console.log('rowData', rowData);
-					
 
 					doc['footer'] = function() {
 						return {
