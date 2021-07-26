@@ -109,7 +109,10 @@ $(document).ready(function() {
 
 					doc['footer'] = function() {
 						return {
-							text: ['Revision Date: ', { text: jsDate.toString() }],
+							text: [
+								'Shaded Rows Denote Alternates\n',
+								'Revision Date: ', { text: jsDate.toString() }
+							],
 							margin: [20, 0, 20, 0],
 							alignment: 'center',
 						}
