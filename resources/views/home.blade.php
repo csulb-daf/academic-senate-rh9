@@ -66,7 +66,7 @@ $(document).ready(function() {
 		rowGroup: {
 			emptyDataGroup: null
 		},
-		dom: 'Blrtip',
+		dom: 'Blrt<"footer">ip',
 		buttons: {
 			buttons: [{
 				extend: 'pdf',
@@ -114,8 +114,14 @@ $(document).ready(function() {
 			},
 			complete: function() {
 				$('form#memberSearch').insertAfter('#commSearch_wrapper .dataTables_length').show();
+				
+				$('#commSearch_wrapper .footer').html('<div class="dataTables_wrapper no-footer"><table class="display dataTable no-footer dtr-inline"></table></div>');
+				$('#commSearch_wrapper .footer table').append( $('table#commSearch tr:eq(1)').clone());
 			}	
     },
+    initComplete: function() {
+		},
+    
 		columns: [
 			{ title: 'Committee', data: 'committeename', defaultContent: '', visible: false, 
 				createdCell: function(td, cellData, rowData, row, col) {
