@@ -1,6 +1,13 @@
 <select class="form-control  userSelect" name="userSelect"  id="userSelect" >
 	<option></option>
 </select>
+<div>Please search by:</div>
+<ul style="padding-left: 17px; text-indent: -5px;">
+	<li>First Name (ex. John)</li>
+	<li>Last Name (ex. Smith)</li>
+	<li>First Name + Last Name (ex. John Smith)</li>
+</ul>
+
 
 <script>
 $(document).ready(function() {
