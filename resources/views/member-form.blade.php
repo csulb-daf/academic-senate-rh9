@@ -34,6 +34,7 @@
 			<input type="hidden" name="cid" value="{{ $cid }}">
 			<input type="hidden" name="mid" value="{{ !empty($mid)? $mid:'' }}">
 			<input type="hidden" name="emp_sort" id="empSort" value="{{ old('emp_sort', isset($emp_sort)? $emp_sort:'') }}">
+			<input type="hidden" name="referer" value="{{ $referer }}">
 			
 			<div class="form-group row">
 				<label for="fName" class="col-sm-2 col-form-label">First Name:</label>
@@ -122,7 +123,7 @@
 							<option value="{{$year}}" {{ old('termSelect', isset($termID)? $termID:'') == $year ? 'selected' : '' }}>{{$year}}</option>
 						@endfor
 						
-						<option value="Ex-Officio" {{ old('termSelect', isset($term)? $term:'') === 'Ex-Officio' ? 'selected' : '' }}>Ex-Officio</option>
+						<option value="Ex-Officio" {{ old('termSelect', isset($termID)? $termID:'') === 'Ex-Officio' ? 'selected' : '' }}>Ex-Officio</option>
 					</select>
 					</div>
 			</div>

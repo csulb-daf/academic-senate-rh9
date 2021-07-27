@@ -11,6 +11,11 @@ use Illuminate\Http\Request;
 
 class Controller extends BaseController {
 	use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
+	
+	private $studentSort = 10;
+	private $facultySort = 20;
+	private $staffSort = 30;
+	
 	public function getCommitteeMemberships($cid) {
 		// TODO: rewrite these in Eloquent to automatically filter out soft deletes
 		return DB::table ( 'committee_membership as cm' )
@@ -83,7 +88,7 @@ class Controller extends BaseController {
 	 * maps employee type and sort order
 	 * returns array
 	 */
-	function mapEmployeeType($str) {
+	public function mapEmployeeType($str) {
 		$empType = [];
 		
 		switch($str) {
@@ -92,28 +97,49 @@ class Controller extends BaseController {
 			case 'TA':
 			case 'Former Student':
 			case 'Student':
-				$empType['sortOrder'] = 10;
 				$empType['name'] = 'Student';
+				$empType['sortOrder'] = $this->mapEmployeeSort('Student');
 				break;
 
 			case 'FAC-Lecturer\Temporary':
 			case 'FAC-Tenure\Tenure Track':
-				$empType['sortOrder'] = 20;
 				$empType['name'] = 'Faculty';
+				$empType['sortOrder'] = $this->mapEmployeeSort('Faculty');
 				break;
 				
 			case 'STF':
 			case 'Auxiliary-STF':
 			case 'MPP':
-				$empType['sortOrder'] = 30;
 				$empType['name'] = 'Staff';
+				$empType['sortOrder'] = $this->mapEmployeeSort('Staff');
 				break;
 				
 			default:
-				$empType['sortOrder'] = 100;
 				$empType['name'] = $str;
+				$empType['sortOrder'] = 100;
 		}
 		
 		return $empType;
+	}
+	
+	public function mapEmployeeSort($empType) {
+		switch($empType) {
+			case 'Student':
+				$empSort = $this->studentSort;
+				break;
+				
+			case 'Faculty':
+				$empSort = $this->facultySort;
+				break;
+				
+			case 'Staff':
+				$empSort = $this->staffSort;
+				break;
+				
+			default:
+				$empSort = 100;
+		}
+		
+		return $empSort;
 	}
 }

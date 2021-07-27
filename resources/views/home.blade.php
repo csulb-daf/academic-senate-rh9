@@ -4,6 +4,12 @@
 
 @section('content')
 
+@if(session()->has('member'))
+    <div class="alert alert-success">
+        {{ session()->get('member') }}
+    </div>
+@endif			
+
 <div id="selectContainer">
 	@include('partials.committee-search')
 </div>
@@ -48,6 +54,7 @@ $(document).ready(function() {
 		table.ajax.url(url).load(function(response) {
 			$('.tableTitle').text('Search Results: '+ firstName +' '+ lastName +' ('+ response[0]['emp_type'] +')');
 			$('#commSearch .empType').hide().addClass('hide');
+			$('#commSearch tr#altHeading').hide();
 		});
 		$('#commSelect').val(null).trigger('change');		//reset select box
 	});
@@ -56,6 +63,7 @@ $(document).ready(function() {
 		$('.tableTitle').text('Committee: '+ e.params.data.text);	
 		table.ajax.url("{{ route('committee.search') }}").load(function(response) {
 			$('#commSearch .empType').show().removeClass('hide');
+			$('#commSearch tr#altHeading').show();
 		});
 		$('#memberSelect').val(null).trigger('change');		//reset select box
 	});
@@ -65,6 +73,11 @@ $(document).ready(function() {
 		autoWidth: false,
 		rowGroup: {
 			emptyDataGroup: null
+		},
+		createdRow: function(row, data, dataIndex) {
+			if(data.alternate) {
+				$(row).addClass('added');
+			}
 		},
 		dom: 'Blrtip',
 		buttons: {
@@ -83,10 +96,23 @@ $(document).ready(function() {
 					//Create a date string that we use in the footer.
 					var now = new Date();
 					var jsDate = (now.getMonth()+1) +'-'+ now.getDate() +'-'+ now.getFullYear();
-					
+
+					var data = table.column(13).data().toArray();		//alternate column bg color
+					$.each(data, function(key, val) {
+					  if(val.alternate == 1) {
+							row = doc.content[1].table.body[key+1];
+							for (col=0; col < row.length; col++) {
+								row[col].fillColor =  '#b2e4c7';
+							}
+					  }
+					});	
+
 					doc['footer'] = function() {
 						return {
-							text: ['Revision Date: ', { text: jsDate.toString() }],
+							text: [
+								'Shaded Rows Denote Alternates\n',
+								'Revision Date: ', { text: jsDate.toString() }
+							],
 							margin: [20, 0, 20, 0],
 							alignment: 'center',
 						}
@@ -195,6 +221,7 @@ $(document).ready(function() {
 
 	table.on('draw', function () {
 		$('[data-toggle="tooltip"]').tooltip();
+		$(this).find('tr.added:first').before('<tr id="altHeading" class="dtrg-group dtrg-start dtrg-level-0"><td colspan="14">Alternates</td></tr>');
 	});
 	
 });

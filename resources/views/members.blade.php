@@ -33,6 +33,10 @@ $(document).ready(function() {
 				$(this).closest('div.delButtons').hide();
 				$(this).closest('div.delButtons').siblings('div.editButtons').show();
 			});
+
+			if(data.alternate) {
+				$(row).addClass('added');
+			}
 		},
     ajax: {
 			url: url,
@@ -101,6 +105,12 @@ $(document).ready(function() {
 		}],
 		order: [[2, 'asc'], [0, 'asc']],
 	});		//DataTable
+
+	table.on('draw', function () {
+		$('[data-toggle="tooltip"]').tooltip();
+		$(this).find('tr.added:first').before('<tr id="altHeading" class="dtrg-group dtrg-start dtrg-level-0"><td colspan="14">Alternates</td></tr>');
+	});
+	
 });
 
 function editMember(id) {
