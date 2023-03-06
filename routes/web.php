@@ -11,10 +11,14 @@
 |
 */
 
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Route;
+// use Illuminate\Support\Facades\View;
+
 Auth::routes([
- 		'register' => false,
-		'reset' => false,
-		'verify' => false,
+	'register' => false,
+	'reset' => false,
+	'verify' => false,
 ]);
 
 /*** Home Page ***/
@@ -28,21 +32,25 @@ Route::post('/member/list', 'HomeController@getMembers')->name('member.list');
 Route::post('/member/search', 'HomeController@memberSearch')->name('member.search');
 
 /*** Committee Pages ***/
-Route::get('/committee', 'CommitteeController@index')->name('committee');
-Route::get('/committee/admin', 'CommitteeController@displayCommitteeAssignments')->name('committee.admin');;
-Route::get('/committee/form', 'CommitteeController@create');
-Route::get('/committee/add', 'CommitteeController@create');
-Route::post('/committee/add', 'CommitteeController@store')->name('committee.add');
-Route::post('/committee/update', 'CommitteeController@update')->name('committee.update');
-Route::post('/committee/destroy', 'CommitteeController@destroy')->name('committee.destroy');
+Route::group(['prefix' => 'committee',  'middleware' => 'auth'], function() {
+	
+	Route::get('/', 'CommitteeController@index')->name('committee');
+	Route::get('admin', 'CommitteeController@displayCommitteeAssignments')->name('committee.admin');;
+	Route::get('form', 'CommitteeController@create');
+	Route::get('add', 'CommitteeController@create');
+	Route::post('add', 'CommitteeController@store')->name('committee.add');
+	Route::post('update', 'CommitteeController@update')->name('committee.update');
+	Route::post('destroy', 'CommitteeController@destroy')->name('committee.destroy');
+	
+	Route::get('members/{cid}', 'MembersController@index')->name('comm.assign');
+	Route::get('members/{cid}/memberships', 'MembersController@getMemberships')->name('members.table');
+	Route::get('members/{cid}/add/{mid}/{chid}', 'MembersController@create')->name('members.add.view');
+	Route::post('members/{cid}/add', 'MembersController@store')->name('members.add');
+	Route::get('members/{cid}/edit/{mid}', 'MembersController@create')->name('members.edit');
+	Route::post('members/update/{mid}', 'MembersController@update')->name('members.update');
+	Route::post('members/destroy/{mid}', 'MembersController@destroy')->name('members.destroy');
+});
 
-Route::get('/committee/members/{cid}', 'MembersController@index')->name('comm.assign');
-Route::get('/committee/members/{cid}/memberships', 'MembersController@getMemberships')->name('members.table');
-Route::get('/committee/members/{cid}/add/{mid}/{chid}', 'MembersController@create')->name('members.add.view');
-Route::post('/committee/members/{cid}/add', 'MembersController@store')->name('members.add');
-Route::get('/committee/members/{cid}/edit/{mid}', 'MembersController@create')->name('members.edit');
-Route::post('/committee/members/update/{mid}', 'MembersController@update')->name('members.update');
-Route::post('/committee/members/destroy/{mid}', 'MembersController@destroy')->name('members.destroy');
 
 /*** Employee Name Search ***/
 Route::post('/employees/search', 'MembersController@getEmployees')->name('employees.search');
