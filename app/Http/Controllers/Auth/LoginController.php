@@ -2,16 +2,13 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\User;
 use App\Http\Controllers\Controller;
+use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
-use Redirect;
-use Illuminate\Support\MessageBag;
-use Illuminate\Support\Facades\Input;
-use App\User;
-use Session;
 use Illuminate\Support\Facades\Auth;
-
+use Illuminate\Support\MessageBag;
 
 class LoginController extends Controller
 {
@@ -33,7 +30,7 @@ class LoginController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/home';
+    protected $redirectTo = RouteServiceProvider::HOME;
 
     /**
      * Create a new controller instance.
@@ -64,7 +61,6 @@ class LoginController extends Controller
             else {
                 session()->flash('msg', 'You are not authorized to access this application.');
                 return redirect()->back();
-                //return Redirect::back()->withErrors(['msg', 'You are not authorized to access this application.']);
             }
         }
         else {
@@ -72,7 +68,7 @@ class LoginController extends Controller
             $errors = new MessageBag;
             $errors->add ('password', 'Invalid email or password.');
             $errors->add('email','Invalid email or password');
-            return Redirect::back()->withErrors($errors)->withInput(Input::except('password'));
+            return redirect()->back()->withErrors($errors)->withInput(Input::except('password'));
         }
     }
 
