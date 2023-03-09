@@ -105,8 +105,8 @@ function addComm() {
 	window.location = "{{ route('committee.add') }}";
 }
 function assignComm(id) {
-	var url = 	"{{ route('comm.assign', ['id'=>':id']) }}";
-	url = url.replace(':id', id);
+	var url = 	"{{ route('comm.assign', ['cid'=>':cid']) }}";
+	url = url.replace(':cÍid', id);
 	window.location = url;
 }
 </script>

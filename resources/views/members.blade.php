@@ -17,14 +17,13 @@
 <script>
 $(document).ready(function() {
 	$('div.container').addClass('wide');
-	var url = 	"{{ route('members.table', ['id'=>':id']) }}";
-	url = url.replace(':id', {{ $cid }});
+	var url = 	"{{ route('members.table', ['cid'=>':cid']) }}";
+	url = url.replace(':cid', {{ $cid }});
 	
 	var table = $('#memberAdmin').DataTable({
 		responsive: true,
 		autoWidth: false,
 		createdRow: function(row, data, dataIndex) {
-			//setEdit(row, communityTable, "{{ route('community.update') }}", "{{ route('community.destroy') }}");
 			$('button.deleteButton', row).click(function() {
 				$(this).closest('div.editButtons').hide();
 				$(this).closest('div.editButtons').siblings('div.delButtons').show();
@@ -79,8 +78,8 @@ $(document).ready(function() {
 				render: function(data, type, row, meta) {
 					if(data.id == null) {
 						var cid = {{ $cid }};
-						var url = 	"{{ route('members.add.view', ['id'=>':id', 'mid'=>':mid', 'chid'=>':chid']) }}";
-						url = url.replace(':id', cid);
+						var url = 	"{{ route('members.add.view', ['cid'=>':id', 'mid'=>':mid', 'chid'=>':chid']) }}";
+						url = url.replace(':cid', cid);
 						url = url.replace(':mid', 0);
 						url = url.replace(':chid', data.chargeID);
 						return '<a href="'+ url +'" class="btn btn-light btn-sm border assignLink">Assign</button>';
@@ -114,14 +113,14 @@ $(document).ready(function() {
 });
 
 function editMember(id) {
-	var url = 	"{{ route('members.edit', ['cid'=>':cid', 'user'=>':uid']) }}";
+	var url = 	"{{ route('members.edit', ['cid'=>':cid', 'mid'=>':mid']) }}";
 	url = url.replace(':cid', {{ $cid }});
-	url = url.replace(':uid', id);
+	url = url.replace(':mid', id);
 	window.location = url;
 }
 function deleteMember(id) {
-	var url = 	"{{ route('members.destroy', ['user'=>':uid']) }}";
-	url = url.replace(':uid', id);
+	var url = 	"{{ route('members.destroy', ['mid'=>':mid']) }}";
+	url = url.replace(':mid', id);
 	$.ajax({
 		headers: {
 			'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')

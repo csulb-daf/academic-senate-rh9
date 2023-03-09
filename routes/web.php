@@ -33,7 +33,6 @@ Route::post('/member/search', 'HomeController@memberSearch')->name('member.searc
 
 /*** Committee Pages ***/
 Route::group(['prefix' => 'committee',  'middleware' => 'auth'], function() {
-	
 	Route::get('/', 'CommitteeController@index')->name('committee');
 	Route::get('admin', 'CommitteeController@displayCommitteeAssignments')->name('committee.admin');;
 	Route::get('form', 'CommitteeController@create');
@@ -41,14 +40,13 @@ Route::group(['prefix' => 'committee',  'middleware' => 'auth'], function() {
 	Route::post('add', 'CommitteeController@store')->name('committee.add');
 	Route::post('update', 'CommitteeController@update')->name('committee.update');
 	Route::post('destroy', 'CommitteeController@destroy')->name('committee.destroy');
-	
-	Route::get('members/{cid?}', 'MembersController@index')->name('comm.assign');
-	Route::get('members/{cid?}/memberships', 'MembersController@getMemberships')->name('members.table');
-	Route::get('members/{cid?}/add/{mid?}/{chid?}', 'MembersController@create')->name('members.add.view');
-	Route::post('members/{cid?}/add', 'MembersController@store')->name('members.add');
-	Route::get('members/{cid?}/edit/{mid?}', 'MembersController@create')->name('members.edit');
-	Route::post('members/update/{mid?}', 'MembersController@update')->name('members.update');
-	Route::post('members/destroy/{mid?}', 'MembersController@destroy')->name('members.destroy');
+	Route::get('members/{cid}', 'MembersController@index')->name('comm.assign');
+	Route::get('members/{cid}/memberships', 'MembersController@getMemberships')->name('members.table');
+	Route::get('members/{cid}/add/{mid}/{chid}', 'MembersController@create')->name('members.add.view');
+	Route::post('members/{cid}/add', 'MembersController@store')->name('members.add');
+	Route::get('members/{cid}/edit/{mid}', 'MembersController@create')->name('members.edit');
+	Route::post('members/update/{mid}', 'MembersController@update')->name('members.update');
+	Route::post('members/destroy/{mid}', 'MembersController@destroy')->name('members.destroy');
 });
 
 

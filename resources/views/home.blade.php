@@ -33,6 +33,11 @@
 @section('scripts')
 <script>
 $(document).ready(function() {
+	var cid = 0;
+	$('#commSelect').on('change', function() {
+		cid = $(this).val();
+	});
+	
 	$('div.container').addClass('wide');
 
 	@if(session('committeeID') && session('committeeName'))
@@ -188,17 +193,16 @@ $(document).ready(function() {
 			{ title: 'Actions', data: null, defaultContent: '', className: 'actions', responsivePriority: 2, width: '60px',
 				render: function(data, type, row) {
 					if(data.id == null) {
-						var cid = $('#commSelect').val();
-						var url = 	"{{ route('members.add.view', ['id'=>':id', 'mid'=>':mid', 'chid'=>':chid']) }}";
-						url = url.replace(':id', cid);
+						var url = 	"{{ route('members.add.view', ['cid'=>':cid', 'mid'=>':mid', 'chid'=>':chid']) }}";
+						url = url.replace(':cid', cid);
 						url = url.replace(':mid', 0);
 						url = url.replace(':chid', data.chargeID);
 
 						return '<a href="'+ url +'" class="btn btn-light btn-sm border assign" title="Assign" data-toggle="tooltip"><img src="{{ asset('images/external-link.svg') }}"></a>';
 					}
-					var changeUrl = 	"{{ route('members.edit', ['cid'=>':cid', 'user'=>':uid']) }}";
+					var changeUrl = 	"{{ route('members.edit', ['cid'=>':cid', 'mid'=>':mid']) }}";
 					changeUrl = changeUrl.replace(':cid', data.committee);
-					changeUrl = changeUrl.replace(':uid', data.id);
+					changeUrl = changeUrl.replace(':mid', data.id);
 
 					var assignUrl = 	"{{ route('comm.assign', ['cid'=>':cid']) }}";
 					assignUrl = assignUrl.replace(':cid', data.committee);
@@ -224,7 +228,6 @@ $(document).ready(function() {
 		$(this).find('tr.added:first').before('<tr id="altHeading" class="dtrg-group dtrg-start dtrg-level-0"><td colspan="14">Alternates</td></tr>');
 	});
 	
-});
-
+});	//document.ready
 </script>
 @endsection
