@@ -106,7 +106,7 @@ function addComm() {
 }
 function assignComm(id) {
 	var url = 	"{{ route('comm.assign', ['cid'=>':cid']) }}";
-	url = url.replace(':cÍid', id);
+	url = url.replace(':cid', id);
 	window.location = url;
 }
 </script>

@@ -32,7 +32,7 @@ Route::post('/member/list', 'HomeController@getMembers')->name('member.list');
 Route::post('/member/search', 'HomeController@memberSearch')->name('member.search');
 
 /*** Committee Pages ***/
-Route::group(['prefix' => 'committee',  'middleware' => 'auth'], function() {
+Route::group(['prefix' => 'committee'], function() {
 	Route::get('/', 'CommitteeController@index')->name('committee');
 	Route::get('admin', 'CommitteeController@displayCommitteeAssignments')->name('committee.admin');;
 	Route::get('form', 'CommitteeController@create');

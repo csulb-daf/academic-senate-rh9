@@ -78,7 +78,7 @@ $(document).ready(function() {
 				render: function(data, type, row, meta) {
 					if(data.id == null) {
 						var cid = {{ $cid }};
-						var url = 	"{{ route('members.add.view', ['cid'=>':id', 'mid'=>':mid', 'chid'=>':chid']) }}";
+						var url = 	"{{ route('members.add.view', ['cid'=>':cid', 'mid'=>':mid', 'chid'=>':chid']) }}";
 						url = url.replace(':cid', cid);
 						url = url.replace(':mid', 0);
 						url = url.replace(':chid', data.chargeID);
