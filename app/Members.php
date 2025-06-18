@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Members extends Model
 {
-	protected $table = 'committee_membership';
-	use SoftDeletes;
+    protected $table = 'committee_membership';
+
+    use SoftDeletes;
 }

@@ -1,8 +1,8 @@
 <?php
 
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
 class CreateCommitteesTable extends Migration
 {
@@ -16,8 +16,8 @@ class CreateCommitteesTable extends Migration
         Schema::create('committees', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->unsignedBigInteger('user_id');
-            $table->string('committeename',255);
-            $table->string('meetingtimes_locations',255)->nullable();
+            $table->string('committeename', 255);
+            $table->string('meetingtimes_locations', 255)->nullable();
             $table->text('notes')->nullable();
             $table->timestamps();
             $table->softDeletes();

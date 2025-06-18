@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Community extends Model
 {
-	protected $table = 'community_members';
-	use SoftDeletes;
+    protected $table = 'community_members';
+
+    use SoftDeletes;
 }
