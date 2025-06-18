@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\User;
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
+use App\User;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -44,30 +44,29 @@ class LoginController extends Controller
 
     public function login(Request $request)
     {
-        $credentials = $request->only('email','password');
+        $credentials = $request->only('email', 'password');
 
-        $success = $this->verify($credentials['email'],$credentials['password']);
+        $success = $this->verify($credentials['email'], $credentials['password']);
 
-        if($success)
-        {
+        if ($success) {
             $eml = $credentials['email'];
             $user = User::where('email', '=', $eml)->first();
 
             if ($user) {
                 Auth::login($user);
-                return redirect('/');
-            }
 
-            else {
+                return redirect('/');
+            } else {
                 session()->flash('msg', 'You are not authorized to access this application.');
+
                 return redirect()->back();
             }
-        }
-        else {
-            //$errors = new MessageBag(['password' => ['Email and/or password invalid.']]);
+        } else {
+            // $errors = new MessageBag(['password' => ['Email and/or password invalid.']]);
             $errors = new MessageBag;
-            $errors->add ('password', 'Invalid email or password.');
-            $errors->add('email','Invalid email or password');
+            $errors->add('password', 'Invalid email or password.');
+            $errors->add('email', 'Invalid email or password');
+
             return redirect()->back()->withErrors($errors)->withInput(Input::except('password'));
         }
     }
@@ -76,7 +75,7 @@ class LoginController extends Controller
     {
         $host = env('ADLDS_HOST');
         $ldapport = env('ADLDS_PORT');
-        $connection = @ldap_connect($host,$ldapport);
+        $connection = @ldap_connect($host, $ldapport);
         $success = false;
 
         if ($connection) {
@@ -90,7 +89,7 @@ class LoginController extends Controller
                 ldap_close($connection);
             }
         }
+
         return $success;
     }
 }
-
