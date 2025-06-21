@@ -9,6 +9,7 @@ use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\MessageBag;
+use Symfony\Component\Console\Input\Input;
 
 class LoginController extends Controller
 {
@@ -67,7 +68,7 @@ class LoginController extends Controller
             $errors->add('password', 'Invalid email or password.');
             $errors->add('email', 'Invalid email or password');
 
-            return redirect()->back()->withErrors($errors)->withInput(Input::except('password'));
+            return redirect()->back()->withErrors($errors)->withInput($request->except('password'));
         }
     }
 
@@ -81,11 +82,12 @@ class LoginController extends Controller
         if ($connection) {
             ldap_set_option($connection, LDAP_OPT_PROTOCOL_VERSION, 3);
             ldap_set_option($connection, LDAP_OPT_REFERRALS, 0);
+            ldap_set_option($connection, LDAP_OPT_X_TLS_CACERTFILE, '/etc/httpd/ssl_certs/csulb_self_cert.cer/csulb_self_cert.cer');
+            ldap_set_option($connection, LDAP_OPT_X_TLS_CACERTFILE, '/etc/httpd/ssl_certs/csulb_self_chain.cer');
 
             $bind = @ldap_bind($connection, $eml, $pwd);
             if ($bind) {
                 $success = true;
-
                 ldap_close($connection);
             }
         }
