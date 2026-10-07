@@ -53,7 +53,7 @@ class Controller extends BaseController
     {
         $host = env('ADLDS_HOST');
         $ldapport = env('ADLDS_PORT');
-        $connection = ldap_connect("ldap://{$host}:{$ldapport}");
+        $connection = ldap_connect("{$host}:{$ldapport}");
         $usrbind = 'CN=ITS WDC Service Account,OU=ITS,OU=Service,OU=Users,OU=DAF,OU=Delegated-OUs,DC=campus,DC=ad,DC=csulb,DC=edu';
         $usrpw = env('ADLDS_PW');
         $search_basedn = 'DC=campus,DC=ad,DC=csulb,DC=edu';
