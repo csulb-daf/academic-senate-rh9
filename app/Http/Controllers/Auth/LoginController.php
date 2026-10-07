@@ -74,16 +74,12 @@ class LoginController extends Controller
 
     public function verify($eml, $pwd)
     {
-        $host = env('ADLDS_HOST');
-        $ldapport = env('ADLDS_PORT');
-        $connection = ldap_connect("{$host}:{$ldapport}");
+        $connection = $this->ldapConnect();
         $success = false;
 
         if ($connection) {
             ldap_set_option($connection, LDAP_OPT_PROTOCOL_VERSION, 3);
             ldap_set_option($connection, LDAP_OPT_REFERRALS, 0);
-            ldap_set_option($connection, LDAP_OPT_X_TLS_CACERTFILE, '/etc/httpd/ssl_certs/csulb_self_cert.cer/csulb_self_cert.cer');
-            ldap_set_option($connection, LDAP_OPT_X_TLS_CACERTFILE, '/etc/httpd/ssl_certs/csulb_self_chain.cer');
 
             $bind = @ldap_bind($connection, $eml, $pwd);
             if ($bind) {

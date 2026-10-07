@@ -49,11 +49,28 @@ class Controller extends BaseController
             ->get();
     }
 
-    public function directorySearch(Request $request)
+    /**
+     * Open a connection to the campus directory.
+     *
+     * The CA file has to be set globally before ldap_connect(); setting it on
+     * the connection handle is ignored by PHP's LDAP extension.
+     */
+    protected function ldapConnect()
     {
+        $cacert = env('ADLDS_CACERT', '/etc/httpd/ssl_certs/csulb_self_chain.cer');
+        if (is_readable($cacert)) {
+            ldap_set_option(null, LDAP_OPT_X_TLS_CACERTFILE, $cacert);
+        }
+
         $host = env('ADLDS_HOST');
         $ldapport = env('ADLDS_PORT');
-        $connection = ldap_connect("{$host}:{$ldapport}");
+
+        return ldap_connect("{$host}:{$ldapport}");
+    }
+
+    public function directorySearch(Request $request)
+    {
+        $connection = $this->ldapConnect();
         $usrbind = 'CN=ITS WDC Service Account,OU=ITS,OU=Service,OU=Users,OU=DAF,OU=Delegated-OUs,DC=campus,DC=ad,DC=csulb,DC=edu';
         $usrpw = env('ADLDS_PW');
         $search_basedn = 'DC=campus,DC=ad,DC=csulb,DC=edu';
