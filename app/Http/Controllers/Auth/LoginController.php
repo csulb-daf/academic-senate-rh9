@@ -76,7 +76,7 @@ class LoginController extends Controller
     {
         $host = env('ADLDS_HOST');
         $ldapport = env('ADLDS_PORT');
-        $connection = @ldap_connect($host, $ldapport);
+        $connection = ldap_connect("ldap://{$host}:{$ldapport}");
         $success = false;
 
         if ($connection) {
